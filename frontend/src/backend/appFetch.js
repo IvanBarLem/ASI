@@ -1,6 +1,6 @@
 import NetworkError from "./NetworkError";
 
-const BACKEND_URL = "https://localhost:8080";
+const BACKEND_URL = "http://localhost:8080";
 const SERVICE_TOKEN_NAME = "serviceToken";
 
 let networkErrorCallback;

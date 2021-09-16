@@ -14,42 +14,35 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	@Autowired
 	private JwtGenerator jwtGenerator;
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
-		http.cors().and().csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.addFilter(new JwtFilter(authenticationManager(), jwtGenerator))
-			.authorizeRequests()
-			.antMatchers("/users/signUp").permitAll()
-			.antMatchers("/users/login").permitAll()
-			.antMatchers("/users/loginFromServiceToken").permitAll()
-			.antMatchers("/catalog/categories").permitAll()
-			.antMatchers("/catalog/products").permitAll()
-			.antMatchers("/catalog/products/{id}").permitAll()
-			.antMatchers("/**").hasRole("USER");
+
+		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
+				.antMatchers("/users/signUp").permitAll().antMatchers("/users/login").permitAll()
+				.antMatchers("/users/loginFromServiceToken").permitAll().antMatchers("/**").hasRole("USER");
 
 	}
-	
+
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
-		
+
 		CorsConfiguration config = new CorsConfiguration();
-	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
 		config.setAllowCredentials(true);
-	    config.addAllowedOrigin("*");
-	    config.addAllowedHeader("*");
-	    config.addAllowedMethod("*");
-	    
-	    source.registerCorsConfiguration("/**", config);
-	    
-	    return source;
-	    
-	 }
+		config.addAllowedOrigin("*");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
+
+		source.registerCorsConfiguration("/**", config);
+
+		return source;
+
+	}
 
 }

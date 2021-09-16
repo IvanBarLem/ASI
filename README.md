@@ -1,4 +1,4 @@
-# PA Project 
+# ASI Project
 
 ## Requirements
 
@@ -12,13 +12,13 @@
 ```
 Start Mysql server if not running (e.g. mysqld).
 
-mysqladmin -u root create paproject
-mysqladmin -u root create paprojecttest
+mysqladmin -u root create asiproject
+mysqladmin -u root create asiprojecttest
 
 mysql -u root
-    CREATE USER 'pa'@'localhost' IDENTIFIED BY 'pa';
-    GRANT ALL PRIVILEGES ON paproject.* to 'pa'@'localhost' WITH GRANT OPTION;
-    GRANT ALL PRIVILEGES ON paprojecttest.* to 'pa'@'localhost' WITH GRANT OPTION;
+    CREATE USER 'asi'@'localhost' IDENTIFIED BY 'asi';
+    GRANT ALL PRIVILEGES ON asiproject.* to 'asi'@'localhost' WITH GRANT OPTION;
+    GRANT ALL PRIVILEGES ON asiprojecttest.* to 'asi'@'localhost' WITH GRANT OPTION;
     exit
 ```
 
