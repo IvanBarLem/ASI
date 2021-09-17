@@ -59,8 +59,8 @@ const Header = ({ userName }) => (
   </nav>
 );
 
-const mapStateToProps = state => ({
-  userName: users.selectors.getUserName(state)
+const mapStateToProps = (state) => ({
+  userName: users.selectors.getUserName(state),
 });
 
 export default connect(mapStateToProps)(Header);

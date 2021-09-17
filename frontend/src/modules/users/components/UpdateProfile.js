@@ -1,150 +1,151 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {FormattedMessage} from 'react-intl';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FormattedMessage } from "react-intl";
 
-import {Errors} from '../../common';
-import * as actions from '../actions';
-import * as selectors from '../selectors';
+import { Errors } from "../../common";
+import * as actions from "../actions";
+import * as selectors from "../selectors";
+import { useHistory } from "react-router";
 
-class UpdateProfile extends React.Component {
+const UpdateProfile = (props) => {
+  const user = useSelector(selectors.getUser);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    constructor(props) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [backendErrors, setBackendErrors] = useState(null);
+  let form;
 
-        super(props);
+  useEffect(() => {
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
+    setEmail(user.email);
+  }, [user]);
 
-        this.state = {
-            firstName: props.user.firstName,
-            lastName: props.user.lastName,
-            email: props.user.email,
-            backendErrors: null,
-            passwordsDoNotMatch: false
-        };
+  function handleFirstNameChange(event) {
+    setFirstName(event.target.value);
+  }
 
+  function handleLastNameChange(event) {
+    setLastName(event.target.value);
+  }
+
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (form.checkValidity()) {
+      updateProfile();
+    } else {
+      setBackendErrors(null);
+      form.classList.add("was-validated");
     }
+  }
 
-    handleFirstNameChange(event) {
-        this.setState({firstName: event.target.value});
-    }
+  function updateProfile() {
+    dispatch(
+      actions.updateProfile(
+        {
+          id: user.id,
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: email.trim(),
+        },
+        () => history.push("/"),
+        (errors) => setBackendErrors(errors)
+      )
+    );
+  }
 
-    handleLastNameChange(event) {
-        this.setState({lastName: event.target.value});
-    }
-
-    handleEmailChange(event) {
-        this.setState({email: event.target.value});
-    }
-
-    handleSubmit(event) {
-
-        event.preventDefault();
-
-        if (this.form.checkValidity()) {
-            this.updateProfile();
-        } else {
-            this.setBackendErrors(null);
-            this.form.classList.add('was-validated');
-        }
-
-    }
-
-    updateProfile() {
-
-        this.props.updateProfile(
-            {id: this.props.user.id,
-            firstName: this.state.firstName.trim(),
-            lastName: this.state.lastName.trim(),
-            email: this.state.email.trim()},
-            () => this.props.history.push('/'),
-            errors => this.setBackendErrors(errors));
-        
-    }
-
-    setBackendErrors(backendErrors) {
-        this.setState({backendErrors});
-    }
-
-    handleErrorsClose() {
-        this.setState({backendErrors: null});
-    }
-
-    render() {
-
-        return (
-            <div>
-                <Errors errors={this.state.backendErrors} onClose={() => this.handleErrorsClose()}/>
-                <div className="card bg-light border-dark">
-                    <h5 className="card-header">
-                        <FormattedMessage id="project.users.UpdateProfile.title"/>
-                    </h5>
-                    <div className="card-body">
-                    <form ref={node => this.form = node} 
-                            className="needs-validation" noValidate onSubmit={(e) => this.handleSubmit(e)}>
-                            <div className="form-group row">
-                                <label htmlFor="firstName" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.firstName"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="text" id="firstName" className="form-control"
-                                        value={this.state.firstName}
-                                        onChange={(e) => this.handleFirstNameChange(e)}
-                                        autoFocus
-                                        required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="lastName" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.lastName"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="text" id="lastName" className="form-control"
-                                        value={this.state.lastName}
-                                        onChange={(e) => this.handleLastNameChange(e)}
-                                        required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.required'/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <label htmlFor="email" className="col-md-3 col-form-label">
-                                    <FormattedMessage id="project.global.fields.email"/>
-                                </label>
-                                <div className="col-md-4">
-                                    <input type="email" id="email" className="form-control"
-                                        value={this.state.email}
-                                        onChange={(e) => this.handleEmailChange(e)}
-                                        required/>
-                                    <div className="invalid-feedback">
-                                        <FormattedMessage id='project.global.validator.email'/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <div className="offset-md-3 col-md-1">
-                                    <button type="submit" className="btn btn-primary">
-                                        <FormattedMessage id="project.global.buttons.save"/>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+  function handleErrorsClose() {
+    setBackendErrors(null);
+  }
+  return (
+    <div>
+      <Errors errors={backendErrors} onClose={() => handleErrorsClose()} />
+      <div className="card bg-light border-dark">
+        <h5 className="card-header">
+          <FormattedMessage id="project.users.UpdateProfile.title" />
+        </h5>
+        <div className="card-body">
+          <form
+            ref={(node) => (form = node)}
+            className="needs-validation"
+            noValidate
+            onSubmit={(e) => handleSubmit(e)}
+          >
+            <div className="form-group row">
+              <label htmlFor="firstName" className="col-md-3 col-form-label">
+                <FormattedMessage id="project.global.fields.firstName" />
+              </label>
+              <div className="col-md-4">
+                <input
+                  type="text"
+                  id="firstName"
+                  className="form-control"
+                  value={firstName}
+                  onChange={(e) => handleFirstNameChange(e)}
+                  autoFocus
+                  required
+                />
+                <div className="invalid-feedback">
+                  <FormattedMessage id="project.global.validator.required" />
                 </div>
+              </div>
             </div>
-        );
-
-    }
-
-}
-
-const mapStateToProps = (state) => ({
-    user: selectors.getUser(state)
-});
-
-const mapDispatchToProps = {
-    updateProfile: actions.updateProfile
+            <div className="form-group row">
+              <label htmlFor="lastName" className="col-md-3 col-form-label">
+                <FormattedMessage id="project.global.fields.lastName" />
+              </label>
+              <div className="col-md-4">
+                <input
+                  type="text"
+                  id="lastName"
+                  className="form-control"
+                  value={lastName}
+                  onChange={(e) => handleLastNameChange(e)}
+                  required
+                />
+                <div className="invalid-feedback">
+                  <FormattedMessage id="project.global.validator.required" />
+                </div>
+              </div>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="email" className="col-md-3 col-form-label">
+                <FormattedMessage id="project.global.fields.email" />
+              </label>
+              <div className="col-md-4">
+                <input
+                  type="email"
+                  id="email"
+                  className="form-control"
+                  value={email}
+                  onChange={(e) => handleEmailChange(e)}
+                  required
+                />
+                <div className="invalid-feedback">
+                  <FormattedMessage id="project.global.validator.email" />
+                </div>
+              </div>
+            </div>
+            <div className="form-group row">
+              <div className="offset-md-3 col-md-1">
+                <button type="submit" className="btn btn-primary">
+                  <FormattedMessage id="project.global.buttons.save" />
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UpdateProfile);
+export default UpdateProfile;
