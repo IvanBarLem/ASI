@@ -22,6 +22,33 @@ mysql -u root
     exit
 ```
 
+## If using Docker for mysql
+
+Download mysql image:
+
+```bash
+docker pull mysql:8.0.11
+```
+
+Start the mysql container:
+```bash
+docker run --name mysql -p 3306:3306 -v /path/to/your/db/volume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=admin -d mysql:8.0.11
+```
+
+Once it is running, enter the container:
+```bash
+docker exec -it mysql bash
+```
+
+Then inside the container, access to mysql with credentials:
+```bash
+mysql -u root -p
+```
+Create database:
+```bash
+create database asiproject;
+```
+
 ## Run
 
 ```
