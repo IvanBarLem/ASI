@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+import {ThemeProvider} from '@mui/material/styles';
 
+import theme from '../ThemeConfig';
 import Header from "./Header";
 import Body from "./Body";
 import Footer from "./Footer";
@@ -21,13 +23,15 @@ const reauthenticationCallback = dispatch => () =>
 
   return (
     <div>
-      <Router>
-        <div>
-          <Header />
-          <Body />
-        </div>
-      </Router>
-      <Footer />
+      <ThemeProvider theme={theme}>
+        <Router>
+          <div>
+            <Header />
+            <Body />
+          </div>
+        </Router>
+        <Footer />
+      </ThemeProvider>
     </div>
   )
 }
