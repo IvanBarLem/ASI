@@ -8,7 +8,7 @@ import users from "../../users";
 const Header = ({ userName }) => (
   <nav className="navbar navbar-expand-lg navbar-light bg-light border">
     <Link className="navbar-brand" to="/">
-      PA Project
+      ASI Project
     </Link>
     <button
       className="navbar-toggler"

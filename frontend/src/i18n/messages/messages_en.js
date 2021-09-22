@@ -1,6 +1,6 @@
 export default {
   "project.app.Footer.text":
-    "PA Project - Area of Telematics Engineering - University of A Coruña",
+    "ASI Project - University of A Coruña",
   "project.app.Header.home": "Home",
   "project.app.Header.logout": "Logout",
   "project.app.Home.welcome": "MiniPortal main page content!",

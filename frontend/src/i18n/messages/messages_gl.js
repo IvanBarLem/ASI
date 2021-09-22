@@ -1,9 +1,9 @@
 export default {
 
-    'project.app.Footer.text': 'PA Project - Area de Enxeñaría Telemática - Universidade da Coruña',
+    'project.app.Footer.text': 'ASI Project - Universidade da Coruña',
     'project.app.Header.home': 'Inicio',
     'project.app.Header.logout': 'Saír',
-    'project.app.Home.welcome': '¡Contido da páxina principal de PA Project!',
+    'project.app.Home.welcome': '¡Contido da páxina principal de ASI Project!',
 
     'project.adverts.header.addProduct': 'Engadir producto',
     'project.adverts.AddProduct.title': 'Engadir producto',
