@@ -1,66 +1,75 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
+import React from 'react';
+import {useSelector} from 'react-redux';
+import {AppBar, Toolbar, IconButton, Typography,  Hidden, useTheme} from '@mui/material';
+import MenuIcon from '@material-ui/icons/Menu';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { makeStyles } from '@material-ui/core/styles';
 
-import users from "../../users";
+import users from '../../users';
+import Dropdown from './Dropdown';
+import Userbutton from './UserButton';
 
-const Header = ({ userName }) => (
-  <nav className="navbar navbar-expand-lg navbar-light bg-light border">
-    <Link className="navbar-brand" to="/">
-      ASI Project
-    </Link>
-    <button
-      className="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span className="navbar-toggler-icon"></span>
-    </button>
+const useStyles = makeStyles((theme) => ({
+    menuButton: {
+        marginRight: "1%",
+    },
+    title: {
+        flexGrow: 1
+    }
+}))
 
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav mr-auto"></ul>
+const Header = (props) => {
+	const classes = useStyles();
+	const theme = useTheme();
+	const matches = useMediaQuery(theme.breakpoints.up('md'));
+    const userName = useSelector(users.selectors.getUserName);
+    const isLoggedIn = useSelector(users.selectors.isLoggedIn);
+	const [dropdownOpened, setDropdownOpened] = React.useState(false);
+    const toogleDropdown = () => {
+        setDropdownOpened(!dropdownOpened)
+    }
 
-      {userName ? (
-        <ul className="navbar-nav">
-          <li className="nav-item dropdown">
-            <a className="dropdown-toggle nav-link" data-toggle="dropdown">
-              <span className="fas fa-user"></span>&nbsp;
-              {userName}
-            </a>
-            <div className="dropdown-menu dropdown-menu-right">
-              <Link className="dropdown-item" to="/users/update-profile">
-                <FormattedMessage id="project.users.UpdateProfile.title" />
-              </Link>
-              <Link className="dropdown-item" to="/users/change-password">
-                <FormattedMessage id="project.users.ChangePassword.title" />
-              </Link>
-              <div className="dropdown-divider"></div>
-              <Link className="dropdown-item" to="/users/logout">
-                <FormattedMessage id="project.app.Header.logout" />
-              </Link>
-            </div>
-          </li>
-        </ul>
-      ) : (
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <Link className="nav-link" to="/users/login">
-              <FormattedMessage id="project.users.Login.title" />
-            </Link>
-          </li>
-        </ul>
-      )}
-    </div>
-  </nav>
-);
+    return (
+        <div>
+            <AppBar sx={props.dropDownMarginClasses}>
+                <Toolbar>
+                    {(isLoggedIn && !matches) ?
+                        <IconButton
+							className={classes.menuButton}
+                            color='inherit' 
+                            aria-label='menu' 
+                            onClick={() => toogleDropdown()}
+                        >
+                            <MenuIcon/>
+                        </IconButton>
+                        :
+                        <div/>
+                    }
+                    <Typography className={classes.title} variant='h6'>
+                        Agencia Viajes
+                    </Typography>
+                    <Userbutton userName={userName}/>
+                </Toolbar>
+            </AppBar>
+            <div className="offset"></div>
+            {isLoggedIn ?
+                <div>
+                <Hidden mdDown>
+                    <Dropdown variant='permanent' open={true}/>
+                </Hidden>
+                <Hidden lgUp>
+                    <Dropdown 
+                        variant='temporary'
+                        open={dropdownOpened}
+                        onClose={toogleDropdown}
+                    />
+                </Hidden>
+                </div>
+                :
+                <div/>
+            }
+        </div>
+    )
+}
 
-const mapStateToProps = (state) => ({
-  userName: users.selectors.getUserName(state),
-});
-
-export default connect(mapStateToProps)(Header);
+export default Header;

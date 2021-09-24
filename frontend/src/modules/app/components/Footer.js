@@ -1,14 +1,17 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import { Box } from '@mui/material';
 
-const Footer = () => (
+const Footer = (props) => (
 
     <div>
         <br/>
         <hr/>
         <footer>
             <p className="text-center">
-                <FormattedMessage id="project.app.Footer.text"/>
+                <Box sx={props.dropDownMarginClasses}>
+                    <FormattedMessage id="project.app.Footer.text"/>
+                </Box>
             </p>
         </footer>
     </div>

@@ -4,13 +4,34 @@ import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 import { Paper, Typography, Box, Grid, TextField, Button, Divider} from '@mui/material';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { Errors } from '../../common';
 import * as actions from '../actions';
 
 import '../users.css';
 
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        paddingBottom: theme.spacing(1)
+    },
+    header: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+        padding: theme.spacing(1),
+        borderTopLeftRadius: theme.spacing(1),
+        borderTopRightRadius: theme.spacing(1)
+    },
+    paperBody: {
+        margin: theme.spacing(2)
+    },
+    row:{
+        marginBottom: theme.spacing(1)
+    } 
+}));
+
 const Login = () => {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
     const [userName, setUserName] = useState('');
@@ -50,7 +71,7 @@ const Login = () => {
                 onSubmit={e => handleSubmit(e)}
                 onInvalid={e => handleInvalid(e)}
             >
-                <Paper className="paper">
+                <Paper className={classes.paper}>
                     <Box sx={{
                         bgcolor: 'primary.dark',
                         color: 'primary.contrastText',
