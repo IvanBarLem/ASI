@@ -14,14 +14,12 @@ const UpdateProfile = (props) => {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
   const [backendErrors, setBackendErrors] = useState(null);
   let form;
 
   useEffect(() => {
     setFirstName(user.firstName);
     setLastName(user.lastName);
-    setEmail(user.email);
   }, [user]);
 
   function handleFirstNameChange(event) {
@@ -30,10 +28,6 @@ const UpdateProfile = (props) => {
 
   function handleLastNameChange(event) {
     setLastName(event.target.value);
-  }
-
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
   }
 
   function handleSubmit(event) {
@@ -54,7 +48,6 @@ const UpdateProfile = (props) => {
           id: user.id,
           firstName: firstName.trim(),
           lastName: lastName.trim(),
-          email: email.trim(),
         },
         () => history.push("/"),
         (errors) => setBackendErrors(errors)
@@ -113,24 +106,6 @@ const UpdateProfile = (props) => {
                 />
                 <div className="invalid-feedback">
                   <FormattedMessage id="project.global.validator.required" />
-                </div>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label htmlFor="email" className="col-md-3 col-form-label">
-                <FormattedMessage id="project.global.fields.email" />
-              </label>
-              <div className="col-md-4">
-                <input
-                  type="email"
-                  id="email"
-                  className="form-control"
-                  value={email}
-                  onChange={(e) => handleEmailChange(e)}
-                  required
-                />
-                <div className="invalid-feedback">
-                  <FormattedMessage id="project.global.validator.email" />
                 </div>
               </div>
             </div>

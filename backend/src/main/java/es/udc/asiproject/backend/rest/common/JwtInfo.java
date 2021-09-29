@@ -1,17 +1,17 @@
 package es.udc.asiproject.backend.rest.common;
 
 public class JwtInfo {
-	
+
 	private Long userId;
-	private String userName;
+	private String email;
 	private String role;
-	
-	public JwtInfo(Long userId, String userName, String role) {
-		
+
+	public JwtInfo(Long userId, String email, String role) {
+
 		this.userId = userId;
-		this.userName = userName;
+		this.email = email;
 		this.role = role;
-		
+
 	}
 
 	public Long getUserId() {
@@ -22,12 +22,12 @@ public class JwtInfo {
 		this.userId = userId;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getRole() {

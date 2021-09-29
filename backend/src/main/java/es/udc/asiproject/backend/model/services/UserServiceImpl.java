@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void signUp(User user) throws DuplicateInstanceException {
 
-		if (userDao.existsByUserName(user.getUserName())) {
-			throw new DuplicateInstanceException("project.entities.user", user.getUserName());
+		if (userDao.existsByEmail(user.getEmail())) {
+			throw new DuplicateInstanceException("project.entities.user", user.getEmail());
 		}
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -41,16 +41,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public User login(String userName, String password) throws IncorrectLoginException {
+	public User login(String email, String password) throws IncorrectLoginException {
 
-		Optional<User> user = userDao.findByUserName(userName);
+		Optional<User> user = userDao.findByEmail(email);
 
 		if (!user.isPresent()) {
-			throw new IncorrectLoginException(userName, password);
+			throw new IncorrectLoginException(email, password);
 		}
 
 		if (!passwordEncoder.matches(password, user.get().getPassword())) {
-			throw new IncorrectLoginException(userName, password);
+			throw new IncorrectLoginException(email, password);
 		}
 
 		return user.get();
@@ -64,14 +64,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateProfile(Long id, String firstName, String lastName, String email)
-			throws InstanceNotFoundException {
+	public User updateProfile(Long id, String firstName, String lastName) throws InstanceNotFoundException {
 
 		User user = permissionChecker.checkUser(id);
 
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
-		user.setEmail(email);
 
 		return user;
 

@@ -1,11 +1,12 @@
 package es.udc.asiproject.backend.rest.dtos;
 
 public class IdDto {
-	
+
 	private Long id;
-	
-	public IdDto() {}
-	
+
+	public IdDto() {
+	}
+
 	public IdDto(Long id) {
 		this.id = id;
 	}

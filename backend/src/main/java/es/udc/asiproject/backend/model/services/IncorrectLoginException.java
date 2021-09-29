@@ -3,18 +3,18 @@ package es.udc.asiproject.backend.model.services;
 @SuppressWarnings("serial")
 public class IncorrectLoginException extends Exception {
 
-	private String userName;
+	private String email;
 	private String password;
 
-	public IncorrectLoginException(String userName, String password) {
+	public IncorrectLoginException(String email, String password) {
 
-		this.userName = userName;
+		this.email = email;
 		this.password = password;
 
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getEmail() {
+		return email;
 	}
 
 	public String getPassword() {

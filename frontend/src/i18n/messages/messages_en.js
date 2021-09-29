@@ -1,6 +1,5 @@
 export default {
-  "project.app.Footer.text":
-    "ASI Project - University of A Coruña",
+  "project.app.Footer.text": "ASI Project - University of A Coruña",
   "project.app.Header.home": "Home",
   "project.app.Header.logout": "Logout",
   "project.app.Home.welcome": "MiniPortal main page content!",
@@ -42,7 +41,6 @@ export default {
   "project.global.fields.password": "Password",
   "project.global.fields.postalAddress": "Postal address",
   "project.global.fields.postalCode": "Postal code",
-  "project.global.fields.userName": "Username",
   "project.global.fields.department": "Department",
   "project.global.fields.price": "Launch price",
   "project.global.fields.actualPrice": "Actual price",
@@ -66,5 +64,5 @@ export default {
   "project.users.Login.title": "Login",
   "project.users.SignUp.fields.confirmPassword": "Confirm password",
   "project.users.SignUp.title": "Sign up",
-  "project.users.UpdateProfile.title": "Update profile"
+  "project.users.UpdateProfile.title": "Update profile",
 };

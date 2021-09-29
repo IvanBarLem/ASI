@@ -4,11 +4,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class ChangePasswordParamsDto {
-	
+
 	private String oldPassword;
 	private String newPassword;
-	
-	public ChangePasswordParamsDto() {}
+
+	public ChangePasswordParamsDto() {
+	}
 
 	@NotNull
 	public String getOldPassword() {
@@ -20,7 +21,7 @@ public class ChangePasswordParamsDto {
 	}
 
 	@NotNull
-	@Size(min=1, max=60)
+	@Size(min = 1, max = 60)
 	public String getNewPassword() {
 		return newPassword;
 	}

@@ -1,7 +1,7 @@
 package es.udc.asiproject.backend.model.services;
 
 @SuppressWarnings("serial")
-public class InvalidUserException extends Exception{
+public class InvalidUserException extends Exception {
 	private Long id;
 
 	public InvalidUserException(Long id) {
@@ -11,5 +11,5 @@ public class InvalidUserException extends Exception{
 	public Long getId() {
 		return id;
 	}
-	
+
 }

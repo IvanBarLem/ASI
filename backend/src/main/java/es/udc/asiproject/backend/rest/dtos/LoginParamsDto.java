@@ -1,21 +1,24 @@
 package es.udc.asiproject.backend.rest.dtos;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 public class LoginParamsDto {
-	
-	private String userName;
-	private String password;
-	
-	public LoginParamsDto() {}
 
-	@NotNull
-	public String getUserName() {
-		return userName;
+	private String email;
+	private String password;
+
+	public LoginParamsDto() {
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName.trim();
+	@NotNull
+	@Email
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email.trim();
 	}
 
 	@NotNull
