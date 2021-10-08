@@ -3,6 +3,9 @@
 DROP TABLE User;
 DROP TABLE Transport;
 DROP TABLE TransportType;
+DROP TABLE Activity;
+DROP TABLE Accommodation;
+
 
 CREATE TABLE User (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -30,4 +33,16 @@ CREATE TABLE Transport (
     CONSTRAINT UserPK PRIMARY KEY (id),
     CONSTRAINT TransportTransportTypeIdFK FOREIGN KEY(transportTypeId)
         REFERENCES TransportType (id)
+) ENGINE = InnoDB;
+
+CREATE TABLE Activity (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(60) NOT NULL,
+	CONSTRAINT ActivityPK PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+CREATE TABLE Accommodation (
+	id BIGINT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(60) NOT NULL,
+	CONSTRAINT AcommodationPK PRIMARY KEY (id)
 ) ENGINE = InnoDB;
