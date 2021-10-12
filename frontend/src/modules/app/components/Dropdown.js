@@ -8,8 +8,6 @@ import {
   Divider,
   Drawer,
 } from "@mui/material";
-import AddIcon from "@material-ui/icons/Add";
-import HomeIcon from "@material-ui/icons/Home";
 import ListIcon from "@material-ui/icons/List";
 import { Link } from "react-router-dom";
 
@@ -28,17 +26,11 @@ const Dropdown = (props) => {
       <div className="offset" />
       <Divider />
       <List component="nav">
-        <ListItem button component={Link} to="/create-pack">
-          <ListItemIcon>
-            <AddIcon />
-          </ListItemIcon>
-          <ListItemText>Crear Pack</ListItemText>
-        </ListItem>
-        <ListItem button component={Link} to="/">
+        <ListItem button component={Link} to="/packs">
           <ListItemIcon>
             <ListIcon />
           </ListItemIcon>
-          <ListItemText>Boton 2</ListItemText>
+          <ListItemText>Ver Packs</ListItemText>
         </ListItem>
       </List>
     </Drawer>

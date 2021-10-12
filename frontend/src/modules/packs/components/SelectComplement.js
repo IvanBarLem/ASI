@@ -12,7 +12,6 @@ export const SelectComplement = ({
   options,
   selectedOptions,
   handleChange,
-  handleDelete,
   label,
 }) => {
   const ITEM_HEIGHT = 48;
@@ -25,18 +24,9 @@ export const SelectComplement = ({
       },
     },
   };
+
   return (
     <FormControl sx={{ m: 1, width: 300 }}>
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-        {selectedOptions.map((value) => (
-          <Chip
-            key={value.key}
-            label={value.name}
-            onDelete={handleDelete(value)}
-            clickable={true}
-          />
-        ))}
-      </Box>
       <InputLabel id="select-label">{label}</InputLabel>
       <Select
         labelId="select-label"
@@ -45,10 +35,17 @@ export const SelectComplement = ({
         value={selectedOptions}
         onChange={handleChange}
         input={<OutlinedInput id="select" label="Chip" />}
+        renderValue={(selected) => (
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+            {selected.map((value) => (
+              <Chip key={value.id} label={value.name} />
+            ))}
+          </Box>
+        )}
         MenuProps={MenuProps}
       >
         {options.map((option) => (
-          <MenuItem key={option.key} value={option.key}>
+          <MenuItem key={option.id} value={option}>
             {option.name}
           </MenuItem>
         ))}

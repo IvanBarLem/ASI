@@ -11,10 +11,10 @@ import {
   ChangePassword,
   Logout,
 } from "../../users";
-import { CreatePack } from "../../packs";
+import { CreatePack, FindPacks } from "../../packs";
 
 const Body = (props) => (
-  <div className="container">
+  <Box sx={{ margin: 4 }}>
     <Box sx={props.dropDownMarginClasses} m={2}>
       <AppGlobalComponents />
       <Switch>
@@ -30,11 +30,12 @@ const Body = (props) => (
           />
         )}
         {props.loggedIn && (
-          <Route exact path="/create-pack" component={CreatePack} />
-        )}
-        {props.loggedIn && (
           <Route exact path="/users/logout" component={Logout} />
         )}
+        {props.loggedIn && (
+          <Route exact path="/create-pack" component={CreatePack} />
+        )}
+        {props.loggedIn && <Route exact path="/packs" component={FindPacks} />}
         {!props.loggedIn && (
           <Route exact path="/users/login" component={Login} />
         )}
@@ -44,7 +45,7 @@ const Body = (props) => (
         <Route component={Home} />
       </Switch>
     </Box>
-  </div>
+  </Box>
 );
 
 /*

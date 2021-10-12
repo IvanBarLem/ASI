@@ -1,0 +1,64 @@
+import {
+  Grid,
+  Input,
+  List,
+  ListItem,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+
+export const Step1 = ({
+  name,
+  setName,
+  description,
+  setDescription,
+  image,
+  handleChangeImage,
+}) => {
+  return (
+    <List sx={{ padding: 1 }}>
+      <ListItem>
+        <TextField
+          id="name"
+          label={<FormattedMessage id="project.global.fields.name" />}
+          variant="outlined"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          size="small"
+          required
+          fullWidth
+        />
+      </ListItem>
+      <ListItem>
+        <TextField
+          id="description"
+          label={<FormattedMessage id="project.global.fields.description" />}
+          variant="outlined"
+          value={description}
+          minRows={5}
+          onChange={(e) => setDescription(e.target.value)}
+          size="small"
+          multiline
+          fullWidth
+        />
+      </ListItem>
+      <ListItem>
+        <Grid container spacing={2} direction="column">
+          <Grid item>
+            <Typography>Imagen de portada:</Typography>
+          </Grid>
+          <Grid item>
+            <Input
+              id="imagen"
+              value={image}
+              onChange={handleChangeImage}
+              type="file"
+            />
+          </Grid>
+        </Grid>
+      </ListItem>
+    </List>
+  );
+};
