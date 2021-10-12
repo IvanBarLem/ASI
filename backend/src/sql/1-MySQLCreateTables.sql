@@ -2,10 +2,10 @@
 
 DROP TABLE User;
 DROP TABLE Transport;
-DROP TABLE TransportType;
 DROP TABLE Activity;
 DROP TABLE Accommodation;
-
+DROP TABLE Travel;
+DROP Table Transport;
 
 CREATE TABLE User (
     id BIGINT NOT NULL AUTO_INCREMENT,
@@ -18,21 +18,16 @@ CREATE TABLE User (
     CONSTRAINT EmailUniqueKey UNIQUE (email)
 ) ENGINE = InnoDB;
 
-CREATE TABLE TransportType (
-	id BIGINT NOT NULL AUTO_INCREMENT,
-	name VARCHAR(60) NOT NULL,
-	CONSTRAINT TransportTypePK PRIMARY KEY (id)
-) ENGINE = InnoDB;
-
 CREATE TABLE Transport (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    transportTypeId BIGINT NOT NULL,
-    date DATETIME NOT NULL,
-    origin VARCHAR(60) NOT NULL,
-    destination VARCHAR(60) NOT NULL,
-    CONSTRAINT UserPK PRIMARY KEY (id),
-    CONSTRAINT TransportTransportTypeIdFK FOREIGN KEY(transportTypeId)
-        REFERENCES TransportType (id)
+    name VARCHAR(60) NOT NULL,
+    CONSTRAINT TransportPK PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
+CREATE TABLE Travel (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(60) NOT NULL,
+    CONSTRAINT TravelPK PRIMARY KEY (id)
 ) ENGINE = InnoDB;
 
 CREATE TABLE Activity (

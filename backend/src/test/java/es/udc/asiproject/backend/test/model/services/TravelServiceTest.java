@@ -11,34 +11,30 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import es.udc.asiproject.backend.model.entities.Transport;
-import es.udc.asiproject.backend.model.entities.TransportDao;
-import es.udc.asiproject.backend.model.services.TransportService;
+import es.udc.asiproject.backend.model.entities.Travel;
+import es.udc.asiproject.backend.model.entities.TravelDao;
+import es.udc.asiproject.backend.model.services.TravelService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-public class TransportServiceTest {
+public class TravelServiceTest {
 
 	@Autowired
-	TransportService transportService;
+	TravelService travelService;
 
 	@Autowired
-	TransportDao transportDao;
+	TravelDao travelDao;
 
 	@Test
 	public void testFindTransports() {
 
-		Transport t = new Transport("Patineta");
-		transportDao.save(t);
+		Travel t = new Travel("Egipto Antiguo");
+		travelDao.save(t);
 
-		assertEquals(1, transportService.findTransports().size());
+		assertEquals(1, travelService.findTravels().size());
 
-		Transport t1 = new Transport("Patines");
-		transportDao.save(t1);
-
-		assertEquals(2, transportService.findTransports().size());
 	}
 
 }
