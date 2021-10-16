@@ -10,7 +10,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @SpringBootApplication
 public class Application {
-
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
@@ -22,7 +21,6 @@ public class Application {
 
 	@Bean
 	public MessageSource messageSource() {
-
 		ReloadableResourceBundleMessageSource bean = new ReloadableResourceBundleMessageSource();
 
 		bean.setBasename("classpath:messages");
@@ -33,13 +31,10 @@ public class Application {
 
 	@Bean
 	public LocalValidatorFactoryBean validator() {
-
 		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
 
 		bean.setValidationMessageSource(messageSource());
 
 		return bean;
-
 	}
-
 }

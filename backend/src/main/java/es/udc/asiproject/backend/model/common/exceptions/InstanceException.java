@@ -2,7 +2,6 @@ package es.udc.asiproject.backend.model.common.exceptions;
 
 @SuppressWarnings("serial")
 public abstract class InstanceException extends Exception {
-
 	private String name;
 	private Object key;
 
@@ -11,10 +10,8 @@ public abstract class InstanceException extends Exception {
 	}
 
 	public InstanceException(String name, Object key) {
-
 		this.name = name;
 		this.key = key;
-
 	}
 
 	public String getName() {
@@ -24,5 +21,4 @@ public abstract class InstanceException extends Exception {
 	public Object getKey() {
 		return key;
 	}
-
 }

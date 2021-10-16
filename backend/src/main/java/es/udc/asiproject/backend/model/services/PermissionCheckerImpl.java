@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.asiproject.backend.daos.UserDao;
+import es.udc.asiproject.backend.daos.entities.User;
 import es.udc.asiproject.backend.model.common.exceptions.InstanceNotFoundException;
-import es.udc.asiproject.backend.model.entities.User;
-import es.udc.asiproject.backend.model.entities.UserDao;
 
 @Service
 @Transactional(readOnly = true)

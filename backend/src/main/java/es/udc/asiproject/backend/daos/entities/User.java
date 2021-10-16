@@ -1,38 +1,46 @@
-package es.udc.asiproject.backend.model.entities;
+package es.udc.asiproject.backend.daos.entities;
 
+import java.util.Objects;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class User {
-
 	public enum RoleType {
 		USER
 	};
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String password;
-	private String firstName;
-	private String lastName;
+	@Column(nullable = false, unique = true, length = 60)
 	private String email;
+	@Column(nullable = false, length = 60)
+	private String password;
+	@Column(nullable = false, length = 60)
+	private String firstName;
+	@Column(nullable = false, length = 60)
+	private String lastName;
+	@Enumerated(EnumType.ORDINAL)
+	@Column(nullable = false)
 	private RoleType role;
 
 	public User() {
 	}
 
 	public User(String password, String firstName, String lastName, String email) {
-
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
@@ -81,4 +89,22 @@ public class User {
 		this.role = role;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, firstName, id, lastName, password, role);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(password, other.password) && role == other.role;
+	}
 }

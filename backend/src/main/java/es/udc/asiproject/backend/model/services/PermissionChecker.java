@@ -1,7 +1,7 @@
 package es.udc.asiproject.backend.model.services;
 
+import es.udc.asiproject.backend.daos.entities.User;
 import es.udc.asiproject.backend.model.common.exceptions.InstanceNotFoundException;
-import es.udc.asiproject.backend.model.entities.User;
 
 public interface PermissionChecker {
 

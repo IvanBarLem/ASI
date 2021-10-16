@@ -1,26 +1,22 @@
-package es.udc.asiproject.backend.test.model.services;
+package es.udc.asiproject.backend.services;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import javax.transaction.Transactional;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import es.udc.asiproject.backend.model.entities.Transport;
-import es.udc.asiproject.backend.model.entities.TransportDao;
+import es.udc.asiproject.backend.daos.TransportDao;
+import es.udc.asiproject.backend.daos.entities.Transport;
 import es.udc.asiproject.backend.model.services.TransportService;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-@Transactional
+@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class TransportServiceTest {
-
 	@Autowired
 	TransportService transportService;
 
@@ -29,7 +25,6 @@ public class TransportServiceTest {
 
 	@Test
 	public void testFindTransports() {
-
 		Transport t = new Transport("Patineta");
 		transportDao.save(t);
 
@@ -40,5 +35,4 @@ public class TransportServiceTest {
 
 		assertEquals(2, transportService.findTransports().size());
 	}
-
 }

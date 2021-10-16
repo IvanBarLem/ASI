@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.udc.asiproject.backend.model.entities.Accommodation;
-import es.udc.asiproject.backend.model.entities.AccommodationDao;
+import es.udc.asiproject.backend.daos.AccommodationDao;
+import es.udc.asiproject.backend.daos.entities.Accommodation;
 
 @Service
 public class AccommodationServiceImpl implements AccommodationService {

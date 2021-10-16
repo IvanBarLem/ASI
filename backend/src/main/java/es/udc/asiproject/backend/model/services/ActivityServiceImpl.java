@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.udc.asiproject.backend.model.entities.Activity;
-import es.udc.asiproject.backend.model.entities.ActivityDao;
+import es.udc.asiproject.backend.daos.ActivityDao;
+import es.udc.asiproject.backend.daos.entities.Activity;
 
 @Service
 public class ActivityServiceImpl implements ActivityService {

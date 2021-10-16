@@ -4,29 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import es.udc.asiproject.backend.model.common.exceptions.InstanceNotFoundException;
-import es.udc.asiproject.backend.model.entities.Transport;
-import es.udc.asiproject.backend.model.entities.TransportDao;
+import es.udc.asiproject.backend.daos.TransportDao;
+import es.udc.asiproject.backend.daos.entities.Transport;
 
 @Service
 public class TransportServiceImpl implements TransportService {
 
-  	@Autowired
-  	private TransportDao transportDao;
+	@Autowired
+	private TransportDao transportDao;
 
-		@Override
-		public List<Transport> findTransports() {
+	@Override
+	public List<Transport> findTransports() {
+		Iterable<Transport> transports = transportDao.findAll();
+		List<Transport> transportsList = new ArrayList<Transport>();
 
-				Iterable<Transport> transports = transportDao.findAll();
-				List<Transport> transportsList = new ArrayList<Transport>();
+		for (Transport t : transports)
+			transportsList.add(t);
 
-				for (Transport t : transports)
-						transportsList.add(t);
-						
-				return transportsList;
-		}
-
+		return transportsList;
+	}
 }

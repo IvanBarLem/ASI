@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import es.udc.asiproject.backend.daos.entities.User;
 import es.udc.asiproject.backend.model.common.exceptions.DuplicateInstanceException;
 import es.udc.asiproject.backend.model.common.exceptions.InstanceNotFoundException;
-import es.udc.asiproject.backend.model.entities.User;
 import es.udc.asiproject.backend.model.services.IncorrectLoginException;
 import es.udc.asiproject.backend.model.services.IncorrectPasswordException;
 import es.udc.asiproject.backend.model.services.PermissionException;

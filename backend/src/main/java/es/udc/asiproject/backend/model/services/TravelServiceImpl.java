@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.udc.asiproject.backend.model.entities.Travel;
-import es.udc.asiproject.backend.model.entities.TravelDao;
+import es.udc.asiproject.backend.daos.TravelDao;
+import es.udc.asiproject.backend.daos.entities.Travel;
 
 @Service
 public class TravelServiceImpl implements TravelService {
