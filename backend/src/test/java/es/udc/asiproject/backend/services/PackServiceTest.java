@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
+import java.util.HashSet;
+
+import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 
 import es.udc.asiproject.backend.persistence.dao.AccommodationDao;
@@ -29,9 +29,9 @@ import es.udc.asiproject.backend.persistence.model.Travel;
 import es.udc.asiproject.backend.service.PackService;
 import es.udc.asiproject.backend.service.exceptions.InstanceNotFoundException;
 
+@Transactional
 @SpringBootTest
 @ActiveProfiles("test")
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class PackServiceTest {
 	@Autowired
 	AccommodationDao accommodationDao;
@@ -72,6 +72,7 @@ public class PackServiceTest {
 		return travel;
 	}
 
+	@SuppressWarnings("serial")
 	private Pack createPack() {
 		Pack pack = new Pack();
 		pack.setTitle("title");
@@ -81,10 +82,26 @@ public class PackServiceTest {
 		pack.setDuration((short) 5);
 		pack.setPersons("persons");
 		pack.setCreatedAt(new Date());
-		pack.setAccommodations(Set.of(seedAccommodationDatabase()));
-		pack.setActivities(Set.of(seedActivityDatabase()));
-		pack.setTransports(Set.of(seedTransportDatabase()));
-		pack.setTravels(Set.of(seedTravelDatabase()));
+		pack.setAccommodations(new HashSet<Accommodation>() {
+			{
+				add(seedAccommodationDatabase());
+			}
+		});
+		pack.setActivities(new HashSet<Activity>() {
+			{
+				add(seedActivityDatabase());
+			}
+		});
+		pack.setTransports(new HashSet<Transport>() {
+			{
+				add(seedTransportDatabase());
+			}
+		});
+		pack.setTravels(new HashSet<Travel>() {
+			{
+				add(seedTravelDatabase());
+			}
+		});
 
 		return pack;
 	}
