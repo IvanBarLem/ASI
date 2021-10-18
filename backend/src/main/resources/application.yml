@@ -1,26 +1,4 @@
-spring:
-   datasource:
-      url: jdbc:mysql://localhost:3306/asiproject
-      username: asi
-      password: asi
-      validationQuery: SELECT 1
-   jpa:
-      properties:
-         hibernate:
-            dialect: org.hibernate.dialect.MySQL5Dialect
-      hibernate:
-         ddl-auto: update
-         show-sql: true
-         format-sql: true
-         use-sql-comments: true
-         naming:
-            physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl         
-
 project:
    jwt:
       signKey: Bu:GW8bgPlEw
       expirationMinutes: 1440
-
-springdoc:
-   swagger-ui:
-      path: /api.html

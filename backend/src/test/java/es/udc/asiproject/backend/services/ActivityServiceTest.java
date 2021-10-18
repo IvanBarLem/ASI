@@ -2,20 +2,20 @@ package es.udc.asiproject.backend.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 
 import es.udc.asiproject.backend.persistence.dao.ActivityDao;
 import es.udc.asiproject.backend.persistence.model.Activity;
 import es.udc.asiproject.backend.service.ActivityService;
 
+@Transactional
 @SpringBootTest
 @ActiveProfiles("test")
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class ActivityServiceTest {
 	@Autowired
 	ActivityService activityService;
