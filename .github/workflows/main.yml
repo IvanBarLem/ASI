@@ -1,13 +1,8 @@
 # This is a workflow to run backend test.
 name: Java CI
 
-# Controls when the action will run.
-on:
-        push:
-                branches:
-                - main
-                - develop
-                - release/*
+# Controls when the action will run. Triggers the workflow on push requests events.
+on: [push]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel.
 jobs:
@@ -18,10 +13,10 @@ jobs:
 
                 # Steps represent a sequence of tasks that will be executed as part of the job.
                 steps:
-                # Checks-out the repository under $GITHUB_WORKSPACE, so the job can access it.
-                - uses: actions/checkout@v2
-		
-		# Runs a command using the runners shell.
-                - name: Run tests
-                  run: cd backend && mvn test
-                
+                        # Checks-out the repository under $GITHUB_WORKSPACE, so the job can access it.
+                        - uses: actions/checkout@v2
+
+                        # Runs a command using the runners shell.
+                        - name: Run tests
+                          run: cd backend && mvn test
+  
