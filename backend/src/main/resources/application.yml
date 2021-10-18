@@ -14,9 +14,13 @@ spring:
          format-sql: true
          use-sql-comments: true
          naming:
-            physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+            physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl         
 
 project:
    jwt:
       signKey: Bu:GW8bgPlEw
       expirationMinutes: 1440
+
+springdoc:
+   swagger-ui:
+      path: /api.html

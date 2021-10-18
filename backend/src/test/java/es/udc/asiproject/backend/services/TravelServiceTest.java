@@ -9,9 +9,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 
-import es.udc.asiproject.backend.daos.TravelDao;
-import es.udc.asiproject.backend.daos.entities.Travel;
-import es.udc.asiproject.backend.model.services.TravelService;
+import es.udc.asiproject.backend.persistence.dao.TravelDao;
+import es.udc.asiproject.backend.persistence.model.Travel;
+import es.udc.asiproject.backend.service.TravelService;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -19,7 +19,6 @@ import es.udc.asiproject.backend.model.services.TravelService;
 public class TravelServiceTest {
 	@Autowired
 	TravelService travelService;
-
 	@Autowired
 	TravelDao travelDao;
 

@@ -10,19 +10,19 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 
-import es.udc.asiproject.backend.daos.entities.User;
-import es.udc.asiproject.backend.daos.entities.User.RoleType;
-import es.udc.asiproject.backend.model.common.exceptions.DuplicateInstanceException;
-import es.udc.asiproject.backend.model.common.exceptions.InstanceNotFoundException;
-import es.udc.asiproject.backend.model.services.IncorrectLoginException;
-import es.udc.asiproject.backend.model.services.IncorrectPasswordException;
-import es.udc.asiproject.backend.model.services.UserService;
+import es.udc.asiproject.backend.persistence.model.User;
+import es.udc.asiproject.backend.persistence.model.User.RoleType;
+import es.udc.asiproject.backend.service.UserService;
+import es.udc.asiproject.backend.service.exceptions.DuplicateInstanceException;
+import es.udc.asiproject.backend.service.exceptions.IncorrectLoginException;
+import es.udc.asiproject.backend.service.exceptions.IncorrectPasswordException;
+import es.udc.asiproject.backend.service.exceptions.InstanceNotFoundException;
 
 @SpringBootTest
 @ActiveProfiles("test")
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserServiceTest {
-	private final Long NON_EXISTENT_ID = (long) -1;
+	private final Long NON_EXISTENT_ID = -1L;
 
 	@Autowired
 	private UserService userService;

@@ -9,9 +9,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 
-import es.udc.asiproject.backend.daos.AccommodationDao;
-import es.udc.asiproject.backend.daos.entities.Accommodation;
-import es.udc.asiproject.backend.model.services.AccommodationService;
+import es.udc.asiproject.backend.persistence.dao.AccommodationDao;
+import es.udc.asiproject.backend.persistence.model.Accommodation;
+import es.udc.asiproject.backend.service.AccommodationService;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -19,7 +19,6 @@ import es.udc.asiproject.backend.model.services.AccommodationService;
 public class AccommodationServiceTest {
 	@Autowired
 	AccommodationService accommodationService;
-
 	@Autowired
 	AccommodationDao accommodationDao;
 
