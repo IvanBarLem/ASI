@@ -19,6 +19,7 @@ import es.udc.asiproject.backend.controller.mapper.PageMapper;
 import es.udc.asiproject.backend.persistence.model.Pack;
 import es.udc.asiproject.backend.service.PackService;
 import es.udc.asiproject.backend.service.exceptions.InstanceNotFoundException;
+import es.udc.asiproject.backend.service.exceptions.InvalidOperationException;
 
 @RestController
 @RequestMapping("/packs")
@@ -29,7 +30,7 @@ public class PackController {
 	@PostMapping(path = "/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	public PackDto createPack(@Validated({ InsertValidation.class }) @RequestBody PackDto packDto)
-			throws InstanceNotFoundException {
+			throws InstanceNotFoundException, InvalidOperationException {
 		Pack pack = PackMapper.convertToEntity(packDto);
 
 		return PackMapper.convertToDto(packService.createPack(pack));

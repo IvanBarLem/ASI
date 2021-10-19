@@ -28,6 +28,7 @@ import es.udc.asiproject.backend.persistence.model.Transport;
 import es.udc.asiproject.backend.persistence.model.Travel;
 import es.udc.asiproject.backend.service.PackService;
 import es.udc.asiproject.backend.service.exceptions.InstanceNotFoundException;
+import es.udc.asiproject.backend.service.exceptions.InvalidOperationException;
 
 @Transactional
 @SpringBootTest
@@ -107,7 +108,7 @@ public class PackServiceTest {
 	}
 
 	@Test
-	public void shouldCreatePack() throws InstanceNotFoundException {
+	public void shouldCreatePack() throws InstanceNotFoundException, InvalidOperationException {
 		Pack inputPack = createPack();
 		Pack outputPack = packService.createPack(inputPack);
 
@@ -127,7 +128,7 @@ public class PackServiceTest {
 	}
 
 	@Test
-	public void shouldReturnPage() throws InstanceNotFoundException {
+	public void shouldReturnPage() throws InstanceNotFoundException, InvalidOperationException {
 		packService.createPack(createPack());
 		packService.createPack(createPack());
 		packService.createPack(createPack());

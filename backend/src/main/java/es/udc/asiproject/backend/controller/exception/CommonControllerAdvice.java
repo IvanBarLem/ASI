@@ -19,6 +19,7 @@ import es.udc.asiproject.backend.service.exceptions.DuplicateInstanceException;
 import es.udc.asiproject.backend.service.exceptions.IncorrectLoginException;
 import es.udc.asiproject.backend.service.exceptions.IncorrectPasswordException;
 import es.udc.asiproject.backend.service.exceptions.InstanceNotFoundException;
+import es.udc.asiproject.backend.service.exceptions.InvalidOperationException;
 import es.udc.asiproject.backend.service.exceptions.PermissionException;
 
 @ControllerAdvice
@@ -77,6 +78,17 @@ public class CommonControllerAdvice {
 		String errorMessage = messageSource.getMessage(InstanceNotFoundException.class.getSimpleName(),
 				new Object[] { nameMessage, exception.getKey().toString() },
 				InstanceNotFoundException.class.getSimpleName(), locale);
+
+		return new ErrorDto(errorMessage);
+	}
+
+	@ResponseBody
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(InvalidOperationException.class)
+	public ErrorDto handleInvalidOperationException(InvalidOperationException exception, Locale locale) {
+		String errorMessage = messageSource.getMessage(
+				InvalidOperationException.class.getSimpleName() + "." + exception.getCode(), null,
+				InvalidOperationException.class.getSimpleName(), locale);
 
 		return new ErrorDto(errorMessage);
 	}

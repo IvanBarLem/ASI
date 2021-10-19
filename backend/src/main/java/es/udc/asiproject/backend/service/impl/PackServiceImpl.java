@@ -23,6 +23,7 @@ import es.udc.asiproject.backend.persistence.model.Transport;
 import es.udc.asiproject.backend.persistence.model.Travel;
 import es.udc.asiproject.backend.service.PackService;
 import es.udc.asiproject.backend.service.exceptions.InstanceNotFoundException;
+import es.udc.asiproject.backend.service.exceptions.InvalidOperationException;
 
 @Service
 public class PackServiceImpl implements PackService {
@@ -39,7 +40,12 @@ public class PackServiceImpl implements PackService {
 
 	@Override
 	@Transactional
-	public Pack createPack(Pack pack) throws InstanceNotFoundException {
+	public Pack createPack(Pack pack) throws InstanceNotFoundException, InvalidOperationException {
+		if (pack.getAccommodations().isEmpty() && pack.getActivities().isEmpty() && pack.getTransports().isEmpty()
+				&& pack.getTravels().isEmpty()) {
+			throw new InvalidOperationException("EmptyPack");
+		}
+
 		for (Accommodation accommodation : pack.getAccommodations()) {
 			Optional<Accommodation> optional = accommodationDao.findById(accommodation.getId());
 

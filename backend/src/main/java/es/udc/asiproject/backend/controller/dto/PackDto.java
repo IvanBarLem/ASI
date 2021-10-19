@@ -31,13 +31,13 @@ public class PackDto {
 	@NotBlank(groups = { InsertValidation.class })
 	@Size(min = 1, max = 60, groups = { InsertValidation.class })
 	private String persons;
-	@NotEmpty(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class })
 	private Set<AccommodationDto> accommodations;
-	@NotEmpty(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class })
 	private Set<ActivityDto> activities;
-	@NotEmpty(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class })
 	private Set<TransportDto> transports;
-	@NotEmpty(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class })
 	private Set<TravelDto> travels;
 
 	public PackDto() {
