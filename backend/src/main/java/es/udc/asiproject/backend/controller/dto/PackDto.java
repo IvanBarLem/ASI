@@ -1,7 +1,6 @@
 package es.udc.asiproject.backend.controller.dto;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,7 +21,7 @@ public class PackDto {
 	@Size(min = 1, max = 60, groups = { InsertValidation.class })
 	private String description;
 	@NotEmpty(groups = { InsertValidation.class })
-	private Byte[] image;
+	private String image;
 	@NotNull(groups = { InsertValidation.class })
 	@Positive(groups = { InsertValidation.class })
 	private BigDecimal price;
@@ -44,7 +43,7 @@ public class PackDto {
 	public PackDto() {
 	}
 
-	public PackDto(Long id, String title, String description, Byte[] image, BigDecimal price, Short duration,
+	public PackDto(Long id, String title, String description, String image, BigDecimal price, Short duration,
 			String persons, Set<AccommodationDto> accommodations, Set<ActivityDto> activities,
 			Set<TransportDto> transports, Set<TravelDto> travels) {
 		this.id = id;
@@ -84,11 +83,11 @@ public class PackDto {
 		this.description = description;
 	}
 
-	public Byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(Byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
@@ -150,12 +149,8 @@ public class PackDto {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(image);
-		result = prime * result + Objects.hash(accommodations, activities, description, duration, id, persons, price,
-				title, transports, travels);
-		return result;
+		return Objects.hash(accommodations, activities, description, duration, id, image, persons, price, title,
+				transports, travels);
 	}
 
 	@Override
@@ -169,7 +164,7 @@ public class PackDto {
 		PackDto other = (PackDto) obj;
 		return Objects.equals(accommodations, other.accommodations) && Objects.equals(activities, other.activities)
 				&& Objects.equals(description, other.description) && Objects.equals(duration, other.duration)
-				&& Objects.equals(id, other.id) && Arrays.equals(image, other.image)
+				&& Objects.equals(id, other.id) && Objects.equals(image, other.image)
 				&& Objects.equals(persons, other.persons) && Objects.equals(price, other.price)
 				&& Objects.equals(title, other.title) && Objects.equals(transports, other.transports)
 				&& Objects.equals(travels, other.travels);

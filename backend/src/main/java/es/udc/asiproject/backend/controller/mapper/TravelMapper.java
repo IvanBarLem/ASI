@@ -2,6 +2,7 @@ package es.udc.asiproject.backend.controller.mapper;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -26,6 +27,14 @@ public class TravelMapper {
 		return travelDto;
 	}
 
+	public static Set<TravelDto> convertToDto(Set<Travel> travels) {
+		Type targetType = new TypeToken<Set<TravelDto>>() {
+		}.getType();
+		Set<TravelDto> travelsDto = mapper.map(travels, targetType);
+
+		return travelsDto;
+	}
+
 	public static List<TravelDto> convertToDto(List<Travel> travels) {
 		Type targetType = new TypeToken<List<TravelDto>>() {
 		}.getType();
@@ -38,5 +47,13 @@ public class TravelMapper {
 		Travel travel = mapper.map(travelDto, Travel.class);
 
 		return travel;
+	}
+
+	public static Set<Travel> convertToEntity(Set<TravelDto> travelsDtos) {
+		Type targetType = new TypeToken<Set<Travel>>() {
+		}.getType();
+		Set<Travel> travels = mapper.map(travelsDtos, targetType);
+
+		return travels;
 	}
 }
