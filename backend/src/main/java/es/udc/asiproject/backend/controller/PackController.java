@@ -39,7 +39,7 @@ public class PackController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public PageDto<PackDto> getPacks(@RequestParam(defaultValue = "0") int page,
-	    @RequestParam(defaultValue = "10") int pageSize) {
+	    @RequestParam(defaultValue = "8") int pageSize) {
 	return PageMapper.convertToDto(packService.findPacks(page, pageSize), PackMapper::convertToDto);
     }
 }

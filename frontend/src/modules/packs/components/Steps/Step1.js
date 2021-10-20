@@ -40,6 +40,7 @@ export const Step1 = ({
           minRows={5}
           onChange={(e) => setDescription(e.target.value)}
           size="small"
+          required
           multiline
           fullWidth
         />
@@ -47,13 +48,16 @@ export const Step1 = ({
       <ListItem>
         <Grid container spacing={2} direction="column">
           <Grid item>
-            <Typography>Imagen de portada:</Typography>
+            <Typography>
+              <FormattedMessage id="project.packs.CreatePack.image" />:
+            </Typography>
           </Grid>
           <Grid item>
             <Input
               id="imagen"
               value={image}
               onChange={handleChangeImage}
+              required
               type="file"
             />
           </Grid>
