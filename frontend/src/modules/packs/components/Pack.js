@@ -15,6 +15,28 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 const Pack = ({ item }) => {
   const image =
     "https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png";
+  
+  const getProducts = () => {
+    var products = [];
+    var position = 1;
+    item.accommodations.forEach(accommodation => {
+      products.push({id: position, name: accommodation.name});
+      ++position;
+    }); 
+    item.activities.forEach(activity => {
+      products.push({id: position, name: activity.name});
+      ++position;
+    });
+    item.transports.forEach(transport => {
+      products.push({id: position, name: transport.name});
+      ++position;
+    });
+    item.travels.forEach(travel => {
+      products.push({id: position, name: travel.name});
+      ++position;
+    }); 
+    return products;
+  }
 
   return (
     <Grid
@@ -66,20 +88,20 @@ const Pack = ({ item }) => {
             {item.description}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            <IconButton>
+            <IconButton disabled>
               <TimerIcon fontSize="small" />
             </IconButton>
             {item.duration} {item.duration - 1 ? "días" : "día"}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            <IconButton>
+            <IconButton disabled>
               <GroupAddIcon fontSize="small" />
             </IconButton>
-            {item.numPersons}
+            {item.persons}
           </Typography>
           <Divider />
           <Grid sx={{ marginTop: "6px" }} container spacing={1}>
-            {item.products.map((product) => (
+            {getProducts().map((product) => (
               <Grid key={product.id} item>
                 <Chip
                   key={product.id}
