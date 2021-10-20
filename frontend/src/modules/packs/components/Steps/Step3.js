@@ -32,6 +32,7 @@ export const Step3 = ({
           type="number"
           fullWidth
           InputProps={{
+            min: 1,
             endAdornment: <InputAdornment position="end">€</InputAdornment>,
           }}
         />
@@ -47,13 +48,20 @@ export const Step3 = ({
           type="number"
           fullWidth
           InputProps={{
-            endAdornment: <InputAdornment position="end">días</InputAdornment>,
+            min: 1,
+            endAdornment: (
+              <InputAdornment position="end">
+                <FormattedMessage id="project.packs.CreatePack.days" />
+              </InputAdornment>
+            ),
           }}
         />
       </ListItem>
       <ListItem>
         <FormControl sx={{ m: 1, width: "100%" }}>
-          <InputLabel id="numPersons-label">Nicho</InputLabel>
+          <InputLabel id="numPersons-label">
+            <FormattedMessage id="project.packs.CreatePack.niche" />
+          </InputLabel>
           <Select
             labelId="numPersons-label"
             id="numPersons"
@@ -62,13 +70,18 @@ export const Step3 = ({
             fullWidth
             label="numPersons"
           >
-            <MenuItem value={"Ninguno"}>
-              <em>Ninguno</em>
+            <MenuItem value={"Individual"}>
+              <FormattedMessage id="project.packs.CreatePack.select.individual" />
             </MenuItem>
-            <MenuItem value={"Individual"}>Individual</MenuItem>
-            <MenuItem value={"Parejas"}>Parejas</MenuItem>
-            <MenuItem value={"Familias"}>Familias</MenuItem>
-            <MenuItem value={"Amigos"}>Amigos</MenuItem>
+            <MenuItem value={"Couples"}>
+              <FormattedMessage id="project.packs.CreatePack.select.couples" />
+            </MenuItem>
+            <MenuItem value={"Families"}>
+              <FormattedMessage id="project.packs.CreatePack.select.families" />
+            </MenuItem>
+            <MenuItem value={"Friends"}>
+              <FormattedMessage id="project.packs.CreatePack.select.friends" />
+            </MenuItem>
           </Select>
         </FormControl>
       </ListItem>

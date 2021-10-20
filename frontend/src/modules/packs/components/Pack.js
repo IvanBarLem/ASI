@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import TimerIcon from "@mui/icons-material/Timer";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import { FormattedMessage } from "react-intl";
 
 const Pack = ({ item }) => {
   const image =
@@ -69,7 +70,12 @@ const Pack = ({ item }) => {
             <IconButton>
               <TimerIcon fontSize="small" />
             </IconButton>
-            {item.duration} {item.duration - 1 ? "días" : "día"}
+            {item.duration}{" "}
+            {item.duration - 1 ? (
+              <FormattedMessage id="project.packs.findpacks.days" />
+            ) : (
+              <FormattedMessage id="project.packs.findpacks.day" />
+            )}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
             <IconButton>

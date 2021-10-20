@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-//import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { useHistory } from "react-router-dom";
 
-//import { Errors } from "../../common";
-//import * as actions from "../actions";
+import { Errors } from "../../common";
+import * as actions from "../actions";
 
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -18,39 +18,15 @@ import { Step1 } from "./Steps/Step1";
 import { Step2 } from "./Steps/Step2";
 import { Step3 } from "./Steps/Step3";
 
-const transports = [
-  { id: 0, name: "avion" },
-  { id: 1, name: "coche" },
-  { id: 2, name: "tren" },
-  { id: 3, name: "metro" },
-  { id: 4, name: "bus" },
+const steps = [
+  <FormattedMessage id="project.packs.CreatePack.step1" />,
+  <FormattedMessage id="project.packs.CreatePack.step2" />,
+  <FormattedMessage id="project.packs.CreatePack.step3" />,
+  <FormattedMessage id="project.packs.CreatePack.step4" />,
 ];
-const trips = [
-  { id: 0, name: "avion1" },
-  { id: 1, name: "avion2" },
-  { id: 2, name: "avion3" },
-  { id: 3, name: "avion4" },
-  { id: 4, name: "avion5" },
-];
-const accomodations = [
-  { id: 0, name: "casa1" },
-  { id: 1, name: "casa2" },
-  { id: 2, name: "casa3" },
-  { id: 3, name: "casa4" },
-  { id: 4, name: "casa5" },
-];
-const activities = [
-  { id: 0, name: "senderismo" },
-  { id: 1, name: "motos de agua" },
-  { id: 2, name: "escalada" },
-  { id: 3, name: "paseo" },
-  { id: 4, name: "playa" },
-];
-
-const steps = ["Datos básicos", "Complementos", "Características", "Resumen"];
 
 const CreatePack = () => {
-  //const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [name, setName] = useState("");
@@ -60,12 +36,51 @@ const CreatePack = () => {
 
   const [price, setPrice] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [numPersons, setNumPersons] = useState("Ninguno");
+  const [numPersons, setNumPersons] = useState("");
+
+  const [activities, setActivities] = useState([]);
+  const [accomodations, setAccomodations] = useState([]);
+  const [transports, setTransports] = useState([]);
+  const [travels, setTravels] = useState([]);
 
   const [transportsSelected, setTransportsSelected] = useState([]);
   const [accomodationsSelected, setAccomodationsSelected] = useState([]);
   const [activitiesSelected, setActivitiesSelected] = useState([]);
-  const [tripsSelected, setTripsSelected] = useState([]);
+  const [travelsSelected, setTravelsSelected] = useState([]);
+
+  const [backendErrors, setBackendErrors] = useState(null);
+  const [backendErrorsActivities, setBackendErrorsActivities] = useState(null);
+  const [backendErrorsAccomodations, setBackendErrorsAccomodations] =
+    useState(null);
+  const [backendErrorsTransports, setBackendErrorsTransports] = useState(null);
+  const [backendErrorsTravels, setBackendErrorsTravels] = useState(null);
+
+  useEffect(() => {
+    dispatch(
+      actions.getActivities(
+        (activities) => setActivities(activities),
+        (errors) => setBackendErrorsActivities(errors)
+      )
+    );
+    dispatch(
+      actions.getAccomodations(
+        (accomodations) => setAccomodations(accomodations),
+        (errors) => setBackendErrorsAccomodations(errors)
+      )
+    );
+    dispatch(
+      actions.getTransports(
+        (transports) => setTransports(transports),
+        (errors) => setBackendErrorsTransports(errors)
+      )
+    );
+    dispatch(
+      actions.getTravels(
+        (travels) => setTravels(travels),
+        (errors) => setBackendErrorsTravels(errors)
+      )
+    );
+  }, []);
 
   const handleChangeTransports = (e) => {
     const {
@@ -91,12 +106,12 @@ const CreatePack = () => {
     setAccomodationsSelected(value);
   };
 
-  const handleChangeTrips = (e) => {
+  const handleChangeTravels = (e) => {
     const {
       target: { value },
     } = e;
 
-    setTripsSelected(value);
+    setTravelsSelected(value);
   };
 
   const getBase64 = (inputFile) => {
@@ -125,13 +140,53 @@ const CreatePack = () => {
     if (activeStep !== steps.length - 1) {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else {
-      //mandar a backend, si no hay errores hacer push, si los hay mostrar errores
-      history.push("/packs");
+      dispatch(
+        actions.createPack(
+          {
+            title: name.trim(),
+            description: description.trim(),
+            image: imagePreview,
+            price: price,
+            duration: duration,
+            persons: numPersons,
+            accommodations: accomodationsSelected,
+            transports: transportsSelected,
+            travels: travelsSelected,
+            activities: activitiesSelected,
+          },
+          () => history.push("/packs"),
+          (errors) => setBackendErrors(errors)
+        )
+      );
     }
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const haveErrors = () => {
+    if (activeStep === 0) {
+      if (name === null || name.trim() === "") return true;
+      if (description === null || description.trim() === "") return true;
+      if (imagePreview === "") return true;
+    }
+    if (activeStep === 1) {
+      if (
+        accomodationsSelected.length +
+          transportsSelected.length +
+          travelsSelected.length +
+          activitiesSelected.length <
+        1
+      )
+        return true;
+    }
+    if (activeStep === 2) {
+      if (duration < 1) return true;
+      if (price < 1) return true;
+      if (numPersons === "") return true;
+    }
+    return false;
   };
 
   return (
@@ -145,7 +200,7 @@ const CreatePack = () => {
           const stepProps = {};
           const labelProps = {};
           return (
-            <Step key={label} {...stepProps}>
+            <Step key={index} {...stepProps}>
               {/*StepIcon*/}
               <StepLabel {...labelProps}>{label}</StepLabel>
             </Step>
@@ -181,14 +236,25 @@ const CreatePack = () => {
               accomodationsSelected={accomodationsSelected}
               activities={activities}
               activitiesSelected={activitiesSelected}
+              transports={transports}
+              transportsSelected={transportsSelected}
+              travels={travels}
+              travelsSelected={travelsSelected}
               handleChangeAccomodations={handleChangeAccomodations}
               handleChangeActivities={handleChangeActivities}
               handleChangeTransports={handleChangeTransports}
-              transports={transports}
-              transportsSelected={transportsSelected}
-              trips={trips}
-              tripsSelected={tripsSelected}
-              handleChangeTrips={handleChangeTrips}
+              handleChangeTravels={handleChangeTravels}
+              errorsTranports={backendErrorsTransports}
+              errorsActivities={backendErrorsActivities}
+              errorsAccomodations={backendErrorsAccomodations}
+              backendErrorsTravels={backendErrorsTravels}
+              backendErrorsTransports={backendErrorsTransports}
+              backendErrorsActivities={backendErrorsActivities}
+              backendErrorsAccomodations={backendErrorsAccomodations}
+              setBackendErrorsActivities={setBackendErrorsActivities}
+              setBackendErrorsAccomodations={setBackendErrorsAccomodations}
+              setBackendErrorsTransports={setBackendErrorsTransports}
+              setBackendErrorsTravels={setBackendErrorsTravels}
             />
           )}
           {activeStep === 2 && (
@@ -207,7 +273,7 @@ const CreatePack = () => {
             variant="h5"
             sx={{ width: "100%", textAlign: "center", marginBottom: "15px" }}
           >
-            ¿Desea guardar este pack?
+            <FormattedMessage id="project.packs.CreatePack.save" />
           </Typography>
         )}
         <Grid
@@ -230,7 +296,7 @@ const CreatePack = () => {
               price: price,
               duration: duration,
               numPersons: numPersons,
-              products: tripsSelected
+              products: travelsSelected
                 .concat(transportsSelected)
                 .concat(accomodationsSelected)
                 .concat(activitiesSelected),
@@ -238,6 +304,7 @@ const CreatePack = () => {
           />
         </Grid>
       </Grid>
+      <Errors errors={backendErrors} onClose={() => setBackendErrors(null)} />
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
         <Button
           color="inherit"
@@ -249,7 +316,7 @@ const CreatePack = () => {
         </Button>
         <Box sx={{ flex: "1 1 auto" }} />
 
-        <Button disabled={name.trim() === ""} onClick={handleNext}>
+        <Button disabled={haveErrors()} onClick={handleNext}>
           {activeStep === steps.length - 1 ? (
             <FormattedMessage id="project.global.buttons.save" />
           ) : (
