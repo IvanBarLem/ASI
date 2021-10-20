@@ -11,7 +11,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, Divider } from "@mui/material";
 
 import Pack from "./Pack";
 import { Step1 } from "./Steps/Step1";
@@ -195,139 +195,207 @@ const CreatePack = () => {
         width: "100%",
       }}
     >
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          return (
-            <Step key={index} {...stepProps}>
-              {/*StepIcon*/}
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
       <Grid className="row" marginTop={4}>
         <Grid
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
           item
           display={activeStep !== 3}
           xs={12}
-          md={6}
-          lg={4}
-        >
-          {activeStep === 0 && (
-            <Step1
-              name={name}
-              setName={setName}
-              description={description}
-              setDescription={setDescription}
-              image={image}
-              handleChangeImage={handleChangeImage}
-            />
-          )}
-          {activeStep === 1 && (
-            <Step2
-              accommodations={accommodations}
-              accommodationsSelected={accommodationsSelected}
-              activities={activities}
-              activitiesSelected={activitiesSelected}
-              transports={transports}
-              transportsSelected={transportsSelected}
-              travels={travels}
-              travelsSelected={travelsSelected}
-              handleChangeAccommodations={handleChangeAccommodations}
-              handleChangeActivities={handleChangeActivities}
-              handleChangeTransports={handleChangeTransports}
-              handleChangeTravels={handleChangeTravels}
-              errorsTranports={backendErrorsTransports}
-              errorsActivities={backendErrorsActivities}
-              errorsAccommodations={backendErrorsAccommodations}
-              backendErrorsTravels={backendErrorsTravels}
-              backendErrorsTransports={backendErrorsTransports}
-              backendErrorsActivities={backendErrorsActivities}
-              backendErrorsAccommodations={backendErrorsAccommodations}
-              setBackendErrorsActivities={setBackendErrorsActivities}
-              setBackendErrorsAccommodations={setBackendErrorsAccommodations}
-              setBackendErrorsTransports={setBackendErrorsTransports}
-              setBackendErrorsTravels={setBackendErrorsTravels}
-            />
-          )}
-          {activeStep === 2 && (
-            <Step3
-              duration={duration}
-              numPersons={numPersons}
-              price={price}
-              setDuration={setDuration}
-              setNumPersons={setNumPersons}
-              setPrice={setPrice}
-            />
-          )}
+          lg={activeStep === 3 ? 12 : 8}
+        > 
+          <Box sx={{width: "90%"}}>
+            <Stepper activeStep={activeStep}>
+              {steps.map((label, index) => {
+                const stepProps = {};
+                const labelProps = {};
+                return (
+                  <Step key={index} {...stepProps}>
+                    {/*StepIcon*/}
+                    <StepLabel {...labelProps}>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
+            <Box sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {activeStep === 0 && (
+                <Step1
+                  name={name}
+                  setName={setName}
+                  description={description}
+                  setDescription={setDescription}
+                  image={image}
+                  handleChangeImage={handleChangeImage}
+                />
+              )}
+              {activeStep === 1 && (
+                <Step2
+                  accommodations={accommodations}
+                  accommodationsSelected={accommodationsSelected}
+                  activities={activities}
+                  activitiesSelected={activitiesSelected}
+                  transports={transports}
+                  transportsSelected={transportsSelected}
+                  travels={travels}
+                  travelsSelected={travelsSelected}
+                  handleChangeAccommodations={handleChangeAccommodations}
+                  handleChangeActivities={handleChangeActivities}
+                  handleChangeTransports={handleChangeTransports}
+                  handleChangeTravels={handleChangeTravels}
+                  errorsTranports={backendErrorsTransports}
+                  errorsActivities={backendErrorsActivities}
+                  errorsAccommodations={backendErrorsAccommodations}
+                  backendErrorsTravels={backendErrorsTravels}
+                  backendErrorsTransports={backendErrorsTransports}
+                  backendErrorsActivities={backendErrorsActivities}
+                  backendErrorsAccommodations={backendErrorsAccommodations}
+                  setBackendErrorsActivities={setBackendErrorsActivities}
+                  setBackendErrorsAccommodations={setBackendErrorsAccommodations}
+                  setBackendErrorsTransports={setBackendErrorsTransports}
+                  setBackendErrorsTravels={setBackendErrorsTravels}
+                />
+              )}
+              {activeStep === 2 && (
+                <Step3
+                  duration={duration}
+                  numPersons={numPersons}
+                  price={price}
+                  setDuration={setDuration}
+                  setNumPersons={setNumPersons}
+                  setPrice={setPrice}
+                />
+              )}
+            </Box>
+            {activeStep !== 3 && (
+              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                >
+                  <FormattedMessage id="project.global.buttons.back" />
+                </Button>
+                <Box sx={{ flex: "1 1 auto" }} />
+
+                <Button disabled={haveErrors()} onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? (
+                    <FormattedMessage id="project.global.buttons.save" />
+                  ) : (
+                    <FormattedMessage id="project.global.buttons.next" />
+                  )}
+                </Button>
+              </Box>
+            )}
+          </Box>
         </Grid>
-        {activeStep === 3 && (
-          <Typography
-            variant="h5"
-            sx={{ width: "100%", textAlign: "center", marginBottom: "15px" }}
-          >
-            <FormattedMessage id="project.packs.CreatePack.save" />
-          </Typography>
-        )}
+        {activeStep === 3 ?
+          <React.Fragment/>
+          :
+          <Grid 
+            item 
+            sx={{ 
+              marginLeft: 1,
+              marginRight: 5,
+              display: { xs: 'none', lg: 'block' } 
+            }}>
+            <Divider orientation="vertical"/>
+          </Grid>
+        }
+        
         <Grid
           item
           xs={12}
-          md={activeStep === 3 ? 12 : 6}
-          lg={activeStep === 3 ? 12 : 8}
+          lg={activeStep === 3 ? 12 : 3}
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Pack
-            item={{
-              id: 0,
-              image: imagePreview,
-              title: name,
-              description: description,
-              price: price,
-              duration: duration,
-              persons: numPersons,
-              accommodations: accommodationsSelected,
-              transports: transportsSelected,
-              activities: activitiesSelected,
-              travels: travelsSelected,
-            }}
-          />
-          <Errors
-            errors={backendErrors}
-            onClose={() => setBackendErrors(null)}
-          />
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {activeStep === 3 ? 
+                  <Typography
+                    variant="h5"
+                    sx={{ width: "100%", textAlign: "center", marginBottom: "15px" }}
+                  >
+                    <FormattedMessage id="project.packs.CreatePack.save" />
+                  </Typography>
+                  :
+                  <Typography variant="h5" >
+                    <FormattedMessage id="project.packs.CreatePack.previsualization" />
+                  </Typography>
+                  
+              }
+            </Box>
+            <Box 
+              sx={{
+                marginTop: "1%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Pack
+                item={{
+                  id: 0,
+                  image: imagePreview,
+                  title: name,
+                  description: description,
+                  price: price,
+                  duration: duration,
+                  persons: numPersons,
+                  accommodations: accommodationsSelected,
+                  transports: transportsSelected,
+                  activities: activitiesSelected,
+                  travels: travelsSelected,
+                }}
+              />
+              <Errors
+                errors={backendErrors}
+                onClose={() => setBackendErrors(null)}
+              />
+              
+            </Box>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+        > 
+          {activeStep === 3 && (
+            <Box sx={{ width: "90%", display: "flex", flexDirection: "row", pt: 2 }}>
+              <Button
+                color="inherit"
+                disabled={activeStep === 0}
+                onClick={handleBack}
+                sx={{ mr: 1 }}
+              >
+                <FormattedMessage id="project.global.buttons.back" />
+              </Button>
+              <Box sx={{ flex: "1 1 auto" }} />
+
+              <Button disabled={haveErrors()} onClick={handleNext}>
+                {activeStep === steps.length - 1 ? (
+                  <FormattedMessage id="project.global.buttons.save" />
+                ) : (
+                  <FormattedMessage id="project.global.buttons.next" />
+                )}
+              </Button>
+            </Box>
+          )}
         </Grid>
       </Grid>
-
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-        <Button
-          color="inherit"
-          disabled={activeStep === 0}
-          onClick={handleBack}
-          sx={{ mr: 1 }}
-        >
-          <FormattedMessage id="project.global.buttons.back" />
-        </Button>
-        <Box sx={{ flex: "1 1 auto" }} />
-
-        <Button disabled={haveErrors()} onClick={handleNext}>
-          {activeStep === steps.length - 1 ? (
-            <FormattedMessage id="project.global.buttons.save" />
-          ) : (
-            <FormattedMessage id="project.global.buttons.next" />
-          )}
-        </Button>
-      </Box>
     </Box>
   );
 };

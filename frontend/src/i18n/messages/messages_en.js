@@ -66,5 +66,6 @@ export default {
   "project.packs.CreatePack.select.couples": "Couples",
   "project.packs.CreatePack.select.families": "Families",
   "project.packs.CreatePack.select.friends": "Friends",
+  "project.packs.CreatePack.previsualization": "Previsualization",
   "project.packs.foundNoPacks": "There are no packs yet",
 };

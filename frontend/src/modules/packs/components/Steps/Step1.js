@@ -1,6 +1,5 @@
 import {
   Grid,
-  Input,
   List,
   ListItem,
   TextField,
@@ -53,12 +52,11 @@ export const Step1 = ({
             </Typography>
           </Grid>
           <Grid item>
-            <Input
-              id="imagen"
-              value={image}
-              onChange={handleChangeImage}
-              required
+            <input 
+              accept="image/png, image/jpeg" 
+              onChange={handleChangeImage} 
               type="file"
+              required
             />
           </Grid>
         </Grid>

@@ -55,8 +55,9 @@ const Pack = ({ item }) => {
     >
       <Card
         sx={{
+          height: '100%',
           maxWidth: 360,
-          minWidth: 200,
+          minWidth: 280,
         }}
       >
         <CardMedia
@@ -85,7 +86,7 @@ const Pack = ({ item }) => {
           <Typography gutterBottom variant="h5" component="div">
             {item.title}
           </Typography>
-          <Typography noWrap gutterBottom variant="body1" component="div">
+          <Typography gutterBottom variant="body1" component="div">
             {item.description}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
