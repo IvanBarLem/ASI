@@ -1,6 +1,25 @@
 import * as actionTypes from "./actionTypes";
 import backend from "../../backend";
 
+const findPacksCompleted = (packSearch) => ({
+  type: actionTypes.FIND_PACKS_COMPLETED,
+  packSearch,
+});
+
+export const findPacks = (page) => (dispatch) => {
+  backend.packService.findPacks(page, (result) =>
+    dispatch(findPacksCompleted({ page, result }))
+  );
+};
+
+export const previousFindPacksPage = (page) => findPacks(page - 1);
+
+export const nextFindPacksPage = (page) => findPacks(page + 1);
+
+export const clearPackSearch = () => ({
+  type: actionTypes.CLEAR_PACK_SEARCH,
+});
+
 const createPackCompleted = (pack) => ({
   type: actionTypes.CREATE_PACK_COMPLETED,
   pack,
@@ -11,7 +30,7 @@ export const createPack = (pack, onSuccess, onErrors) => (dispatch) =>
     pack,
     (pack) => {
       dispatch(createPackCompleted(pack));
-      onSuccess();
+      onSuccess(pack);
     },
     onErrors
   );
@@ -38,15 +57,15 @@ export const getActivities = (onSuccess, onErrors) => (dispatch) =>
     onSuccess(activities);
   }, onErrors);
 
-const getAccomodationsCompleted = (accomodations) => ({
-  type: actionTypes.GET_ACCOMODATIONS_COMPLETED,
-  accomodations,
+const getAccommodationsCompleted = (accommodations) => ({
+  type: actionTypes.GET_ACCOMMODATIONS_COMPLETED,
+  accommodations,
 });
 
-export const getAccomodations = (onSuccess, onErrors) => (dispatch) =>
-  backend.packService.getAccomodations((accomodations) => {
-    dispatch(getAccomodationsCompleted(accomodations));
-    onSuccess(accomodations);
+export const getAccommodations = (onSuccess, onErrors) => (dispatch) =>
+  backend.packService.getAccommodations((accommodations) => {
+    dispatch(getAccommodationsCompleted(accommodations));
+    onSuccess(accommodations);
   }, onErrors);
 
 const getTravelsCompleted = (travels) => ({

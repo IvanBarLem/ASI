@@ -17,6 +17,28 @@ const Pack = ({ item }) => {
   const image =
     "https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png";
 
+  const getProducts = () => {
+    var products = [];
+    var position = 1;
+    item.accommodations.forEach((accommodation) => {
+      products.push({ id: position, name: accommodation.name });
+      ++position;
+    });
+    item.activities.forEach((activity) => {
+      products.push({ id: position, name: activity.name });
+      ++position;
+    });
+    item.transports.forEach((transport) => {
+      products.push({ id: position, name: transport.name });
+      ++position;
+    });
+    item.travels.forEach((travel) => {
+      products.push({ id: position, name: travel.name });
+      ++position;
+    });
+    return products;
+  };
+
   return (
     <Grid
       key={item.id}
@@ -67,7 +89,7 @@ const Pack = ({ item }) => {
             {item.description}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            <IconButton>
+            <IconButton disabled>
               <TimerIcon fontSize="small" />
             </IconButton>
             {item.duration}{" "}
@@ -78,14 +100,24 @@ const Pack = ({ item }) => {
             )}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
-            <IconButton>
+            <IconButton disabled>
               <GroupAddIcon fontSize="small" />
             </IconButton>
-            {item.numPersons}
+            {item.persons === "Individual" ? (
+              <FormattedMessage id="project.packs.CreatePack.select.individual" />
+            ) : item.persons === "Couples" ? (
+              <FormattedMessage id="project.packs.CreatePack.select.couples" />
+            ) : item.persons === "Families" ? (
+              <FormattedMessage id="project.packs.CreatePack.select.families" />
+            ) : item.persons === "Friends" ? (
+              <FormattedMessage id="project.packs.CreatePack.select.friends" />
+            ) : (
+              ""
+            )}
           </Typography>
           <Divider />
           <Grid sx={{ marginTop: "6px" }} container spacing={1}>
-            {item.products.map((product) => (
+            {getProducts().map((product) => (
               <Grid key={product.id} item>
                 <Chip
                   key={product.id}

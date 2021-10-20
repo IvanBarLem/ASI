@@ -4,25 +4,6 @@ export default {
   "project.app.Header.logout": "Logout",
   "project.app.Home.welcome": "MiniPortal main page content!",
 
-  "project.adverts.header.addProduct": "Add product",
-  "project.adverts.AddProduct.title": "Add product",
-  "project.adverts.AddProduct.add": "Add",
-  "project.adverts.BidUpForm.bidUp": "Bid up",
-  "project.adverts.BidUpForm.title": "Bid up",
-  "project.adverts.BidUpCompleted.bidUpGenerated": "Bid up done correctly",
-  "project.adverts.AddProductCompleted.addProductGenerated":
-    "Add Product done correctly",
-  "project.adverts.header.findBids": "Bids",
-  "project.adverts.header.findAdvertisedProducts": "Advertised products",
-  "project.adverts.FindBidsResult.noBids": "No bids found",
-  "project.adverts.FindAdvertisedProductsResult.noAdvertisedProducts":
-    "No advertised products found",
-
-  "project.catalog.CategorySelector.allDepartments": "All departments",
-  "project.catalog.FindProductsResult.noProductsFound": "No products found",
-  "project.catalog.ProductDetails.backToSearchResults":
-    "Back to search results",
-
   "project.common.ErrorDialog.title": "Error",
 
   "project.global.buttons.cancel": "Cancel",
@@ -85,4 +66,5 @@ export default {
   "project.packs.CreatePack.select.couples": "Couples",
   "project.packs.CreatePack.select.families": "Families",
   "project.packs.CreatePack.select.friends": "Friends",
+  "project.packs.foundNoPacks": "There are no packs yet",
 };

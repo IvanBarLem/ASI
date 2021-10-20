@@ -39,18 +39,18 @@ const CreatePack = () => {
   const [numPersons, setNumPersons] = useState("");
 
   const [activities, setActivities] = useState([]);
-  const [accomodations, setAccomodations] = useState([]);
+  const [accommodations, setAccommodations] = useState([]);
   const [transports, setTransports] = useState([]);
   const [travels, setTravels] = useState([]);
 
   const [transportsSelected, setTransportsSelected] = useState([]);
-  const [accomodationsSelected, setAccomodationsSelected] = useState([]);
+  const [accommodationsSelected, setAccommodationsSelected] = useState([]);
   const [activitiesSelected, setActivitiesSelected] = useState([]);
   const [travelsSelected, setTravelsSelected] = useState([]);
 
   const [backendErrors, setBackendErrors] = useState(null);
   const [backendErrorsActivities, setBackendErrorsActivities] = useState(null);
-  const [backendErrorsAccomodations, setBackendErrorsAccomodations] =
+  const [backendErrorsAccommodations, setBackendErrorsAccommodations] =
     useState(null);
   const [backendErrorsTransports, setBackendErrorsTransports] = useState(null);
   const [backendErrorsTravels, setBackendErrorsTravels] = useState(null);
@@ -63,9 +63,9 @@ const CreatePack = () => {
       )
     );
     dispatch(
-      actions.getAccomodations(
-        (accomodations) => setAccomodations(accomodations),
-        (errors) => setBackendErrorsAccomodations(errors)
+      actions.getAccommodations(
+        (accommodations) => setAccommodations(accommodations),
+        (errors) => setBackendErrorsAccommodations(errors)
       )
     );
     dispatch(
@@ -98,12 +98,12 @@ const CreatePack = () => {
     setActivitiesSelected(value);
   };
 
-  const handleChangeAccomodations = (e) => {
+  const handleChangeAccommodations = (e) => {
     const {
       target: { value },
     } = e;
 
-    setAccomodationsSelected(value);
+    setAccommodationsSelected(value);
   };
 
   const handleChangeTravels = (e) => {
@@ -149,12 +149,12 @@ const CreatePack = () => {
             price: price,
             duration: duration,
             persons: numPersons,
-            accommodations: accomodationsSelected,
+            accommodations: accommodationsSelected,
             transports: transportsSelected,
             travels: travelsSelected,
             activities: activitiesSelected,
           },
-          () => history.push("/packs"),
+          (pack) => history.push("/packs"),
           (errors) => setBackendErrors(errors)
         )
       );
@@ -173,7 +173,7 @@ const CreatePack = () => {
     }
     if (activeStep === 1) {
       if (
-        accomodationsSelected.length +
+        accommodationsSelected.length +
           transportsSelected.length +
           travelsSelected.length +
           activitiesSelected.length <
@@ -182,8 +182,8 @@ const CreatePack = () => {
         return true;
     }
     if (activeStep === 2) {
-      if (duration < 1) return true;
-      if (price < 1) return true;
+      if (duration < 1 || duration > 30000) return true;
+      if (price < 1 || price > 30000) return true;
       if (numPersons === "") return true;
     }
     return false;
@@ -232,27 +232,27 @@ const CreatePack = () => {
           )}
           {activeStep === 1 && (
             <Step2
-              accomodations={accomodations}
-              accomodationsSelected={accomodationsSelected}
+              accommodations={accommodations}
+              accommodationsSelected={accommodationsSelected}
               activities={activities}
               activitiesSelected={activitiesSelected}
               transports={transports}
               transportsSelected={transportsSelected}
               travels={travels}
               travelsSelected={travelsSelected}
-              handleChangeAccomodations={handleChangeAccomodations}
+              handleChangeAccommodations={handleChangeAccommodations}
               handleChangeActivities={handleChangeActivities}
               handleChangeTransports={handleChangeTransports}
               handleChangeTravels={handleChangeTravels}
               errorsTranports={backendErrorsTransports}
               errorsActivities={backendErrorsActivities}
-              errorsAccomodations={backendErrorsAccomodations}
+              errorsAccommodations={backendErrorsAccommodations}
               backendErrorsTravels={backendErrorsTravels}
               backendErrorsTransports={backendErrorsTransports}
               backendErrorsActivities={backendErrorsActivities}
-              backendErrorsAccomodations={backendErrorsAccomodations}
+              backendErrorsAccommodations={backendErrorsAccommodations}
               setBackendErrorsActivities={setBackendErrorsActivities}
-              setBackendErrorsAccomodations={setBackendErrorsAccomodations}
+              setBackendErrorsAccommodations={setBackendErrorsAccommodations}
               setBackendErrorsTransports={setBackendErrorsTransports}
               setBackendErrorsTravels={setBackendErrorsTravels}
             />
@@ -295,16 +295,20 @@ const CreatePack = () => {
               description: description,
               price: price,
               duration: duration,
-              numPersons: numPersons,
-              products: travelsSelected
-                .concat(transportsSelected)
-                .concat(accomodationsSelected)
-                .concat(activitiesSelected),
+              persons: numPersons,
+              accommodations: accommodationsSelected,
+              transports: transportsSelected,
+              activities: activitiesSelected,
+              travels: travelsSelected,
             }}
+          />
+          <Errors
+            errors={backendErrors}
+            onClose={() => setBackendErrors(null)}
           />
         </Grid>
       </Grid>
-      <Errors errors={backendErrors} onClose={() => setBackendErrors(null)} />
+
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
         <Button
           color="inherit"

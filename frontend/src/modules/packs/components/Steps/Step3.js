@@ -32,7 +32,7 @@ export const Step3 = ({
           type="number"
           fullWidth
           InputProps={{
-            min: 1,
+            inputProps: { min: 0, max: 30000 },
             endAdornment: <InputAdornment position="end">€</InputAdornment>,
           }}
         />
@@ -48,7 +48,7 @@ export const Step3 = ({
           type="number"
           fullWidth
           InputProps={{
-            min: 1,
+            inputProps: { min: 0, max: 30000 },
             endAdornment: (
               <InputAdornment position="end">
                 <FormattedMessage id="project.packs.CreatePack.days" />

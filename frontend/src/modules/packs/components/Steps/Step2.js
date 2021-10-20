@@ -8,9 +8,9 @@ export const Step2 = ({
   transports,
   transportsSelected,
   handleChangeTransports,
-  accomodations,
-  accomodationsSelected,
-  handleChangeAccomodations,
+  accommodations,
+  accommodationsSelected,
+  handleChangeAccommodations,
   activities,
   activitiesSelected,
   handleChangeActivities,
@@ -18,11 +18,11 @@ export const Step2 = ({
   travelsSelected,
   handleChangeTravels,
   backendErrorsActivities,
-  backendErrorsAccomodations,
+  backendErrorsAccommodations,
   backendErrorsTransports,
   backendErrorsTravels,
   setBackendErrorsActivities,
-  setBackendErrorsAccomodations,
+  setBackendErrorsAccommodations,
   setBackendErrorsTransports,
   setBackendErrorsTravels,
 }) => {
@@ -54,16 +54,16 @@ export const Step2 = ({
       </ListItem>
       <ListItem>
         <SelectComplement
-          options={accomodations}
-          selectedOptions={accomodationsSelected}
-          handleChange={handleChangeAccomodations}
+          options={accommodations}
+          selectedOptions={accommodationsSelected}
+          handleChange={handleChangeAccommodations}
           label={
             <FormattedMessage id="project.packs.CreatePack.acommodations" />
           }
         />
         <ErrorDialog
-          error={backendErrorsAccomodations}
-          onClose={() => setBackendErrorsAccomodations(null)}
+          error={backendErrorsAccommodations}
+          onClose={() => setBackendErrorsAccommodations(null)}
         />
       </ListItem>
       <ListItem>

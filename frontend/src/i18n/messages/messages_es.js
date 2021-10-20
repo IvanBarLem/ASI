@@ -5,26 +5,6 @@ export default {
   "project.app.Home.welcome":
     "¡Contenido de la página principal de ASI Project!",
 
-  "project.adverts.header.addProduct": "Añadir producto",
-  "project.adverts.AddProduct.title": "Añadir producto",
-  "project.adverts.AddProduct.add": "Añadir",
-  "project.adverts.BidUpForm.bidUp": "Pujar",
-  "project.adverts.BidUpForm.title": "Pujar",
-  "project.adverts.BidUpCompleted.bidUpGenerated": "Puja realizada con éxito",
-  "project.adverts.AddProductCompleted.addProductGenerated":
-    "Producto añadido con éxito",
-  "project.adverts.header.findBids": "Pujas",
-  "project.adverts.header.findAdvertisedProducts": "Productos anunciados",
-  "project.adverts.FindBidsResult.noBids": "No existen pujas",
-  "project.adverts.FindAdvertisedProductsResult.noAdvertisedProducts":
-    "No existen productos anunciados",
-
-  "project.catalog.CategorySelector.allDepartments": "Todos los departamentos",
-  "project.catalog.FindProductsResult.noProductsFound":
-    "No se han encontrado productos",
-  "project.catalog.ProductDetails.backToSearchResults":
-    "Volver a resultados de búsqueda",
-
   "project.common.ErrorDialog.title": "Error",
 
   "project.global.buttons.cancel": "Cancelar",
@@ -89,4 +69,6 @@ export default {
   "project.packs.CreatePack.select.couples": "Parejas",
   "project.packs.CreatePack.select.families": "Familias",
   "project.packs.CreatePack.select.friends": "Amigos",
+
+  "project.packs.foundNoPacks": "No existen paquetes aún",
 };

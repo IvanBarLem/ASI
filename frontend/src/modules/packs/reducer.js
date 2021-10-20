@@ -5,15 +5,30 @@ import * as actionTypes from "./actionTypes";
 const initialState = {
   packs: [],
   activities: [],
-  accomodations: [],
+  accommodations: [],
   travels: [],
-  transorts: []
+  transports: [],
+  packSearch: null,
+  pack: null,
 };
 
-const packs = (state = initialState.packs, action) => {
+const packSearch = (state = initialState.packSearch, action) => {
+  switch (action.type) {
+    case actionTypes.FIND_PACKS_COMPLETED:
+      return action.packSearch;
+
+    case actionTypes.CLEAR_PACK_SEARCH:
+      return initialState.packSearch;
+
+    default:
+      return state;
+  }
+};
+
+const pack = (state = initialState.pack, action) => {
   switch (action.type) {
     case actionTypes.CREATE_PACK_COMPLETED:
-      return action.packs.packs;
+      return action.pack;
     default:
       return state;
   }
@@ -22,16 +37,16 @@ const packs = (state = initialState.packs, action) => {
 const activities = (state = initialState.activities, action) => {
   switch (action.type) {
     case actionTypes.GET_ACTIVITIES_COMPLETED:
-      return action.activities.activities;
+      return action.activities;
     default:
       return state;
   }
 };
 
-const accomodations = (state = initialState.accomodations, action) => {
+const accommodations = (state = initialState.accommodations, action) => {
   switch (action.type) {
-    case actionTypes.GET_ACCOMODATIONS_COMPLETED:
-      return action.accomodations.accomodations;
+    case actionTypes.GET_ACCOMMODATIONS_COMPLETED:
+      return action.accommodations;
     default:
       return state;
   }
@@ -40,7 +55,7 @@ const accomodations = (state = initialState.accomodations, action) => {
 const travels = (state = initialState.travels, action) => {
   switch (action.type) {
     case actionTypes.GET_TRAVELS_COMPLETED:
-      return action.travels.travels;
+      return action.travels;
     default:
       return state;
   }
@@ -49,18 +64,19 @@ const travels = (state = initialState.travels, action) => {
 const transports = (state = initialState.transports, action) => {
   switch (action.type) {
     case actionTypes.GET_TRANSPORTS_COMPLETED:
-      return action.transports.transports;
+      return action.transports;
     default:
       return state;
   }
 };
 
 const reducer = combineReducers({
-  packs,
+  packSearch,
+  pack,
   activities,
   travels,
   transports,
-  accomodations
+  accommodations,
 });
 
 export default reducer;
