@@ -4,25 +4,6 @@ export default {
   "project.app.Header.logout": "Logout",
   "project.app.Home.welcome": "MiniPortal main page content!",
 
-  "project.adverts.header.addProduct": "Add product",
-  "project.adverts.AddProduct.title": "Add product",
-  "project.adverts.AddProduct.add": "Add",
-  "project.adverts.BidUpForm.bidUp": "Bid up",
-  "project.adverts.BidUpForm.title": "Bid up",
-  "project.adverts.BidUpCompleted.bidUpGenerated": "Bid up done correctly",
-  "project.adverts.AddProductCompleted.addProductGenerated":
-    "Add Product done correctly",
-  "project.adverts.header.findBids": "Bids",
-  "project.adverts.header.findAdvertisedProducts": "Advertised products",
-  "project.adverts.FindBidsResult.noBids": "No bids found",
-  "project.adverts.FindAdvertisedProductsResult.noAdvertisedProducts":
-    "No advertised products found",
-
-  "project.catalog.CategorySelector.allDepartments": "All departments",
-  "project.catalog.FindProductsResult.noProductsFound": "No products found",
-  "project.catalog.ProductDetails.backToSearchResults":
-    "Back to search results",
-
   "project.common.ErrorDialog.title": "Error",
 
   "project.global.buttons.cancel": "Cancel",
@@ -42,7 +23,7 @@ export default {
   "project.global.fields.postalAddress": "Postal address",
   "project.global.fields.postalCode": "Postal code",
   "project.global.fields.department": "Department",
-  "project.global.fields.price": "Launch price",
+  "project.global.fields.price": "Price",
   "project.global.fields.actualPrice": "Actual price",
   "project.global.fields.duration": "Duration",
   "project.global.fields.description": "Description",
@@ -65,4 +46,26 @@ export default {
   "project.users.SignUp.fields.confirmPassword": "Confirm password",
   "project.users.SignUp.title": "Sign up",
   "project.users.UpdateProfile.title": "Update profile",
+
+  "project.packs.findpacks.days": "days",
+  "project.packs.findpacks.day": "day",
+
+  "project.packs.CreatePack.step1": "Basic information",
+  "project.packs.CreatePack.step2": "Supplements",
+  "project.packs.CreatePack.step3": "Features",
+  "project.packs.CreatePack.step4": "Summary",
+  "project.packs.CreatePack.save": "Would you like to save this pack?",
+  "project.packs.CreatePack.image": "Cover image",
+  "project.packs.CreatePack.travels": "Travels",
+  "project.packs.CreatePack.transports": "Transports",
+  "project.packs.CreatePack.acommodations": "Acommodations",
+  "project.packs.CreatePack.activities": "Activities",
+  "project.packs.CreatePack.niche": "Niche",
+  "project.packs.CreatePack.days": "days",
+  "project.packs.CreatePack.select.individual": "Individual",
+  "project.packs.CreatePack.select.couples": "Couples",
+  "project.packs.CreatePack.select.families": "Families",
+  "project.packs.CreatePack.select.friends": "Friends",
+  "project.packs.CreatePack.previsualization": "Previsualization",
+  "project.packs.foundNoPacks": "There are no packs yet",
 };

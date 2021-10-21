@@ -4,26 +4,6 @@ export default {
   "project.app.Header.logout": "Saír",
   "project.app.Home.welcome": "¡Contido da páxina principal de ASI Project!",
 
-  "project.adverts.header.addProduct": "Engadir producto",
-  "project.adverts.AddProduct.title": "Engadir producto",
-  "project.adverts.AddProduct.add": "Engadir",
-  "project.adverts.BidUpForm.bidUp": "Puxar",
-  "project.adverts.BidUpForm.title": "Puxar",
-  "project.adverts.BidUpCompleted.bidUpGenerated": "Puxa realizada con éxito",
-  "project.adverts.AddProductCompleted.addProductGenerated":
-    "Produto engadido con éxito",
-  "project.adverts.header.findBids": "Puxas",
-  "project.adverts.header.findAdvertisedProducts": "Produtos anunciados",
-  "project.adverts.FindBidsResult.noBids": "Non existen puxas",
-  "project.adverts.FindAdvertisedProductsResult.noAdvertisedProducts":
-    "Non existen productos anunciados",
-
-  "project.catalog.CategorySelector.allDepartments": "Todos os departamentos",
-  "project.catalog.FindProductsResult.noProductsFound":
-    "Non se encontraron productos",
-  "project.catalog.ProductDetails.backToSearchResults":
-    "Volver a resultados de búsqueda",
-
   "project.common.ErrorDialog.title": "Erro",
 
   "project.global.buttons.cancel": "Cancelar",
@@ -43,7 +23,7 @@ export default {
   "project.global.fields.postalAddress": "Dirección postal",
   "project.global.fields.postalCode": "Código postal",
   "project.global.fields.department": "Departamento",
-  "project.global.fields.price": "Prezo de saída",
+  "project.global.fields.price": "Prezo",
   "project.global.fields.actualPrice": "Prezo actual",
   "project.global.fields.duration": "Duración",
   "project.global.fields.description": "Descrición",
@@ -68,4 +48,26 @@ export default {
   "project.users.SignUp.fields.confirmPassword": "Confirmar contrasinal",
   "project.users.SignUp.title": "Rexistrarse",
   "project.users.UpdateProfile.title": "Actualizar perfil",
+
+  "project.packs.findpacks.days": "días",
+  "project.packs.findpacks.day": "día",
+
+  "project.packs.CreatePack.step1": "Datos básicos",
+  "project.packs.CreatePack.step2": "Complementos",
+  "project.packs.CreatePack.step3": "Características",
+  "project.packs.CreatePack.step4": "Resume",
+  "project.packs.CreatePack.save": "¿Desexa gardar este pack?",
+  "project.packs.CreatePack.image": "Imaxe de portada",
+  "project.packs.CreatePack.travels": "Viaxes",
+  "project.packs.CreatePack.transports": "Transportes",
+  "project.packs.CreatePack.acommodations": "Aloxamentos",
+  "project.packs.CreatePack.activities": "Actividades",
+  "project.packs.CreatePack.niche": "Nicho",
+  "project.packs.CreatePack.days": "días",
+  "project.packs.CreatePack.select.individual": "Individual",
+  "project.packs.CreatePack.select.couples": "Parellas",
+  "project.packs.CreatePack.select.families": "Familias",
+  "project.packs.CreatePack.select.friends": "Amigos",
+  "project.packs.CreatePack.previsualization": "Previsualización",
+  "project.packs.foundNoPacks": "Non existen paquetes ainda",
 };
