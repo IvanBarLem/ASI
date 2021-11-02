@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import es.udc.asiproject.backend.persistence.model.User;
-import es.udc.asiproject.backend.persistence.model.User.RoleType;
-import es.udc.asiproject.backend.service.UserService;
-import es.udc.asiproject.backend.service.exceptions.DuplicateInstanceException;
-import es.udc.asiproject.backend.service.exceptions.IncorrectLoginException;
-import es.udc.asiproject.backend.service.exceptions.IncorrectPasswordException;
-import es.udc.asiproject.backend.service.exceptions.InstanceNotFoundException;
+import es.udc.asiproject.persistence.model.User;
+import es.udc.asiproject.persistence.model.User.RoleType;
+import es.udc.asiproject.service.UserService;
+import es.udc.asiproject.service.exceptions.DuplicateInstanceException;
+import es.udc.asiproject.service.exceptions.IncorrectLoginException;
+import es.udc.asiproject.service.exceptions.IncorrectPasswordException;
+import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 
 @Transactional
 @SpringBootTest
