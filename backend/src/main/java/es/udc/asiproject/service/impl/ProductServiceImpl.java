@@ -20,13 +20,10 @@ import es.udc.asiproject.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private AccommodationDao accommodationDao;
-
 	@Autowired
 	private ActivityDao activityDao;
-
 	@Autowired
 	private TransportDao transportDao;
-
 	@Autowired
 	private TravelDao travelDao;
 
