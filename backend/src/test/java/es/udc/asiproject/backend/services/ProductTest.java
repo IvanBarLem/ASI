@@ -2,6 +2,8 @@ package es.udc.asiproject.backend.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
@@ -35,11 +37,27 @@ public class ProductTest {
 	TravelDao travelDao;
 
 	@Test
+	public void testCreateAccommodation() {
+		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
+		List<Accommodation> accommodations = productService.findAccommodations();
+
+		assertEquals(accommodation, accommodations.get(0));
+	}
+
+	@Test
 	public void testFindAccommodations() {
 		Accommodation accommodation = new Accommodation("Hesperia marineda");
 		accommodationDao.save(accommodation);
 
 		assertEquals(1, productService.findAccommodations().size());
+	}
+
+	@Test
+	public void testCreateActivity() {
+		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
+		List<Activity> activities = productService.findActivities();
+
+		assertEquals(activity, activities.get(0));
 	}
 
 	@Test
@@ -51,22 +69,38 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testCreateTransport() {
+		Transport transport = productService.createTransport(new Transport("Patineta"));
+		List<Transport> transports = productService.findTransports();
+
+		assertEquals(transport, transports.get(0));
+	}
+
+	@Test
 	public void testFindTransports() {
-		Transport t = new Transport("Patineta");
-		transportDao.save(t);
+		Transport transport = new Transport("Patineta");
+		transportDao.save(transport);
 
 		assertEquals(1, productService.findTransports().size());
 
-		Transport t1 = new Transport("Patines");
-		transportDao.save(t1);
+		transport = new Transport("Patines");
+		transportDao.save(transport);
 
 		assertEquals(2, productService.findTransports().size());
 	}
 
 	@Test
+	public void testCreateTravel() {
+		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
+		List<Travel> travels = productService.findTravels();
+
+		assertEquals(travel, travels.get(0));
+	}
+
+	@Test
 	public void testFindTravelss() {
-		Travel t = new Travel("Egipto Antiguo");
-		travelDao.save(t);
+		Travel travel = new Travel("Egipto Antiguo");
+		travelDao.save(travel);
 
 		assertEquals(1, productService.findTravels().size());
 	}

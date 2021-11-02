@@ -13,8 +13,8 @@ public class Transport extends Product {
 		super(name);
 	}
 
-	public Transport(Long id, String name, Set<Pack> packs) {
-		super(id, name, packs);
+	public Transport(Long id, String name, Boolean hidden, Set<Pack> packs) {
+		super(id, name, hidden, packs);
 	}
 
 	@Override

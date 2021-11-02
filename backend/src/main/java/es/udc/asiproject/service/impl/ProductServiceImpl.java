@@ -28,9 +28,23 @@ public class ProductServiceImpl implements ProductService {
 	private TravelDao travelDao;
 
 	@Override
+	public Accommodation createAccommodation(Accommodation accommodation) {
+		accommodation.setHidden(false);
+
+		return accommodationDao.save(accommodation);
+	}
+
+	@Override
 	@Transactional(readOnly = true)
 	public List<Accommodation> findAccommodations() {
 		return accommodationDao.findAll();
+	}
+
+	@Override
+	public Activity createActivity(Activity activity) {
+		activity.setHidden(false);
+
+		return activityDao.save(activity);
 	}
 
 	@Override
@@ -40,9 +54,23 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public Transport createTransport(Transport transport) {
+		transport.setHidden(false);
+
+		return transportDao.save(transport);
+	}
+
+	@Override
 	@Transactional(readOnly = true)
 	public List<Transport> findTransports() {
 		return transportDao.findAll();
+	}
+
+	@Override
+	public Travel createTravel(Travel travel) {
+		travel.setHidden(false);
+
+		return travelDao.save(travel);
 	}
 
 	@Override

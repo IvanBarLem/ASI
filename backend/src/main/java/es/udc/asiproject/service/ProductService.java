@@ -11,11 +11,19 @@ import es.udc.asiproject.persistence.model.Travel;
 
 @Service
 public interface ProductService {
+	Accommodation createAccommodation(Accommodation accommodation);
+
 	List<Accommodation> findAccommodations();
+
+	Activity createActivity(Activity activity);
 
 	List<Activity> findActivities();
 
+	Transport createTransport(Transport transport);
+
 	List<Transport> findTransports();
+
+	Travel createTravel(Travel travel);
 
 	List<Travel> findTravels();
 }

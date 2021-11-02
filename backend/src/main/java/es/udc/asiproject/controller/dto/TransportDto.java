@@ -2,13 +2,18 @@ package es.udc.asiproject.controller.dto;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import es.udc.asiproject.controller.dto.validation.GetValidation;
+import es.udc.asiproject.controller.dto.validation.InsertValidation;
 
 public class TransportDto {
 	@NotNull(groups = { GetValidation.class })
 	private Long id;
+	@NotBlank(groups = { InsertValidation.class })
+	@Size(min = 1, max = 60, groups = { InsertValidation.class })
 	private String name;
 
 	public TransportDto() {

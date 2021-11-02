@@ -18,6 +18,8 @@ public class Product {
 	private Long id;
 	@Column(nullable = false, length = 60)
 	private String name;
+	@Column(nullable = false)
+	private Boolean hidden;
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Pack> packs;
 
@@ -26,11 +28,13 @@ public class Product {
 
 	public Product(String name) {
 		this.name = name;
+		this.hidden = false;
 	}
 
-	public Product(Long id, String name, Set<Pack> packs) {
+	public Product(Long id, String name, Boolean hidden, Set<Pack> packs) {
 		this.id = id;
 		this.name = name;
+		this.hidden = hidden;
 		this.packs = packs;
 	}
 
@@ -50,6 +54,14 @@ public class Product {
 		this.name = name;
 	}
 
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
 	public Set<Pack> getPacks() {
 		return packs;
 	}
@@ -60,7 +72,7 @@ public class Product {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, packs);
+		return Objects.hash(hidden, id, name, packs);
 	}
 
 	@Override
@@ -72,6 +84,7 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(packs, other.packs);
+		return Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(packs, other.packs);
 	}
 }

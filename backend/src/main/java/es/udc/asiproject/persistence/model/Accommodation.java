@@ -13,8 +13,8 @@ public class Accommodation extends Product {
 		super(name);
 	}
 
-	public Accommodation(Long id, String name, Set<Pack> packs) {
-		super(id, name, packs);
+	public Accommodation(Long id, String name, Boolean hidden, Set<Pack> packs) {
+		super(id, name, hidden, packs);
 	}
 
 	@Override

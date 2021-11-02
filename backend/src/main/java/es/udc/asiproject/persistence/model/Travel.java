@@ -13,8 +13,8 @@ public class Travel extends Product {
 		super(name);
 	}
 
-	public Travel(Long id, String name, Set<Pack> packs) {
-		super(id, name, packs);
+	public Travel(Long id, String name, Boolean hidden, Set<Pack> packs) {
+		super(id, name, hidden, packs);
 	}
 
 	@Override
