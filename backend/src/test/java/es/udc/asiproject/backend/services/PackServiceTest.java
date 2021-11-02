@@ -19,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import es.udc.asiproject.persistence.dao.AccommodationDao;
 import es.udc.asiproject.persistence.dao.ActivityDao;
+import es.udc.asiproject.persistence.dao.PackDao;
 import es.udc.asiproject.persistence.dao.TransportDao;
 import es.udc.asiproject.persistence.dao.TravelDao;
 import es.udc.asiproject.persistence.model.Accommodation;
@@ -36,6 +37,8 @@ import es.udc.asiproject.service.exceptions.InvalidOperationException;
 public class PackServiceTest {
 	@Autowired
 	PackService packService;
+	@Autowired
+	PackDao packDao;
 	@Autowired
 	AccommodationDao accommodationDao;
 	@Autowired
@@ -82,6 +85,7 @@ public class PackServiceTest {
 		pack.setPrice(new BigDecimal(1.23));
 		pack.setDuration((short) 5);
 		pack.setPersons("persons");
+		pack.setHidden(false);
 		pack.setCreatedAt(new Date());
 		pack.setAccommodations(new HashSet<Accommodation>() {
 			{
@@ -108,7 +112,7 @@ public class PackServiceTest {
 	}
 
 	@Test
-	public void shouldCreatePack() throws InstanceNotFoundException, InvalidOperationException {
+	public void testCreatePack() throws InstanceNotFoundException, InvalidOperationException {
 		Pack inputPack = createPack();
 		Pack outputPack = packService.createPack(inputPack);
 
@@ -128,12 +132,42 @@ public class PackServiceTest {
 	}
 
 	@Test
-	public void shouldReturnPage() throws InstanceNotFoundException, InvalidOperationException {
+	public void testFindPacks() throws InstanceNotFoundException, InvalidOperationException {
+		packService.createPack(createPack());
+		packService.createPack(createPack());
+		Pack pack = createPack();
+		pack.setHidden(true);
+		packDao.save(pack);
+
+		Page<Pack> page = packService.findPacks(0, 3);
+
+		assertAll(() -> {
+			assertEquals(1, page.getTotalPages());
+			assertEquals(2, page.getNumberOfElements());
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
+
+	@Test
+	public void testFindPacksEmpty() {
+		Page<Pack> page = packService.findPacks(0, 1);
+
+		assertAll(() -> {
+			assertEquals(0, page.getTotalPages());
+			assertEquals(0, page.getNumberOfElements());
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
+
+	@Test
+	public void testFindAllPacks() throws InstanceNotFoundException, InvalidOperationException {
 		packService.createPack(createPack());
 		packService.createPack(createPack());
 		packService.createPack(createPack());
 
-		Page<Pack> page = packService.findPacks(1, 1);
+		Page<Pack> page = packService.findAllPacks(1, 1);
 
 		assertAll(() -> {
 			assertEquals(3, page.getTotalPages());
@@ -144,8 +178,8 @@ public class PackServiceTest {
 	}
 
 	@Test
-	public void shouldReturnEmptyPage() {
-		Page<Pack> page = packService.findPacks(0, 1);
+	public void testFindAllPacksEmpty() {
+		Page<Pack> page = packService.findAllPacks(0, 1);
 
 		assertAll(() -> {
 			assertEquals(0, page.getTotalPages());

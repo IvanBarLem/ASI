@@ -11,33 +11,36 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import es.udc.asiproject.controller.dto.validation.InsertValidation;
+import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 
 public class PackDto {
 	private Long id;
-	@NotBlank(groups = { InsertValidation.class })
-	@Size(min = 1, max = 60, groups = { InsertValidation.class })
+	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
+	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String title;
-	@NotBlank(groups = { InsertValidation.class })
-	@Size(min = 1, max = 500, groups = { InsertValidation.class })
+	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
+	@Size(min = 1, max = 500, groups = { InsertValidation.class, UpdateValidation.class })
 	private String description;
-	@NotEmpty(groups = { InsertValidation.class })
+	@NotEmpty(groups = { InsertValidation.class, UpdateValidation.class })
 	private String image;
-	@NotNull(groups = { InsertValidation.class })
-	@Positive(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
+	@Positive(groups = { InsertValidation.class, UpdateValidation.class })
 	private BigDecimal price;
-	@NotNull(groups = { InsertValidation.class })
-	@Positive(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
+	@Positive(groups = { InsertValidation.class, UpdateValidation.class })
 	private Short duration;
-	@NotBlank(groups = { InsertValidation.class })
-	@Size(min = 1, max = 60, groups = { InsertValidation.class })
+	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
+	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String persons;
-	@NotNull(groups = { InsertValidation.class })
+	@NotNull(groups = { UpdateValidation.class })
+	private Boolean hidden;
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	private Set<AccommodationDto> accommodations;
-	@NotNull(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	private Set<ActivityDto> activities;
-	@NotNull(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	private Set<TransportDto> transports;
-	@NotNull(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	private Set<TravelDto> travels;
 
 	public PackDto() {

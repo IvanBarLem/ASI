@@ -38,8 +38,15 @@ public class PackController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public PageDto<PackDto> getPacks(@RequestParam(defaultValue = "0") int pageNumber,
+	public PageDto<PackDto> findPacks(@RequestParam(defaultValue = "0") int pageNumber,
 			@RequestParam(defaultValue = "8") int pageSize) {
 		return PageMapper.convertToDto(packService.findPacks(pageNumber, pageSize), PackMapper::convertToDto);
+	}
+
+	@GetMapping("/hidden")
+	@ResponseStatus(HttpStatus.OK)
+	public PageDto<PackDto> findAllPacks(@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "8") int pageSize) {
+		return PageMapper.convertToDto(packService.findAllPacks(pageNumber, pageSize), PackMapper::convertToDto);
 	}
 }

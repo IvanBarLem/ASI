@@ -12,4 +12,6 @@ public interface PackService {
 	Pack createPack(Pack pack) throws InstanceNotFoundException, InvalidOperationException;
 
 	Page<Pack> findPacks(Integer pageNumber, Integer pageSize);
+
+	Page<Pack> findAllPacks(Integer pageNumber, Integer pageSize);
 }
