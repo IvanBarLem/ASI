@@ -6,14 +6,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import es.udc.asiproject.controller.dto.validation.GetValidation;
 import es.udc.asiproject.controller.dto.validation.InsertValidation;
+import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 
 public class TransportDto {
-	@NotNull(groups = { GetValidation.class })
+	@NotNull(groups = { UpdateValidation.class })
 	private Long id;
-	@NotBlank(groups = { InsertValidation.class })
-	@Size(min = 1, max = 60, groups = { InsertValidation.class })
+	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
+	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String name;
 
 	public TransportDto() {

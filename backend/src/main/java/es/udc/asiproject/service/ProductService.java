@@ -16,11 +16,15 @@ public interface ProductService {
 
 	List<Accommodation> findAccommodations();
 
+	Accommodation updateAccommodation(Accommodation accommodation) throws InstanceNotFoundException;
+
 	void removeAccommodation(Long id) throws InstanceNotFoundException;
 
 	Activity createActivity(Activity activity);
 
 	List<Activity> findActivities();
+
+	Activity updateActivity(Activity activity) throws InstanceNotFoundException;
 
 	void removeActivity(Long id) throws InstanceNotFoundException;
 
@@ -28,11 +32,15 @@ public interface ProductService {
 
 	List<Transport> findTransports();
 
+	Transport updateTransport(Transport transport) throws InstanceNotFoundException;
+
 	void removeTransport(Long id) throws InstanceNotFoundException;
 
 	Travel createTravel(Travel travel);
 
 	List<Travel> findTravels();
+
+	Travel updateTravel(Travel travel) throws InstanceNotFoundException;
 
 	void removeTravel(Long id) throws InstanceNotFoundException;
 }

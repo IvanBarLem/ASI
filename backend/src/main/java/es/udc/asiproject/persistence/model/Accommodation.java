@@ -13,6 +13,10 @@ public class Accommodation extends Product {
 		super(name);
 	}
 
+	public Accommodation(Long id, String name) {
+		super(id, name);
+	}
+
 	public Accommodation(Long id, String name, Boolean hidden, Set<Pack> packs) {
 		super(id, name, hidden, packs);
 	}

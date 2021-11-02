@@ -55,6 +55,22 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testUpdateAccommodationWithInstanceNotFoundException() {
+		assertThrows(InstanceNotFoundException.class,
+				() -> productService.updateAccommodation(new Accommodation(-1L, "Hesperia marineda")));
+	}
+
+	@Test
+	public void testUpdateAccommodation() throws InstanceNotFoundException {
+		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
+		accommodation.setName(accommodation.getName() + "X");
+		productService.updateAccommodation(accommodation);
+		List<Accommodation> accommodations = productService.findAccommodations();
+
+		assertEquals(accommodation, accommodations.get(0));
+	}
+
+	@Test
 	public void testRemoveAccommodationWithInstanceNotFoundException() {
 		assertThrows(InstanceNotFoundException.class, () -> productService.removeAccommodation(-1L));
 	}
@@ -82,6 +98,22 @@ public class ProductTest {
 		activityDao.save(activity);
 
 		assertEquals(1, productService.findActivities().size());
+	}
+
+	@Test
+	public void testUpdateActivityWithInstanceNotFoundException() {
+		assertThrows(InstanceNotFoundException.class,
+				() -> productService.updateActivity(new Activity(-1L, "Motos de Agua")));
+	}
+
+	@Test
+	public void testUpdateActivity() throws InstanceNotFoundException {
+		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
+		activity.setName(activity.getName() + "X");
+		productService.updateActivity(activity);
+		List<Activity> activities = productService.findActivities();
+
+		assertEquals(activity, activities.get(0));
 	}
 
 	@Test
@@ -120,6 +152,22 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testUpdateTransportWithInstanceNotFoundException() {
+		assertThrows(InstanceNotFoundException.class,
+				() -> productService.updateTransport(new Transport(-1L, "Patineta")));
+	}
+
+	@Test
+	public void testUpdateTransport() throws InstanceNotFoundException {
+		Transport transport = productService.createTransport(new Transport("Patineta"));
+		transport.setName(transport.getName() + "X");
+		productService.updateTransport(transport);
+		List<Transport> transports = productService.findTransports();
+
+		assertEquals(transport, transports.get(0));
+	}
+
+	@Test
 	public void testRemoveTransportWithInstanceNotFoundException() {
 		assertThrows(InstanceNotFoundException.class, () -> productService.removeTransport(-1L));
 	}
@@ -147,6 +195,22 @@ public class ProductTest {
 		travelDao.save(travel);
 
 		assertEquals(1, productService.findTravels().size());
+	}
+
+	@Test
+	public void testUpdateTravelWithInstanceNotFoundException() {
+		assertThrows(InstanceNotFoundException.class,
+				() -> productService.updateTravel(new Travel(-1L, "Egipto Antiguo")));
+	}
+
+	@Test
+	public void testUpdateTravel() throws InstanceNotFoundException {
+		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
+		travel.setName(travel.getName() + "X");
+		productService.updateTravel(travel);
+		List<Travel> travels = productService.findTravels();
+
+		assertEquals(travel, travels.get(0));
 	}
 
 	@Test

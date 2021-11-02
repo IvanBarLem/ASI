@@ -13,6 +13,10 @@ public class Transport extends Product {
 		super(name);
 	}
 
+	public Transport(Long id, String name) {
+		super(id, name);
+	}
+
 	public Transport(Long id, String name, Boolean hidden, Set<Pack> packs) {
 		super(id, name, hidden, packs);
 	}

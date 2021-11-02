@@ -31,6 +31,12 @@ public class Product {
 		this.hidden = false;
 	}
 
+	public Product(Long id, String name) {
+		this.id = id;
+		this.name = name;
+		this.hidden = false;
+	}
+
 	public Product(Long id, String name, Boolean hidden, Set<Pack> packs) {
 		this.id = id;
 		this.name = name;

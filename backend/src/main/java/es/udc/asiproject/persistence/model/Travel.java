@@ -13,6 +13,10 @@ public class Travel extends Product {
 		super(name);
 	}
 
+	public Travel(Long id, String name) {
+		super(id, name);
+	}
+
 	public Travel(Long id, String name, Boolean hidden, Set<Pack> packs) {
 		super(id, name, hidden, packs);
 	}

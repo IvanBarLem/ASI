@@ -13,6 +13,10 @@ public class Activity extends Product {
 		super(name);
 	}
 
+	public Activity(Long id, String name) {
+		super(id, name);
+	}
+
 	public Activity(Long id, String name, Boolean hidden, Set<Pack> packs) {
 		super(id, name, hidden, packs);
 	}
