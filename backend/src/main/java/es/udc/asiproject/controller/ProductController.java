@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,7 @@ import es.udc.asiproject.persistence.model.Activity;
 import es.udc.asiproject.persistence.model.Transport;
 import es.udc.asiproject.persistence.model.Travel;
 import es.udc.asiproject.service.ProductService;
+import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 
 @RestController
 @RequestMapping("/products")
@@ -48,6 +51,12 @@ public class ProductController {
 		return AccommodationMapper.convertToDto(productService.findAccommodations());
 	}
 
+	@DeleteMapping("/accommodations/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void removeAccommodation(@PathVariable("id") Long id) throws InstanceNotFoundException {
+		productService.removeAccommodation(id);
+	}
+
 	@PostMapping(path = "/activities/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ActivityDto createActivity(@Validated({ InsertValidation.class }) @RequestBody ActivityDto activityDto) {
@@ -60,6 +69,12 @@ public class ProductController {
 	@ResponseStatus(HttpStatus.OK)
 	public List<ActivityDto> findActivities() {
 		return ActivityMapper.convertToDto(productService.findActivities());
+	}
+
+	@DeleteMapping("/activities/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void removeActivity(@PathVariable("id") Long id) throws InstanceNotFoundException {
+		productService.removeActivity(id);
 	}
 
 	@PostMapping(path = "/transports/create")
@@ -76,6 +91,12 @@ public class ProductController {
 		return TransportMapper.convertToDto(productService.findTransports());
 	}
 
+	@DeleteMapping("/transports/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void removeTransport(@PathVariable("id") Long id) throws InstanceNotFoundException {
+		productService.removeTransport(id);
+	}
+
 	@PostMapping(path = "/travels/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	public TravelDto createTravel(@Validated({ InsertValidation.class }) @RequestBody TravelDto travelDto) {
@@ -88,5 +109,11 @@ public class ProductController {
 	@ResponseStatus(HttpStatus.OK)
 	public List<TravelDto> findTravels() {
 		return TravelMapper.convertToDto(productService.findTravels());
+	}
+
+	@DeleteMapping("/travels/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void removeTravel(@PathVariable("id") Long id) throws InstanceNotFoundException {
+		productService.removeTravel(id);
 	}
 }

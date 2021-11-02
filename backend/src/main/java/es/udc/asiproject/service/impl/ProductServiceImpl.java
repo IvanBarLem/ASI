@@ -15,6 +15,7 @@ import es.udc.asiproject.persistence.model.Activity;
 import es.udc.asiproject.persistence.model.Transport;
 import es.udc.asiproject.persistence.model.Travel;
 import es.udc.asiproject.service.ProductService;
+import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -41,6 +42,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public void removeAccommodation(Long id) throws InstanceNotFoundException {
+		Accommodation accommodation = accommodationDao.findById(id)
+				.orElseThrow(() -> new InstanceNotFoundException(Accommodation.class.getSimpleName(), id));
+
+		accommodationDao.delete(accommodation);
+	}
+
+	@Override
 	public Activity createActivity(Activity activity) {
 		activity.setHidden(false);
 
@@ -51,6 +60,14 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public List<Activity> findActivities() {
 		return activityDao.findAll();
+	}
+
+	@Override
+	public void removeActivity(Long id) throws InstanceNotFoundException {
+		Activity activity = activityDao.findById(id)
+				.orElseThrow(() -> new InstanceNotFoundException(Activity.class.getSimpleName(), id));
+
+		activityDao.delete(activity);
 	}
 
 	@Override
@@ -67,6 +84,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public void removeTransport(Long id) throws InstanceNotFoundException {
+		Transport transport = transportDao.findById(id)
+				.orElseThrow(() -> new InstanceNotFoundException(Transport.class.getSimpleName(), id));
+
+		transportDao.delete(transport);
+	}
+
+	@Override
 	public Travel createTravel(Travel travel) {
 		travel.setHidden(false);
 
@@ -77,5 +102,13 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional(readOnly = true)
 	public List<Travel> findTravels() {
 		return travelDao.findAll();
+	}
+
+	@Override
+	public void removeTravel(Long id) throws InstanceNotFoundException {
+		Travel travel = travelDao.findById(id)
+				.orElseThrow(() -> new InstanceNotFoundException(Travel.class.getSimpleName(), id));
+
+		travelDao.delete(travel);
 	}
 }

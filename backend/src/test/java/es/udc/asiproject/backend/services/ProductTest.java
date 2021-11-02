@@ -1,6 +1,7 @@
 package es.udc.asiproject.backend.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import es.udc.asiproject.persistence.model.Activity;
 import es.udc.asiproject.persistence.model.Transport;
 import es.udc.asiproject.persistence.model.Travel;
 import es.udc.asiproject.service.ProductService;
+import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 
 @Transactional
 @SpringBootTest
@@ -53,6 +55,20 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testRemoveAccommodationWithInstanceNotFoundException() {
+		assertThrows(InstanceNotFoundException.class, () -> productService.removeAccommodation(-1L));
+	}
+
+	@Test
+	public void testRemoveAccommodation() throws InstanceNotFoundException {
+		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
+		productService.removeAccommodation(accommodation.getId());
+		List<Accommodation> accommodations = productService.findAccommodations();
+
+		assertEquals(0, accommodations.size());
+	}
+
+	@Test
 	public void testCreateActivity() {
 		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
 		List<Activity> activities = productService.findActivities();
@@ -66,6 +82,20 @@ public class ProductTest {
 		activityDao.save(activity);
 
 		assertEquals(1, productService.findActivities().size());
+	}
+
+	@Test
+	public void testRemoveActivityWithInstanceNotFoundException() {
+		assertThrows(InstanceNotFoundException.class, () -> productService.removeActivity(-1L));
+	}
+
+	@Test
+	public void testRemoveActivity() throws InstanceNotFoundException {
+		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
+		productService.removeActivity(activity.getId());
+		List<Activity> activities = productService.findActivities();
+
+		assertEquals(0, activities.size());
 	}
 
 	@Test
@@ -90,6 +120,20 @@ public class ProductTest {
 	}
 
 	@Test
+	public void testRemoveTransportWithInstanceNotFoundException() {
+		assertThrows(InstanceNotFoundException.class, () -> productService.removeTransport(-1L));
+	}
+
+	@Test
+	public void testRemoveTransport() throws InstanceNotFoundException {
+		Transport transport = productService.createTransport(new Transport("Patineta"));
+		productService.removeTransport(transport.getId());
+		List<Transport> transports = productService.findTransports();
+
+		assertEquals(0, transports.size());
+	}
+
+	@Test
 	public void testCreateTravel() {
 		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
 		List<Travel> travels = productService.findTravels();
@@ -98,10 +142,24 @@ public class ProductTest {
 	}
 
 	@Test
-	public void testFindTravelss() {
+	public void testFindTravels() {
 		Travel travel = new Travel("Egipto Antiguo");
 		travelDao.save(travel);
 
 		assertEquals(1, productService.findTravels().size());
+	}
+
+	@Test
+	public void testRemoveTravelWithInstanceNotFoundException() {
+		assertThrows(InstanceNotFoundException.class, () -> productService.removeTravel(-1L));
+	}
+
+	@Test
+	public void testRemoveTravel() throws InstanceNotFoundException {
+		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
+		productService.removeTravel(travel.getId());
+		List<Travel> travels = productService.findTravels();
+
+		assertEquals(0, travels.size());
 	}
 }
