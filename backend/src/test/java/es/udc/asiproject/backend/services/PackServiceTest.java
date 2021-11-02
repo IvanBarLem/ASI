@@ -17,23 +17,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 
-import es.udc.asiproject.backend.persistence.dao.AccommodationDao;
-import es.udc.asiproject.backend.persistence.dao.ActivityDao;
-import es.udc.asiproject.backend.persistence.dao.TransportDao;
-import es.udc.asiproject.backend.persistence.dao.TravelDao;
-import es.udc.asiproject.backend.persistence.model.Accommodation;
-import es.udc.asiproject.backend.persistence.model.Activity;
-import es.udc.asiproject.backend.persistence.model.Pack;
-import es.udc.asiproject.backend.persistence.model.Transport;
-import es.udc.asiproject.backend.persistence.model.Travel;
-import es.udc.asiproject.backend.service.PackService;
-import es.udc.asiproject.backend.service.exceptions.InstanceNotFoundException;
-import es.udc.asiproject.backend.service.exceptions.InvalidOperationException;
+import es.udc.asiproject.persistence.dao.AccommodationDao;
+import es.udc.asiproject.persistence.dao.ActivityDao;
+import es.udc.asiproject.persistence.dao.TransportDao;
+import es.udc.asiproject.persistence.dao.TravelDao;
+import es.udc.asiproject.persistence.model.Accommodation;
+import es.udc.asiproject.persistence.model.Activity;
+import es.udc.asiproject.persistence.model.Pack;
+import es.udc.asiproject.persistence.model.Transport;
+import es.udc.asiproject.persistence.model.Travel;
+import es.udc.asiproject.service.PackService;
+import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
+import es.udc.asiproject.service.exceptions.InvalidOperationException;
 
 @Transactional
 @SpringBootTest
 @ActiveProfiles("test")
 public class PackServiceTest {
+	@Autowired
+	PackService packService;
 	@Autowired
 	AccommodationDao accommodationDao;
 	@Autowired
@@ -42,8 +44,6 @@ public class PackServiceTest {
 	TransportDao transportDao;
 	@Autowired
 	TravelDao travelDao;
-	@Autowired
-	PackService packService;
 
 	private Accommodation seedAccommodationDatabase() {
 		Accommodation accommodation = new Accommodation("Hesperia marineda");
