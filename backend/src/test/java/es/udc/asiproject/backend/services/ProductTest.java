@@ -41,17 +41,26 @@ public class ProductTest {
 	@Test
 	public void testCreateAccommodation() {
 		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
-		List<Accommodation> accommodations = productService.findAccommodations();
+		List<Accommodation> accommodations = productService.findAllAccommodations();
 
 		assertEquals(accommodation, accommodations.get(0));
 	}
 
 	@Test
-	public void testFindAccommodations() {
+	public void testFindAccommodations() throws InstanceNotFoundException {
+		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
+		accommodation.setHidden(true);
+		productService.updateAccommodation(accommodation);
+
+		assertEquals(0, productService.findAccommodations().size());
+	}
+
+	@Test
+	public void testFindAllAccommodations() {
 		Accommodation accommodation = new Accommodation("Hesperia marineda");
 		accommodationDao.save(accommodation);
 
-		assertEquals(1, productService.findAccommodations().size());
+		assertEquals(1, productService.findAllAccommodations().size());
 	}
 
 	@Test
@@ -65,7 +74,7 @@ public class ProductTest {
 		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
 		accommodation.setName(accommodation.getName() + "X");
 		productService.updateAccommodation(accommodation);
-		List<Accommodation> accommodations = productService.findAccommodations();
+		List<Accommodation> accommodations = productService.findAllAccommodations();
 
 		assertEquals(accommodation, accommodations.get(0));
 	}
@@ -79,7 +88,7 @@ public class ProductTest {
 	public void testRemoveAccommodation() throws InstanceNotFoundException {
 		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
 		productService.removeAccommodation(accommodation.getId());
-		List<Accommodation> accommodations = productService.findAccommodations();
+		List<Accommodation> accommodations = productService.findAllAccommodations();
 
 		assertEquals(0, accommodations.size());
 	}
@@ -87,17 +96,26 @@ public class ProductTest {
 	@Test
 	public void testCreateActivity() {
 		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
-		List<Activity> activities = productService.findActivities();
+		List<Activity> activities = productService.findAllActivities();
 
 		assertEquals(activity, activities.get(0));
 	}
 
 	@Test
-	public void testFindActivities() {
+	public void testFindActivities() throws InstanceNotFoundException {
+		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
+		activity.setHidden(true);
+		productService.updateActivity(activity);
+
+		assertEquals(0, productService.findActivities().size());
+	}
+
+	@Test
+	public void testFindAllActivities() {
 		Activity activity = new Activity("Motos de Agua");
 		activityDao.save(activity);
 
-		assertEquals(1, productService.findActivities().size());
+		assertEquals(1, productService.findAllActivities().size());
 	}
 
 	@Test
@@ -111,7 +129,7 @@ public class ProductTest {
 		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
 		activity.setName(activity.getName() + "X");
 		productService.updateActivity(activity);
-		List<Activity> activities = productService.findActivities();
+		List<Activity> activities = productService.findAllActivities();
 
 		assertEquals(activity, activities.get(0));
 	}
@@ -125,7 +143,7 @@ public class ProductTest {
 	public void testRemoveActivity() throws InstanceNotFoundException {
 		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
 		productService.removeActivity(activity.getId());
-		List<Activity> activities = productService.findActivities();
+		List<Activity> activities = productService.findAllActivities();
 
 		assertEquals(0, activities.size());
 	}
@@ -133,22 +151,31 @@ public class ProductTest {
 	@Test
 	public void testCreateTransport() {
 		Transport transport = productService.createTransport(new Transport("Patineta"));
-		List<Transport> transports = productService.findTransports();
+		List<Transport> transports = productService.findAllTransports();
 
 		assertEquals(transport, transports.get(0));
 	}
 
 	@Test
-	public void testFindTransports() {
+	public void testFindTransports() throws InstanceNotFoundException {
+		Transport transport = productService.createTransport(new Transport("Patineta"));
+		transport.setHidden(true);
+		productService.updateTransport(transport);
+
+		assertEquals(0, productService.findTransports().size());
+	}
+
+	@Test
+	public void testFindAllTransports() {
 		Transport transport = new Transport("Patineta");
 		transportDao.save(transport);
 
-		assertEquals(1, productService.findTransports().size());
+		assertEquals(1, productService.findAllTransports().size());
 
 		transport = new Transport("Patines");
 		transportDao.save(transport);
 
-		assertEquals(2, productService.findTransports().size());
+		assertEquals(2, productService.findAllTransports().size());
 	}
 
 	@Test
@@ -162,7 +189,7 @@ public class ProductTest {
 		Transport transport = productService.createTransport(new Transport("Patineta"));
 		transport.setName(transport.getName() + "X");
 		productService.updateTransport(transport);
-		List<Transport> transports = productService.findTransports();
+		List<Transport> transports = productService.findAllTransports();
 
 		assertEquals(transport, transports.get(0));
 	}
@@ -176,7 +203,7 @@ public class ProductTest {
 	public void testRemoveTransport() throws InstanceNotFoundException {
 		Transport transport = productService.createTransport(new Transport("Patineta"));
 		productService.removeTransport(transport.getId());
-		List<Transport> transports = productService.findTransports();
+		List<Transport> transports = productService.findAllTransports();
 
 		assertEquals(0, transports.size());
 	}
@@ -184,17 +211,26 @@ public class ProductTest {
 	@Test
 	public void testCreateTravel() {
 		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
-		List<Travel> travels = productService.findTravels();
+		List<Travel> travels = productService.findAllTravels();
 
 		assertEquals(travel, travels.get(0));
 	}
 
 	@Test
-	public void testFindTravels() {
+	public void testFindTravels() throws InstanceNotFoundException {
+		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
+		travel.setHidden(true);
+		productService.updateTravel(travel);
+
+		assertEquals(0, productService.findTravels().size());
+	}
+
+	@Test
+	public void testFindAllTravels() {
 		Travel travel = new Travel("Egipto Antiguo");
 		travelDao.save(travel);
 
-		assertEquals(1, productService.findTravels().size());
+		assertEquals(1, productService.findAllTravels().size());
 	}
 
 	@Test
@@ -208,7 +244,7 @@ public class ProductTest {
 		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
 		travel.setName(travel.getName() + "X");
 		productService.updateTravel(travel);
-		List<Travel> travels = productService.findTravels();
+		List<Travel> travels = productService.findAllTravels();
 
 		assertEquals(travel, travels.get(0));
 	}
@@ -222,7 +258,7 @@ public class ProductTest {
 	public void testRemoveTravel() throws InstanceNotFoundException {
 		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
 		productService.removeTravel(travel.getId());
-		List<Travel> travels = productService.findTravels();
+		List<Travel> travels = productService.findAllTravels();
 
 		assertEquals(0, travels.size());
 	}

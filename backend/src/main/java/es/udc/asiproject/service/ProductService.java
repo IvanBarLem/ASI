@@ -16,6 +16,8 @@ public interface ProductService {
 
 	List<Accommodation> findAccommodations();
 
+	List<Accommodation> findAllAccommodations();
+
 	Accommodation updateAccommodation(Accommodation accommodation) throws InstanceNotFoundException;
 
 	void removeAccommodation(Long id) throws InstanceNotFoundException;
@@ -23,6 +25,8 @@ public interface ProductService {
 	Activity createActivity(Activity activity);
 
 	List<Activity> findActivities();
+
+	List<Activity> findAllActivities();
 
 	Activity updateActivity(Activity activity) throws InstanceNotFoundException;
 
@@ -32,6 +36,8 @@ public interface ProductService {
 
 	List<Transport> findTransports();
 
+	List<Transport> findAllTransports();
+
 	Transport updateTransport(Transport transport) throws InstanceNotFoundException;
 
 	void removeTransport(Long id) throws InstanceNotFoundException;
@@ -39,6 +45,8 @@ public interface ProductService {
 	Travel createTravel(Travel travel);
 
 	List<Travel> findTravels();
+
+	List<Travel> findAllTravels();
 
 	Travel updateTravel(Travel travel) throws InstanceNotFoundException;
 

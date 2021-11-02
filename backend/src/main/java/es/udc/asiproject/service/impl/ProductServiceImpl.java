@@ -39,6 +39,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Accommodation> findAccommodations() {
+		return accommodationDao.findByHiddenFalse();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Accommodation> findAllAccommodations() {
 		return accommodationDao.findAll();
 	}
 
@@ -49,6 +55,7 @@ public class ProductServiceImpl implements ProductService {
 				() -> new InstanceNotFoundException(Accommodation.class.getSimpleName(), accommodation.getId()));
 
 		oldAccommodation.setName(accommodation.getName());
+		oldAccommodation.setHidden(accommodation.getHidden());
 
 		return oldAccommodation;
 	}
@@ -73,6 +80,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Activity> findActivities() {
+		return activityDao.findByHiddenFalse();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Activity> findAllActivities() {
 		return activityDao.findAll();
 	}
 
@@ -83,6 +96,7 @@ public class ProductServiceImpl implements ProductService {
 				.orElseThrow(() -> new InstanceNotFoundException(Activity.class.getSimpleName(), activity.getId()));
 
 		oldActivity.setName(activity.getName());
+		oldActivity.setHidden(activity.getHidden());
 
 		return oldActivity;
 	}
@@ -107,6 +121,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Transport> findTransports() {
+		return transportDao.findByHiddenFalse();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Transport> findAllTransports() {
 		return transportDao.findAll();
 	}
 
@@ -117,6 +137,7 @@ public class ProductServiceImpl implements ProductService {
 				.orElseThrow(() -> new InstanceNotFoundException(Transport.class.getSimpleName(), transport.getId()));
 
 		oldTransport.setName(transport.getName());
+		oldTransport.setHidden(transport.getHidden());
 
 		return oldTransport;
 	}
@@ -141,6 +162,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Travel> findTravels() {
+		return travelDao.findByHiddenFalse();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Travel> findAllTravels() {
 		return travelDao.findAll();
 	}
 
@@ -151,6 +178,7 @@ public class ProductServiceImpl implements ProductService {
 				.orElseThrow(() -> new InstanceNotFoundException(Travel.class.getSimpleName(), travel.getId()));
 
 		oldTravel.setName(travel.getName());
+		oldTravel.setHidden(travel.getHidden());
 
 		return oldTravel;
 	}

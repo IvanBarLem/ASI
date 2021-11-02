@@ -53,6 +53,12 @@ public class ProductController {
 		return AccommodationMapper.convertToDto(productService.findAccommodations());
 	}
 
+	@GetMapping("/accommodations/hidden")
+	@ResponseStatus(HttpStatus.OK)
+	public List<AccommodationDto> findAllAccommodations() {
+		return AccommodationMapper.convertToDto(productService.findAllAccommodations());
+	}
+
 	@PutMapping("/accommodations")
 	@ResponseStatus(HttpStatus.OK)
 	public AccommodationDto updateAccommodation(
@@ -81,6 +87,12 @@ public class ProductController {
 	@ResponseStatus(HttpStatus.OK)
 	public List<ActivityDto> findActivities() {
 		return ActivityMapper.convertToDto(productService.findActivities());
+	}
+
+	@GetMapping("/activities/hidden")
+	@ResponseStatus(HttpStatus.OK)
+	public List<ActivityDto> findAllActivities() {
+		return ActivityMapper.convertToDto(productService.findAllActivities());
 	}
 
 	@PutMapping("/activities")
@@ -112,6 +124,12 @@ public class ProductController {
 		return TransportMapper.convertToDto(productService.findTransports());
 	}
 
+	@GetMapping("/transports/hidden")
+	@ResponseStatus(HttpStatus.OK)
+	public List<TransportDto> findAllTransports() {
+		return TransportMapper.convertToDto(productService.findAllTransports());
+	}
+
 	@PutMapping("/transports")
 	@ResponseStatus(HttpStatus.OK)
 	public TransportDto updateTransport(@Validated({ UpdateValidation.class }) @RequestBody TransportDto transportDto)
@@ -139,6 +157,12 @@ public class ProductController {
 	@ResponseStatus(HttpStatus.OK)
 	public List<TravelDto> findTravels() {
 		return TravelMapper.convertToDto(productService.findTravels());
+	}
+
+	@GetMapping("/travels/hidden")
+	@ResponseStatus(HttpStatus.OK)
+	public List<TravelDto> findAllTravels() {
+		return TravelMapper.convertToDto(productService.findAllTravels());
 	}
 
 	@PutMapping("/travels")

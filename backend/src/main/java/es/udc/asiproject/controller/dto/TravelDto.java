@@ -15,13 +15,10 @@ public class TravelDto {
 	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
 	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String name;
+	@NotNull(groups = { UpdateValidation.class })
+	private Boolean hidden;
 
 	public TravelDto() {
-	}
-
-	public TravelDto(Long id, String name) {
-		this.id = id;
-		this.name = name.trim();
 	}
 
 	public Long getId() {
@@ -40,9 +37,17 @@ public class TravelDto {
 		this.name = name;
 	}
 
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name);
+		return Objects.hash(hidden, id, name);
 	}
 
 	@Override
@@ -54,6 +59,6 @@ public class TravelDto {
 		if (getClass() != obj.getClass())
 			return false;
 		TravelDto other = (TravelDto) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		return Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
 }

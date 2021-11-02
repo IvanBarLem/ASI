@@ -4,28 +4,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-
 import org.springframework.data.domain.Page;
 
-import es.udc.asiproject.controller.dto.validation.GetValidation;
-
 public class PageDto<T> {
-	@NotNull(groups = { GetValidation.class })
-	@Min(value = 0, groups = { GetValidation.class })
 	private Integer pageNumber;
-	@NotNull(groups = { GetValidation.class })
-	@Positive(groups = { GetValidation.class })
 	private Integer pageSize;
 	private Integer totalPages;
 	private List<T> content;
 	private Boolean hasNext;
 	private Boolean hasPrevious;
-
-	public PageDto() {
-	}
 
 	public <U> PageDto(Page<U> page, Function<? super U, ? extends T> converter) {
 		Page<T> mappedPage = page.map(converter);
