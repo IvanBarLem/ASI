@@ -16,4 +16,6 @@ public interface PackService {
 	Page<Pack> findAllPacks(Integer pageNumber, Integer pageSize);
 
 	Pack updatePack(Pack pack) throws InstanceNotFoundException, InvalidOperationException;
+
+	void removePack(Long id) throws InstanceNotFoundException;
 }

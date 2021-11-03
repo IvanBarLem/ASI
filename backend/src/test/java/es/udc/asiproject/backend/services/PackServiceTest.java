@@ -3,6 +3,7 @@ package es.udc.asiproject.backend.services;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
@@ -324,5 +325,19 @@ public class PackServiceTest {
 			assertEquals(inputPack.getTravels(), outputPack.getTravels());
 			assertEquals(4, outputPack.getTravels().size());
 		});
+	}
+
+	@Test
+	public void testRemovePackWithInstanceNotFoundException() {
+		assertThrows(InstanceNotFoundException.class, () -> packService.removePack(-1L));
+	}
+
+	@Test
+	public void testRemovePack() throws InstanceNotFoundException, InvalidOperationException {
+		Pack pack = packService.createPack(createPack());
+		packService.removePack(pack.getId());
+		Page<Pack> packs = packService.findAllPacks(0, 1);
+
+		assertEquals(0, packs.getNumberOfElements());
 	}
 }

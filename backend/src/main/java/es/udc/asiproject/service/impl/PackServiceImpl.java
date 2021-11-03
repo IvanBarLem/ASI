@@ -146,4 +146,13 @@ public class PackServiceImpl implements PackService {
 
 		return oldPack;
 	}
+
+	@Override
+	@Transactional
+	public void removePack(Long id) throws InstanceNotFoundException {
+		Pack pack = packDao.findById(id)
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), id));
+
+		packDao.delete(pack);
+	}
 }
