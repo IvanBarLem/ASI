@@ -11,33 +11,38 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import es.udc.asiproject.controller.dto.validation.InsertValidation;
+import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 
 public class PackDto {
 	private Long id;
-	@NotBlank(groups = { InsertValidation.class })
-	@Size(min = 1, max = 60, groups = { InsertValidation.class })
+	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
+	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String title;
-	@NotBlank(groups = { InsertValidation.class })
-	@Size(min = 1, max = 500, groups = { InsertValidation.class })
+	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
+	@Size(min = 1, max = 500, groups = { InsertValidation.class, UpdateValidation.class })
 	private String description;
-	@NotEmpty(groups = { InsertValidation.class })
+	@NotEmpty(groups = { InsertValidation.class, UpdateValidation.class })
 	private String image;
-	@NotNull(groups = { InsertValidation.class })
-	@Positive(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
+	@Positive(groups = { InsertValidation.class, UpdateValidation.class })
 	private BigDecimal price;
-	@NotNull(groups = { InsertValidation.class })
-	@Positive(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
+	@Positive(groups = { InsertValidation.class, UpdateValidation.class })
 	private Short duration;
-	@NotBlank(groups = { InsertValidation.class })
-	@Size(min = 1, max = 60, groups = { InsertValidation.class })
+	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
+	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String persons;
-	@NotNull(groups = { InsertValidation.class })
+	@NotNull(groups = { UpdateValidation.class })
+	private Boolean outstanding;
+	@NotNull(groups = { UpdateValidation.class })
+	private Boolean hidden;
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	private Set<AccommodationDto> accommodations;
-	@NotNull(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	private Set<ActivityDto> activities;
-	@NotNull(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	private Set<TransportDto> transports;
-	@NotNull(groups = { InsertValidation.class })
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	private Set<TravelDto> travels;
 
 	public PackDto() {
@@ -99,6 +104,22 @@ public class PackDto {
 		this.persons = persons;
 	}
 
+	public Boolean getOutstanding() {
+		return outstanding;
+	}
+
+	public void setOutstanding(Boolean outstanding) {
+		this.outstanding = outstanding;
+	}
+
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
 	public Set<AccommodationDto> getAccommodations() {
 		return accommodations;
 	}
@@ -133,8 +154,8 @@ public class PackDto {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(accommodations, activities, description, duration, id, image, persons, price, title,
-				transports, travels);
+		return Objects.hash(accommodations, activities, description, duration, hidden, id, image, outstanding, persons,
+				price, title, transports, travels);
 	}
 
 	@Override
@@ -148,7 +169,8 @@ public class PackDto {
 		PackDto other = (PackDto) obj;
 		return Objects.equals(accommodations, other.accommodations) && Objects.equals(activities, other.activities)
 				&& Objects.equals(description, other.description) && Objects.equals(duration, other.duration)
-				&& Objects.equals(id, other.id) && Objects.equals(image, other.image)
+				&& Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id)
+				&& Objects.equals(image, other.image) && Objects.equals(outstanding, other.outstanding)
 				&& Objects.equals(persons, other.persons) && Objects.equals(price, other.price)
 				&& Objects.equals(title, other.title) && Objects.equals(transports, other.transports)
 				&& Objects.equals(travels, other.travels);

@@ -33,6 +33,10 @@ public class Pack {
 	private Short duration;
 	@Column(nullable = false, length = 60)
 	private String persons;
+	@Column(nullable = false)
+	private Boolean outstanding;
+	@Column(nullable = false)
+	private Boolean hidden;
 	@Column(nullable = false, updatable = false)
 	private Date createdAt;
 	@ManyToMany(mappedBy = "packs", fetch = FetchType.LAZY)
@@ -48,14 +52,16 @@ public class Pack {
 	}
 
 	public Pack(String title, String description, Byte[] image, BigDecimal price, Short duration, String persons,
-			Date createdAt, Set<Accommodation> accommodations, Set<Activity> activities, Set<Transport> transports,
-			Set<Travel> travels) {
+			Boolean outstanding, Boolean hidden, Date createdAt, Set<Accommodation> accommodations,
+			Set<Activity> activities, Set<Transport> transports, Set<Travel> travels) {
 		this.title = title;
 		this.description = description;
 		this.image = image;
 		this.price = price;
 		this.duration = duration;
 		this.persons = persons;
+		this.outstanding = outstanding;
+		this.hidden = hidden;
 		this.createdAt = createdAt;
 		this.accommodations = accommodations;
 		this.activities = activities;
@@ -64,8 +70,8 @@ public class Pack {
 	}
 
 	public Pack(Long id, String title, String description, Byte[] image, BigDecimal price, Short duration,
-			String persons, Date createdAt, Set<Accommodation> accommodations, Set<Activity> activities,
-			Set<Transport> transports, Set<Travel> travels) {
+			String persons, Boolean outstanding, Boolean hidden, Date createdAt, Set<Accommodation> accommodations,
+			Set<Activity> activities, Set<Transport> transports, Set<Travel> travels) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -73,6 +79,8 @@ public class Pack {
 		this.price = price;
 		this.duration = duration;
 		this.persons = persons;
+		this.outstanding = outstanding;
+		this.hidden = hidden;
 		this.createdAt = createdAt;
 		this.accommodations = accommodations;
 		this.activities = activities;
@@ -136,6 +144,22 @@ public class Pack {
 		this.persons = persons;
 	}
 
+	public Boolean getOutstanding() {
+		return outstanding;
+	}
+
+	public void setOutstanding(Boolean outstanding) {
+		this.outstanding = outstanding;
+	}
+
+	public Boolean getHidden() {
+		return hidden;
+	}
+
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
+	}
+
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -181,8 +205,8 @@ public class Pack {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(image);
-		result = prime * result + Objects.hash(accommodations, activities, createdAt, description, duration, id,
-				persons, price, title, transports, travels);
+		result = prime * result + Objects.hash(accommodations, activities, createdAt, description, duration, hidden, id,
+				outstanding, persons, price, title, transports, travels);
 		return result;
 	}
 
@@ -197,8 +221,9 @@ public class Pack {
 		Pack other = (Pack) obj;
 		return Objects.equals(accommodations, other.accommodations) && Objects.equals(activities, other.activities)
 				&& Objects.equals(createdAt, other.createdAt) && Objects.equals(description, other.description)
-				&& Objects.equals(duration, other.duration) && Objects.equals(id, other.id)
-				&& Arrays.equals(image, other.image) && Objects.equals(persons, other.persons)
+				&& Objects.equals(duration, other.duration) && Objects.equals(hidden, other.hidden)
+				&& Objects.equals(id, other.id) && Arrays.equals(image, other.image)
+				&& Objects.equals(outstanding, other.outstanding) && Objects.equals(persons, other.persons)
 				&& Objects.equals(price, other.price) && Objects.equals(title, other.title)
 				&& Objects.equals(transports, other.transports) && Objects.equals(travels, other.travels);
 	}
