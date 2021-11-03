@@ -69,4 +69,8 @@ export default {
   "project.packs.CreatePack.previsualization": "Previsualization",
   "project.packs.foundNoPacks": "There are no packs yet",
   "project.products.foundNoProducts": "There are no products yet",
+  "project.products.travels": "Travels",
+  "project.products.transports": "Transports",
+  "project.products.accommodations": "Accommodations",
+  "project.products.activities": "Activities",
 };

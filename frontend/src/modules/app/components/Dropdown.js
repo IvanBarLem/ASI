@@ -42,13 +42,13 @@ const Dropdown = (props) => {
           <ListItemIcon>
             <ListIcon />
           </ListItemIcon>
-          <ListItemText>Ver Packs</ListItemText>
+          <ListItemText>Packs</ListItemText>
         </ListItem>
         <ListItem button onClick={handleClick}>
           <ListItemIcon>
             <ExtensionIcon />
           </ListItemIcon>
-          <ListItemText>Ver Productos</ListItemText>
+          <ListItemText>Productos</ListItemText>
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>

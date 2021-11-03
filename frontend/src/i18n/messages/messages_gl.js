@@ -71,4 +71,8 @@ export default {
   "project.packs.CreatePack.previsualization": "Previsualización",
   "project.packs.foundNoPacks": "Non existen paquetes ainda",
   "project.products.foundNoProducts": "Non existen productos ainda",
+  "project.products.travels": "Viaxes",
+  "project.products.transports": "Transportes",
+  "project.products.accommodations": "Aloxamentos",
+  "project.products.activities": "Actividades",
 };
