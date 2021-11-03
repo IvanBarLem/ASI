@@ -39,13 +39,13 @@ public class Pack {
 	private Boolean hidden;
 	@Column(nullable = false, updatable = false)
 	private Date createdAt;
-	@ManyToMany(mappedBy = "packs", fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Accommodation> accommodations;
-	@ManyToMany(mappedBy = "packs", fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Activity> activities;
-	@ManyToMany(mappedBy = "packs", fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Transport> transports;
-	@ManyToMany(mappedBy = "packs", fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Travel> travels;
 
 	public Pack() {

@@ -25,9 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
-				.antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/users/signUp", "/users/login",
-						"/users/loginFromServiceToken")
-				.permitAll().antMatchers("/**").hasRole(RoleType.USER.name());
+				.antMatchers("/users/signUp", "/users/login", "/users/loginFromServiceToken").permitAll()
+				.antMatchers("/**").hasRole(RoleType.USER.name());
 	}
 
 	@Bean

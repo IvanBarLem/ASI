@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Entity
 public class User {
 	public enum RoleType {
-		USER
+		USER, ADMIN
 	};
 
 	@Id
