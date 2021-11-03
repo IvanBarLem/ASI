@@ -12,6 +12,12 @@ import {
   Logout,
 } from "../../users";
 import { CreatePack, FindPacks } from "../../packs";
+import {
+  Travels,
+  Accommodations,
+  Activities,
+  Transports,
+} from "../../products";
 
 const Body = (props) => (
   <Box sx={{ margin: 4 }}>
@@ -34,6 +40,16 @@ const Body = (props) => (
         )}
         {props.loggedIn && (
           <Route exact path="/create-pack" component={CreatePack} />
+        )}
+        {props.loggedIn && <Route exact path="/travels" component={Travels} />}
+        {props.loggedIn && (
+          <Route exact path="/accommodations" component={Accommodations} />
+        )}
+        {props.loggedIn && (
+          <Route exact path="/transports" component={Transports} />
+        )}
+        {props.loggedIn && (
+          <Route exact path="/activities" component={Activities} />
         )}
         {props.loggedIn && <Route exact path="/packs" component={FindPacks} />}
         {!props.loggedIn && (

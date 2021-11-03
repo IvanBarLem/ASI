@@ -71,4 +71,5 @@ export default {
   "project.packs.CreatePack.select.friends": "Amigos",
   "project.packs.CreatePack.previsualization": "Previsualización",
   "project.packs.foundNoPacks": "No existen paquetes aún",
+  "project.products.foundNoProducts": "No existen productos aún",
 };
