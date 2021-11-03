@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import { Errors } from "../../common";
 import * as actions from "../actions";
+import * as actionsProducts from "../../products/actions";
 
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
@@ -57,25 +58,25 @@ const CreatePack = () => {
 
   useEffect(() => {
     dispatch(
-      actions.getActivities(
+      actionsProducts.getActivities(
         (activities) => setActivities(activities),
         (errors) => setBackendErrorsActivities(errors)
       )
     );
     dispatch(
-      actions.getAccommodations(
+      actionsProducts.getAccommodations(
         (accommodations) => setAccommodations(accommodations),
         (errors) => setBackendErrorsAccommodations(errors)
       )
     );
     dispatch(
-      actions.getTransports(
+      actionsProducts.getTransports(
         (transports) => setTransports(transports),
         (errors) => setBackendErrorsTransports(errors)
       )
     );
     dispatch(
-      actions.getTravels(
+      actionsProducts.getTravels(
         (travels) => setTravels(travels),
         (errors) => setBackendErrorsTravels(errors)
       )
@@ -201,8 +202,8 @@ const CreatePack = () => {
           display={activeStep !== 3}
           xs={12}
           lg={activeStep === 3 ? 12 : 8}
-        > 
-          <Box sx={{width: "90%"}}>
+        >
+          <Box sx={{ width: "90%" }}>
             <Stepper activeStep={activeStep}>
               {steps.map((label, index) => {
                 const stepProps = {};
@@ -215,7 +216,8 @@ const CreatePack = () => {
                 );
               })}
             </Stepper>
-            <Box sx={{
+            <Box
+              sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -253,7 +255,9 @@ const CreatePack = () => {
                   backendErrorsActivities={backendErrorsActivities}
                   backendErrorsAccommodations={backendErrorsAccommodations}
                   setBackendErrorsActivities={setBackendErrorsActivities}
-                  setBackendErrorsAccommodations={setBackendErrorsAccommodations}
+                  setBackendErrorsAccommodations={
+                    setBackendErrorsAccommodations
+                  }
                   setBackendErrorsTransports={setBackendErrorsTransports}
                   setBackendErrorsTravels={setBackendErrorsTravels}
                 />
@@ -292,20 +296,21 @@ const CreatePack = () => {
             )}
           </Box>
         </Grid>
-        {activeStep === 3 ?
-          <React.Fragment/>
-          :
-          <Grid 
-            item 
-            sx={{ 
+        {activeStep === 3 ? (
+          <React.Fragment />
+        ) : (
+          <Grid
+            item
+            sx={{
               marginLeft: 1,
               marginRight: 5,
-              display: { xs: 'none', lg: 'block' } 
-            }}>
-            <Divider orientation="vertical"/>
+              display: { xs: "none", lg: "block" },
+            }}
+          >
+            <Divider orientation="vertical" />
           </Grid>
-        }
-        
+        )}
+
         <Grid
           item
           xs={12}
@@ -324,21 +329,24 @@ const CreatePack = () => {
                 alignItems: "center",
               }}
             >
-              {activeStep === 3 ? 
-                  <Typography
-                    variant="h5"
-                    sx={{ width: "100%", textAlign: "center", marginBottom: "15px" }}
-                  >
-                    <FormattedMessage id="project.packs.CreatePack.save" />
-                  </Typography>
-                  :
-                  <Typography variant="h5" >
-                    <FormattedMessage id="project.packs.CreatePack.previsualization" />
-                  </Typography>
-                  
-              }
+              {activeStep === 3 ? (
+                <Typography
+                  variant="h5"
+                  sx={{
+                    width: "100%",
+                    textAlign: "center",
+                    marginBottom: "15px",
+                  }}
+                >
+                  <FormattedMessage id="project.packs.CreatePack.save" />
+                </Typography>
+              ) : (
+                <Typography variant="h5">
+                  <FormattedMessage id="project.packs.CreatePack.previsualization" />
+                </Typography>
+              )}
             </Box>
-            <Box 
+            <Box
               sx={{
                 marginTop: "1%",
                 display: "flex",
@@ -365,16 +373,19 @@ const CreatePack = () => {
                 errors={backendErrors}
                 onClose={() => setBackendErrors(null)}
               />
-              
             </Box>
           </Box>
         </Grid>
-        <Grid
-          item
-          xs={12}
-        > 
+        <Grid item xs={12}>
           {activeStep === 3 && (
-            <Box sx={{ width: "90%", display: "flex", flexDirection: "row", pt: 2 }}>
+            <Box
+              sx={{
+                width: "90%",
+                display: "flex",
+                flexDirection: "row",
+                pt: 2,
+              }}
+            >
               <Button
                 color="inherit"
                 disabled={activeStep === 0}

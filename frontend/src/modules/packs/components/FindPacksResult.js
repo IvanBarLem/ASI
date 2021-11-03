@@ -5,9 +5,9 @@ import Pack from "./Pack";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import * as selectors from '../selectors';
-import * as actions from '../actions';
-import { withRouter } from 'react-router-dom';
+import * as selectors from "../selectors";
+import * as actions from "../actions";
+import { withRouter } from "react-router-dom";
 
 const FindPacksResult = () => {
   const dispatch = useDispatch();
@@ -15,25 +15,25 @@ const FindPacksResult = () => {
   const [page, setPage] = React.useState(1);
 
   const handlePageChange = (event, value) => {
-    dispatch(actions.findPacks(value-1));
+    dispatch(actions.findPacks(value - 1));
     setPage(value);
     window.scrollTo(0, 0);
-  }
+  };
 
   return (
     <React.Fragment>
-      {(packSearch === null || packSearch.result.content.length === 0) ?
-          <Alert severity="info">
-            <FormattedMessage id="project.packs.foundNoPacks" />
-          </Alert>
-        :
+      {packSearch === null || packSearch.result.content.length === 0 ? (
+        <Alert severity="info">
+          <FormattedMessage id="project.packs.foundNoPacks" />
+        </Alert>
+      ) : (
         <Box>
           <Grid container spacing={4}>
             {packSearch.result.content.map((row) => (
               <Pack key={row.id} item={row} />
             ))}
-            <Grid 
-              item 
+            <Grid
+              item
               xs={12}
               sx={{
                 display: "flex",
@@ -41,13 +41,15 @@ const FindPacksResult = () => {
                 alignItems: "center",
               }}
             >
-              <Pagination count={packSearch.result.totalPages} page={page} onChange={handlePageChange} />
+              <Pagination
+                count={packSearch.result.totalPages}
+                page={page}
+                onChange={handlePageChange}
+              />
             </Grid>
-            
           </Grid>
-          
         </Box>
-      }
+      )}
       <Fab
         sx={{ position: "fixed", bottom: 50, right: 50 }}
         color="primary"

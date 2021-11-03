@@ -14,6 +14,7 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { FormattedMessage } from "react-intl";
 
 const Pack = ({ item }) => {
+  console.log(item);
   const image =
     "https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png";
 
@@ -55,7 +56,7 @@ const Pack = ({ item }) => {
     >
       <Card
         sx={{
-          height: '100%',
+          height: "100%",
           maxWidth: 360,
           minWidth: 280,
         }}
