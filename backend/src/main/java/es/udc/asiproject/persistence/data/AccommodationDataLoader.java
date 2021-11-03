@@ -1,5 +1,7 @@
 package es.udc.asiproject.persistence.data;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,10 +20,10 @@ public class AccommodationDataLoader implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		if (accommodationDao.count() == 0) {
-			accommodationDao.save(new Accommodation("Hesperia"));
-			accommodationDao.save(new Accommodation("AC Hoteles"));
-			accommodationDao.save(new Accommodation("Casa Pepa"));
-			accommodationDao.save(new Accommodation("Pension Luis"));
+			accommodationDao.save(new Accommodation("Hesperia", new BigDecimal(50.0)));
+			accommodationDao.save(new Accommodation("AC Hoteles", new BigDecimal(49.99)));
+			accommodationDao.save(new Accommodation("Casa Pepa", new BigDecimal(70.99)));
+			accommodationDao.save(new Accommodation("Pension Luis", new BigDecimal(120.00)));
 		}
 	}
 }

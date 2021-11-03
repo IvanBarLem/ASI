@@ -1,9 +1,11 @@
 package es.udc.asiproject.controller.dto;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import es.udc.asiproject.controller.dto.validation.InsertValidation;
@@ -15,6 +17,9 @@ public class AccommodationDto {
 	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
 	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String name;
+	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
+	@Positive(groups = { InsertValidation.class, UpdateValidation.class })
+	private BigDecimal price;
 	@NotNull(groups = { UpdateValidation.class })
 	private Boolean hidden;
 
@@ -37,6 +42,14 @@ public class AccommodationDto {
 		this.name = name.trim();
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
 	public Boolean getHidden() {
 		return hidden;
 	}
@@ -47,7 +60,7 @@ public class AccommodationDto {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(hidden, id, name);
+		return Objects.hash(hidden, id, name, price);
 	}
 
 	@Override
@@ -59,6 +72,7 @@ public class AccommodationDto {
 		if (getClass() != obj.getClass())
 			return false;
 		AccommodationDto other = (AccommodationDto) obj;
-		return Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		return Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(price, other.price);
 	}
 }

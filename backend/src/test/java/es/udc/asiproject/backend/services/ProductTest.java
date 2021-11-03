@@ -3,6 +3,7 @@ package es.udc.asiproject.backend.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -40,7 +41,8 @@ public class ProductTest {
 
 	@Test
 	public void testCreateAccommodation() {
-		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
+		Accommodation accommodation = productService
+				.createAccommodation(new Accommodation("Hesperia marineda", new BigDecimal(1.23)));
 		List<Accommodation> accommodations = productService.findAllAccommodations();
 
 		assertEquals(accommodation, accommodations.get(0));
@@ -48,7 +50,8 @@ public class ProductTest {
 
 	@Test
 	public void testFindAccommodations() throws InstanceNotFoundException {
-		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
+		Accommodation accommodation = productService
+				.createAccommodation(new Accommodation("Hesperia marineda", new BigDecimal(1.23)));
 		accommodation.setHidden(true);
 		productService.updateAccommodation(accommodation);
 
@@ -57,7 +60,7 @@ public class ProductTest {
 
 	@Test
 	public void testFindAllAccommodations() {
-		Accommodation accommodation = new Accommodation("Hesperia marineda");
+		Accommodation accommodation = new Accommodation("Hesperia marineda", new BigDecimal(1.23));
 		accommodationDao.save(accommodation);
 
 		assertEquals(1, productService.findAllAccommodations().size());
@@ -65,13 +68,14 @@ public class ProductTest {
 
 	@Test
 	public void testUpdateAccommodationWithInstanceNotFoundException() {
-		assertThrows(InstanceNotFoundException.class,
-				() -> productService.updateAccommodation(new Accommodation(-1L, "Hesperia marineda")));
+		assertThrows(InstanceNotFoundException.class, () -> productService
+				.updateAccommodation(new Accommodation(-1L, "Hesperia marineda", new BigDecimal(1.23), false)));
 	}
 
 	@Test
 	public void testUpdateAccommodation() throws InstanceNotFoundException {
-		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
+		Accommodation accommodation = productService
+				.createAccommodation(new Accommodation("Hesperia marineda", new BigDecimal(1.23)));
 		accommodation.setName(accommodation.getName() + "X");
 		productService.updateAccommodation(accommodation);
 		List<Accommodation> accommodations = productService.findAllAccommodations();
@@ -86,7 +90,8 @@ public class ProductTest {
 
 	@Test
 	public void testRemoveAccommodation() throws InstanceNotFoundException {
-		Accommodation accommodation = productService.createAccommodation(new Accommodation("Hesperia marineda"));
+		Accommodation accommodation = productService
+				.createAccommodation(new Accommodation("Hesperia marineda", new BigDecimal(1.23)));
 		productService.removeAccommodation(accommodation.getId());
 		List<Accommodation> accommodations = productService.findAllAccommodations();
 
@@ -95,7 +100,7 @@ public class ProductTest {
 
 	@Test
 	public void testCreateActivity() {
-		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
+		Activity activity = productService.createActivity(new Activity("Motos de Agua", new BigDecimal(1.23)));
 		List<Activity> activities = productService.findAllActivities();
 
 		assertEquals(activity, activities.get(0));
@@ -103,7 +108,7 @@ public class ProductTest {
 
 	@Test
 	public void testFindActivities() throws InstanceNotFoundException {
-		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
+		Activity activity = productService.createActivity(new Activity("Motos de Agua", new BigDecimal(1.23)));
 		activity.setHidden(true);
 		productService.updateActivity(activity);
 
@@ -112,7 +117,7 @@ public class ProductTest {
 
 	@Test
 	public void testFindAllActivities() {
-		Activity activity = new Activity("Motos de Agua");
+		Activity activity = new Activity("Motos de Agua", new BigDecimal(1.23));
 		activityDao.save(activity);
 
 		assertEquals(1, productService.findAllActivities().size());
@@ -121,12 +126,12 @@ public class ProductTest {
 	@Test
 	public void testUpdateActivityWithInstanceNotFoundException() {
 		assertThrows(InstanceNotFoundException.class,
-				() -> productService.updateActivity(new Activity(-1L, "Motos de Agua")));
+				() -> productService.updateActivity(new Activity(-1L, "Motos de Agua", new BigDecimal(1.23), false)));
 	}
 
 	@Test
 	public void testUpdateActivity() throws InstanceNotFoundException {
-		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
+		Activity activity = productService.createActivity(new Activity("Motos de Agua", new BigDecimal(1.23)));
 		activity.setName(activity.getName() + "X");
 		productService.updateActivity(activity);
 		List<Activity> activities = productService.findAllActivities();
@@ -141,7 +146,7 @@ public class ProductTest {
 
 	@Test
 	public void testRemoveActivity() throws InstanceNotFoundException {
-		Activity activity = productService.createActivity(new Activity("Motos de Agua"));
+		Activity activity = productService.createActivity(new Activity("Motos de Agua", new BigDecimal(1.23)));
 		productService.removeActivity(activity.getId());
 		List<Activity> activities = productService.findAllActivities();
 
@@ -150,7 +155,7 @@ public class ProductTest {
 
 	@Test
 	public void testCreateTransport() {
-		Transport transport = productService.createTransport(new Transport("Patineta"));
+		Transport transport = productService.createTransport(new Transport("Patineta", new BigDecimal(1.23)));
 		List<Transport> transports = productService.findAllTransports();
 
 		assertEquals(transport, transports.get(0));
@@ -158,7 +163,7 @@ public class ProductTest {
 
 	@Test
 	public void testFindTransports() throws InstanceNotFoundException {
-		Transport transport = productService.createTransport(new Transport("Patineta"));
+		Transport transport = productService.createTransport(new Transport("Patineta", new BigDecimal(1.23)));
 		transport.setHidden(true);
 		productService.updateTransport(transport);
 
@@ -167,12 +172,12 @@ public class ProductTest {
 
 	@Test
 	public void testFindAllTransports() {
-		Transport transport = new Transport("Patineta");
+		Transport transport = new Transport("Patineta", new BigDecimal(1.23));
 		transportDao.save(transport);
 
 		assertEquals(1, productService.findAllTransports().size());
 
-		transport = new Transport("Patines");
+		transport = new Transport("Patines", new BigDecimal(1.23));
 		transportDao.save(transport);
 
 		assertEquals(2, productService.findAllTransports().size());
@@ -181,12 +186,12 @@ public class ProductTest {
 	@Test
 	public void testUpdateTransportWithInstanceNotFoundException() {
 		assertThrows(InstanceNotFoundException.class,
-				() -> productService.updateTransport(new Transport(-1L, "Patineta")));
+				() -> productService.updateTransport(new Transport(-1L, "Patineta", new BigDecimal(1.23), false)));
 	}
 
 	@Test
 	public void testUpdateTransport() throws InstanceNotFoundException {
-		Transport transport = productService.createTransport(new Transport("Patineta"));
+		Transport transport = productService.createTransport(new Transport("Patineta", new BigDecimal(1.23)));
 		transport.setName(transport.getName() + "X");
 		productService.updateTransport(transport);
 		List<Transport> transports = productService.findAllTransports();
@@ -201,7 +206,7 @@ public class ProductTest {
 
 	@Test
 	public void testRemoveTransport() throws InstanceNotFoundException {
-		Transport transport = productService.createTransport(new Transport("Patineta"));
+		Transport transport = productService.createTransport(new Transport("Patineta", new BigDecimal(1.23)));
 		productService.removeTransport(transport.getId());
 		List<Transport> transports = productService.findAllTransports();
 
@@ -210,7 +215,7 @@ public class ProductTest {
 
 	@Test
 	public void testCreateTravel() {
-		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
+		Travel travel = productService.createTravel(new Travel("Egipto Antiguo", new BigDecimal(1.23)));
 		List<Travel> travels = productService.findAllTravels();
 
 		assertEquals(travel, travels.get(0));
@@ -218,7 +223,7 @@ public class ProductTest {
 
 	@Test
 	public void testFindTravels() throws InstanceNotFoundException {
-		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
+		Travel travel = productService.createTravel(new Travel("Egipto Antiguo", new BigDecimal(1.23)));
 		travel.setHidden(true);
 		productService.updateTravel(travel);
 
@@ -227,7 +232,7 @@ public class ProductTest {
 
 	@Test
 	public void testFindAllTravels() {
-		Travel travel = new Travel("Egipto Antiguo");
+		Travel travel = new Travel("Egipto Antiguo", new BigDecimal(1.23));
 		travelDao.save(travel);
 
 		assertEquals(1, productService.findAllTravels().size());
@@ -236,12 +241,12 @@ public class ProductTest {
 	@Test
 	public void testUpdateTravelWithInstanceNotFoundException() {
 		assertThrows(InstanceNotFoundException.class,
-				() -> productService.updateTravel(new Travel(-1L, "Egipto Antiguo")));
+				() -> productService.updateTravel(new Travel(-1L, "Egipto Antiguo", new BigDecimal(1.23), false)));
 	}
 
 	@Test
 	public void testUpdateTravel() throws InstanceNotFoundException {
-		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
+		Travel travel = productService.createTravel(new Travel("Egipto Antiguo", new BigDecimal(1.23)));
 		travel.setName(travel.getName() + "X");
 		productService.updateTravel(travel);
 		List<Travel> travels = productService.findAllTravels();
@@ -256,7 +261,7 @@ public class ProductTest {
 
 	@Test
 	public void testRemoveTravel() throws InstanceNotFoundException {
-		Travel travel = productService.createTravel(new Travel("Egipto Antiguo"));
+		Travel travel = productService.createTravel(new Travel("Egipto Antiguo", new BigDecimal(1.23)));
 		productService.removeTravel(travel.getId());
 		List<Travel> travels = productService.findAllTravels();
 

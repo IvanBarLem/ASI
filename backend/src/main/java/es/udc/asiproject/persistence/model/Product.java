@@ -1,5 +1,6 @@
 package es.udc.asiproject.persistence.model;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,6 +19,8 @@ public class Product {
 	private Long id;
 	@Column(nullable = false, length = 60)
 	private String name;
+	@Column(nullable = false, precision = 12, scale = 2)
+	private BigDecimal price;
 	@Column(nullable = false)
 	private Boolean hidden;
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -26,22 +29,17 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String name) {
+	public Product(String name, BigDecimal price) {
 		this.name = name;
+		this.price = price;
 		this.hidden = false;
 	}
 
-	public Product(Long id, String name) {
+	public Product(Long id, String name, BigDecimal price, Boolean hidden) {
 		this.id = id;
 		this.name = name;
-		this.hidden = false;
-	}
-
-	public Product(Long id, String name, Boolean hidden, Set<Pack> packs) {
-		this.id = id;
-		this.name = name;
+		this.price = price;
 		this.hidden = hidden;
-		this.packs = packs;
 	}
 
 	public Long getId() {
@@ -58,6 +56,14 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
 	}
 
 	public Boolean getHidden() {
@@ -78,7 +84,7 @@ public class Product {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(hidden, id, name, packs);
+		return Objects.hash(hidden, id, name, packs, price);
 	}
 
 	@Override
@@ -91,6 +97,6 @@ public class Product {
 			return false;
 		Product other = (Product) obj;
 		return Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(packs, other.packs);
+				&& Objects.equals(packs, other.packs) && Objects.equals(price, other.price);
 	}
 }

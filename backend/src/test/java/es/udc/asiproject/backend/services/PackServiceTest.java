@@ -46,28 +46,28 @@ public class PackServiceTest {
 	TravelDao travelDao;
 
 	private Accommodation seedAccommodationDatabase() {
-		Accommodation accommodation = new Accommodation("Hesperia marineda");
+		Accommodation accommodation = new Accommodation("Hesperia marineda", new BigDecimal(1.23));
 		accommodationDao.save(accommodation);
 
 		return accommodation;
 	}
 
 	private Activity seedActivityDatabase() {
-		Activity activity = new Activity("Motos de Agua");
+		Activity activity = new Activity("Motos de Agua", new BigDecimal(1.23));
 		activityDao.save(activity);
 
 		return activity;
 	}
 
 	private Transport seedTransportDatabase() {
-		Transport transport = new Transport("Patineta");
+		Transport transport = new Transport("Patineta", new BigDecimal(1.23));
 		transportDao.save(transport);
 
 		return transport;
 	}
 
 	private Travel seedTravelDatabase() {
-		Travel travel = new Travel("Egipto Antiguo");
+		Travel travel = new Travel("Egipto Antiguo", new BigDecimal(1.23));
 		travelDao.save(travel);
 
 		return travel;

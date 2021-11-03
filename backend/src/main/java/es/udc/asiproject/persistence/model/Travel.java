@@ -1,6 +1,6 @@
 package es.udc.asiproject.persistence.model;
 
-import java.util.Set;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 
@@ -9,16 +9,12 @@ public class Travel extends Product {
 	public Travel() {
 	}
 
-	public Travel(String name) {
-		super(name);
+	public Travel(String name, BigDecimal price) {
+		super(name, price);
 	}
 
-	public Travel(Long id, String name) {
-		super(id, name);
-	}
-
-	public Travel(Long id, String name, Boolean hidden, Set<Pack> packs) {
-		super(id, name, hidden, packs);
+	public Travel(Long id, String name, BigDecimal price, Boolean hidden) {
+		super(id, name, price, hidden);
 	}
 
 	@Override

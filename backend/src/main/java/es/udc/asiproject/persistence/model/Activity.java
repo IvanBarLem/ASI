@@ -1,6 +1,6 @@
 package es.udc.asiproject.persistence.model;
 
-import java.util.Set;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 
@@ -9,16 +9,12 @@ public class Activity extends Product {
 	public Activity() {
 	}
 
-	public Activity(String name) {
-		super(name);
+	public Activity(String name, BigDecimal price) {
+		super(name, price);
 	}
 
-	public Activity(Long id, String name) {
-		super(id, name);
-	}
-
-	public Activity(Long id, String name, Boolean hidden, Set<Pack> packs) {
-		super(id, name, hidden, packs);
+	public Activity(Long id, String name, BigDecimal price, Boolean hidden) {
+		super(id, name, price, hidden);
 	}
 
 	@Override
