@@ -1,11 +1,10 @@
 package es.udc.asiproject.controller.mapper;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,38 +21,22 @@ public class AccommodationMapper {
 	}
 
 	public static AccommodationDto convertToDto(Accommodation accommodation) {
-		AccommodationDto accommodationDto = mapper.map(accommodation, AccommodationDto.class);
-
-		return accommodationDto;
+		return mapper.map(accommodation, AccommodationDto.class);
 	}
 
 	public static Set<AccommodationDto> convertToDto(Set<Accommodation> accommodations) {
-		Type targetType = new TypeToken<Set<AccommodationDto>>() {
-		}.getType();
-		Set<AccommodationDto> accommodationsDto = mapper.map(accommodations, targetType);
-
-		return accommodationsDto;
+		return accommodations.stream().map(item -> convertToDto(item)).collect(Collectors.toSet());
 	}
 
 	public static List<AccommodationDto> convertToDto(List<Accommodation> accommodations) {
-		Type targetType = new TypeToken<List<AccommodationDto>>() {
-		}.getType();
-		List<AccommodationDto> accommodationsDto = mapper.map(accommodations, targetType);
-
-		return accommodationsDto;
+		return accommodations.stream().map(item -> convertToDto(item)).collect(Collectors.toList());
 	}
 
 	public static Accommodation convertToEntity(AccommodationDto accommodationDto) {
-		Accommodation accommodation = mapper.map(accommodationDto, Accommodation.class);
-
-		return accommodation;
+		return mapper.map(accommodationDto, Accommodation.class);
 	}
 
 	public static Set<Accommodation> convertToEntity(Set<AccommodationDto> accommodationDtos) {
-		Type targetType = new TypeToken<Set<Accommodation>>() {
-		}.getType();
-		Set<Accommodation> accommodations = mapper.map(accommodationDtos, targetType);
-
-		return accommodations;
+		return accommodationDtos.stream().map(item -> convertToEntity(item)).collect(Collectors.toSet());
 	}
 }

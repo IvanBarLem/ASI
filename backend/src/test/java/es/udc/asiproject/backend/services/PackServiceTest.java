@@ -266,4 +266,63 @@ public class PackServiceTest {
 			assertFalse(page.hasPrevious());
 		});
 	}
+
+	@SuppressWarnings("serial")
+	@Test
+	public void testUpdatePack() throws InstanceNotFoundException, InvalidOperationException {
+		Pack inputPack = packService.createPack(createPack());
+		inputPack.setTitle(inputPack.getTitle() + "X");
+		inputPack.setDescription(inputPack.getDescription() + "X");
+		inputPack.setImage(new Byte[] { 3, 2, 1 });
+		inputPack.setPrice(new BigDecimal(3.21));
+		inputPack.setDuration((short) 8);
+		inputPack.setOutstanding(true);
+		inputPack.setHidden(true);
+		inputPack.setAccommodations(new HashSet<Accommodation>() {
+			{
+				add(seedAccommodationDatabase());
+			}
+		});
+		inputPack.setActivities(new HashSet<Activity>() {
+			{
+				add(seedActivityDatabase());
+				add(seedActivityDatabase());
+			}
+		});
+		inputPack.setTransports(new HashSet<Transport>() {
+			{
+				add(seedTransportDatabase());
+				add(seedTransportDatabase());
+				add(seedTransportDatabase());
+			}
+		});
+		inputPack.setTravels(new HashSet<Travel>() {
+			{
+				add(seedTravelDatabase());
+				add(seedTravelDatabase());
+				add(seedTravelDatabase());
+				add(seedTravelDatabase());
+			}
+		});
+
+		Pack outputPack = packService.updatePack(inputPack);
+
+		assertAll(() -> {
+			assertEquals(inputPack.getId(), outputPack.getId());
+			assertEquals(inputPack.getTitle(), outputPack.getTitle());
+			assertEquals(inputPack.getDescription(), outputPack.getDescription());
+			assertEquals(inputPack.getImage(), outputPack.getImage());
+			assertEquals(inputPack.getPrice(), outputPack.getPrice());
+			assertEquals(inputPack.getDuration(), outputPack.getDuration());
+			assertEquals(inputPack.getPersons(), outputPack.getPersons());
+			assertEquals(inputPack.getOutstanding(), outputPack.getOutstanding());
+			assertEquals(inputPack.getHidden(), outputPack.getHidden());
+			assertEquals(inputPack.getCreatedAt(), outputPack.getCreatedAt());
+			assertEquals(inputPack.getAccommodations(), outputPack.getAccommodations());
+			assertEquals(inputPack.getActivities(), outputPack.getActivities());
+			assertEquals(inputPack.getTransports(), outputPack.getTransports());
+			assertEquals(inputPack.getTravels(), outputPack.getTravels());
+			assertEquals(4, outputPack.getTravels().size());
+		});
+	}
 }
