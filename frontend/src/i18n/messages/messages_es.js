@@ -71,4 +71,9 @@ export default {
   "project.packs.CreatePack.select.friends": "Amigos",
   "project.packs.CreatePack.previsualization": "Previsualización",
   "project.packs.foundNoPacks": "No existen paquetes aún",
+  "project.products.foundNoProducts": "No existen productos aún",
+  "project.products.travels": "Viajes",
+  "project.products.transports": "Transportes",
+  "project.products.accommodations": "Alojamientos",
+  "project.products.activities": "Actividades",
 };

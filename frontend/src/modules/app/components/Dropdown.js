@@ -7,11 +7,23 @@ import {
   ListItemText,
   Divider,
   Drawer,
+  Collapse,
 } from "@mui/material";
 import ListIcon from "@material-ui/icons/List";
 import { Link } from "react-router-dom";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import ExtensionIcon from "@mui/icons-material/Extension";
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
+import CommuteIcon from "@mui/icons-material/Commute";
+import HotelIcon from "@mui/icons-material/Hotel";
+import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 
 const Dropdown = (props) => {
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
   return (
     <Drawer
       className="myDrawer"
@@ -30,8 +42,48 @@ const Dropdown = (props) => {
           <ListItemIcon>
             <ListIcon />
           </ListItemIcon>
-          <ListItemText>Ver Packs</ListItemText>
+          <ListItemText>Packs</ListItemText>
         </ListItem>
+        <ListItem button onClick={handleClick}>
+          <ListItemIcon>
+            <ExtensionIcon />
+          </ListItemIcon>
+          <ListItemText>Productos</ListItemText>
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem button sx={{ pl: 4 }} component={Link} to="/travels">
+              <ListItemIcon>
+                <AirplanemodeActiveIcon />
+              </ListItemIcon>
+              <ListItemText>Viajes</ListItemText>
+            </ListItem>
+            <ListItem button sx={{ pl: 4 }} component={Link} to="/transports">
+              <ListItemIcon>
+                <CommuteIcon />
+              </ListItemIcon>
+              <ListItemText>Transportes</ListItemText>
+            </ListItem>
+            <ListItem
+              button
+              sx={{ pl: 4 }}
+              component={Link}
+              to="/accommodations"
+            >
+              <ListItemIcon>
+                <HotelIcon />
+              </ListItemIcon>
+              <ListItemText>Alojamientos</ListItemText>
+            </ListItem>
+            <ListItem button sx={{ pl: 4 }} component={Link} to="/activities">
+              <ListItemIcon>
+                <LocalActivityIcon />
+              </ListItemIcon>
+              <ListItemText>Actividades</ListItemText>
+            </ListItem>
+          </List>
+        </Collapse>
       </List>
     </Drawer>
   );

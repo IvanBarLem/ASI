@@ -20,6 +20,7 @@
     "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.0.0",
     "@mui/styles": "^5.0.1",
+    "@mui/x-data-grid": "^4.0.2",
     "@types/node": "16",
     "bootstrap": "^4.6.0",
     "core-js": "^2.6.12",
