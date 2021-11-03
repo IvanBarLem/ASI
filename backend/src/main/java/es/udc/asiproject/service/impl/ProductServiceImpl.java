@@ -55,6 +55,7 @@ public class ProductServiceImpl implements ProductService {
 				() -> new InstanceNotFoundException(Accommodation.class.getSimpleName(), accommodation.getId()));
 
 		oldAccommodation.setName(accommodation.getName());
+		oldAccommodation.setPrice(accommodation.getPrice());
 		oldAccommodation.setHidden(accommodation.getHidden());
 
 		return oldAccommodation;
@@ -96,6 +97,7 @@ public class ProductServiceImpl implements ProductService {
 				.orElseThrow(() -> new InstanceNotFoundException(Activity.class.getSimpleName(), activity.getId()));
 
 		oldActivity.setName(activity.getName());
+		oldActivity.setPrice(activity.getPrice());
 		oldActivity.setHidden(activity.getHidden());
 
 		return oldActivity;
@@ -137,6 +139,7 @@ public class ProductServiceImpl implements ProductService {
 				.orElseThrow(() -> new InstanceNotFoundException(Transport.class.getSimpleName(), transport.getId()));
 
 		oldTransport.setName(transport.getName());
+		oldTransport.setPrice(transport.getPrice());
 		oldTransport.setHidden(transport.getHidden());
 
 		return oldTransport;
@@ -178,6 +181,7 @@ public class ProductServiceImpl implements ProductService {
 				.orElseThrow(() -> new InstanceNotFoundException(Travel.class.getSimpleName(), travel.getId()));
 
 		oldTravel.setName(travel.getName());
+		oldTravel.setPrice(travel.getPrice());
 		oldTravel.setHidden(travel.getHidden());
 
 		return oldTravel;

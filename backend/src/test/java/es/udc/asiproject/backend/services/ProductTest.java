@@ -76,6 +76,7 @@ public class ProductTest {
 	public void testUpdateAccommodation() throws InstanceNotFoundException {
 		Accommodation accommodation = productService
 				.createAccommodation(new Accommodation("Hesperia marineda", new BigDecimal(1.23)));
+		accommodation.setPrice(new BigDecimal(3.21));
 		accommodation.setName(accommodation.getName() + "X");
 		productService.updateAccommodation(accommodation);
 		List<Accommodation> accommodations = productService.findAllAccommodations();
@@ -132,6 +133,7 @@ public class ProductTest {
 	@Test
 	public void testUpdateActivity() throws InstanceNotFoundException {
 		Activity activity = productService.createActivity(new Activity("Motos de Agua", new BigDecimal(1.23)));
+		activity.setPrice(new BigDecimal(3.21));
 		activity.setName(activity.getName() + "X");
 		productService.updateActivity(activity);
 		List<Activity> activities = productService.findAllActivities();
@@ -192,6 +194,7 @@ public class ProductTest {
 	@Test
 	public void testUpdateTransport() throws InstanceNotFoundException {
 		Transport transport = productService.createTransport(new Transport("Patineta", new BigDecimal(1.23)));
+		transport.setPrice(new BigDecimal(3.21));
 		transport.setName(transport.getName() + "X");
 		productService.updateTransport(transport);
 		List<Transport> transports = productService.findAllTransports();
@@ -247,6 +250,7 @@ public class ProductTest {
 	@Test
 	public void testUpdateTravel() throws InstanceNotFoundException {
 		Travel travel = productService.createTravel(new Travel("Egipto Antiguo", new BigDecimal(1.23)));
+		travel.setPrice(new BigDecimal(3.21));
 		travel.setName(travel.getName() + "X");
 		productService.updateTravel(travel);
 		List<Travel> travels = productService.findAllTravels();
