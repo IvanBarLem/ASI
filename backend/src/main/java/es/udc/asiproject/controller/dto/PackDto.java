@@ -33,6 +33,8 @@ public class PackDto {
 	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String persons;
 	@NotNull(groups = { UpdateValidation.class })
+	private Boolean outstanding;
+	@NotNull(groups = { UpdateValidation.class })
 	private Boolean hidden;
 	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	private Set<AccommodationDto> accommodations;

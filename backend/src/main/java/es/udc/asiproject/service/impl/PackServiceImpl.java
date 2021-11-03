@@ -83,6 +83,7 @@ public class PackServiceImpl implements PackService {
 			}
 		}
 
+		pack.setOutstanding(false);
 		pack.setHidden(false);
 		pack.setCreatedAt(new Date());
 
@@ -92,7 +93,7 @@ public class PackServiceImpl implements PackService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Pack> findPacks(Integer pageNumber, Integer pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "createdAt");
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "outstanding", "createdAt");
 
 		return packDao.findByHiddenFalse(pageable);
 	}
@@ -100,7 +101,7 @@ public class PackServiceImpl implements PackService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Pack> findAllPacks(Integer pageNumber, Integer pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "createdAt");
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "outstanding", "createdAt");
 
 		return packDao.findAll(pageable);
 	}

@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -48,6 +50,10 @@ public class PackServiceTest {
 	@Autowired
 	TravelDao travelDao;
 
+	private Date parseDate(String date) throws ParseException {
+		return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+	}
+
 	private Accommodation seedAccommodationDatabase() {
 		Accommodation accommodation = new Accommodation("Hesperia marineda");
 		accommodationDao.save(accommodation);
@@ -85,6 +91,7 @@ public class PackServiceTest {
 		pack.setPrice(new BigDecimal(1.23));
 		pack.setDuration((short) 5);
 		pack.setPersons("persons");
+		pack.setOutstanding(false);
 		pack.setHidden(false);
 		pack.setCreatedAt(new Date());
 		pack.setAccommodations(new HashSet<Accommodation>() {
@@ -123,6 +130,8 @@ public class PackServiceTest {
 			assertEquals(inputPack.getPrice(), outputPack.getPrice());
 			assertEquals(inputPack.getDuration(), outputPack.getDuration());
 			assertEquals(inputPack.getPersons(), outputPack.getPersons());
+			assertEquals(false, outputPack.getOutstanding());
+			assertEquals(false, outputPack.getHidden());
 			assertEquals(inputPack.getCreatedAt(), outputPack.getCreatedAt());
 			assertEquals(inputPack.getAccommodations(), outputPack.getAccommodations());
 			assertEquals(inputPack.getActivities(), outputPack.getActivities());
@@ -132,18 +141,51 @@ public class PackServiceTest {
 	}
 
 	@Test
-	public void testFindPacks() throws InstanceNotFoundException, InvalidOperationException {
-		packService.createPack(createPack());
-		packService.createPack(createPack());
-		Pack pack = createPack();
-		pack.setHidden(true);
-		packDao.save(pack);
+	public void testFindPacks() throws InstanceNotFoundException, InvalidOperationException, ParseException {
+		Pack pack1 = createPack();
+		pack1.setCreatedAt(parseDate("2021-01-01"));
+		packDao.save(pack1);
+		Pack pack2 = createPack();
+		pack2.setCreatedAt(parseDate("2014-01-01"));
+		packDao.save(pack2);
+		Pack pack3 = createPack();
+		pack3.setHidden(true);
+		pack3.setCreatedAt(parseDate("2018-01-01"));
+		packDao.save(pack3);
 
-		Page<Pack> page = packService.findPacks(0, 3);
+		Page<Pack> page = packService.findPacks(0, 2);
 
 		assertAll(() -> {
 			assertEquals(1, page.getTotalPages());
 			assertEquals(2, page.getNumberOfElements());
+			assertEquals(pack1, page.getContent().get(0));
+			assertEquals(pack2, page.getContent().get(1));
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
+
+	@Test
+	public void testFindOutstandingPacks() throws InstanceNotFoundException, InvalidOperationException, ParseException {
+		Pack pack1 = createPack();
+		pack1.setCreatedAt(parseDate("2021-01-01"));
+		packDao.save(pack1);
+		Pack pack2 = createPack();
+		pack2.setOutstanding(true);
+		pack2.setCreatedAt(parseDate("2014-01-01"));
+		packDao.save(pack2);
+		Pack pack3 = createPack();
+		pack3.setHidden(true);
+		pack3.setCreatedAt(parseDate("2018-01-01"));
+		packDao.save(pack3);
+
+		Page<Pack> page = packService.findPacks(0, 2);
+
+		assertAll(() -> {
+			assertEquals(1, page.getTotalPages());
+			assertEquals(2, page.getNumberOfElements());
+			assertEquals(pack2, page.getContent().get(0));
+			assertEquals(pack1, page.getContent().get(1));
 			assertFalse(page.hasNext());
 			assertFalse(page.hasPrevious());
 		});
@@ -162,18 +204,54 @@ public class PackServiceTest {
 	}
 
 	@Test
-	public void testFindAllPacks() throws InstanceNotFoundException, InvalidOperationException {
-		packService.createPack(createPack());
-		packService.createPack(createPack());
-		packService.createPack(createPack());
+	public void testFindAllPacks() throws InstanceNotFoundException, InvalidOperationException, ParseException {
+		Pack pack1 = createPack();
+		pack1.setCreatedAt(parseDate("2021-01-01"));
+		packDao.save(pack1);
+		Pack pack2 = createPack();
+		pack2.setCreatedAt(parseDate("2018-01-01"));
+		packDao.save(pack2);
+		Pack pack3 = createPack();
+		pack3.setHidden(true);
+		pack3.setCreatedAt(parseDate("2014-01-01"));
+		packDao.save(pack3);
 
 		Page<Pack> page = packService.findAllPacks(1, 1);
 
 		assertAll(() -> {
 			assertEquals(3, page.getTotalPages());
 			assertEquals(1, page.getNumberOfElements());
+			assertEquals(pack2, page.getContent().get(0));
 			assertTrue(page.hasNext());
 			assertTrue(page.hasPrevious());
+		});
+	}
+
+	@Test
+	public void testFindAllOutstandingPacks()
+			throws InstanceNotFoundException, InvalidOperationException, ParseException {
+		Pack pack1 = createPack();
+		pack1.setCreatedAt(parseDate("2021-01-01"));
+		packDao.save(pack1);
+		Pack pack2 = createPack();
+		pack2.setOutstanding(true);
+		pack2.setCreatedAt(parseDate("2014-01-01"));
+		packDao.save(pack2);
+		Pack pack3 = createPack();
+		pack3.setHidden(true);
+		pack3.setCreatedAt(parseDate("2018-01-01"));
+		packDao.save(pack3);
+
+		Page<Pack> page = packService.findAllPacks(0, 3);
+
+		assertAll(() -> {
+			assertEquals(1, page.getTotalPages());
+			assertEquals(3, page.getNumberOfElements());
+			assertEquals(pack2, page.getContent().get(0));
+			assertEquals(pack1, page.getContent().get(1));
+			assertEquals(pack3, page.getContent().get(2));
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
 		});
 	}
 
