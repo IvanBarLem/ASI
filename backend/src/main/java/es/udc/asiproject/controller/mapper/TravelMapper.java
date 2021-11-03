@@ -1,11 +1,10 @@
 package es.udc.asiproject.controller.mapper;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,38 +21,22 @@ public class TravelMapper {
 	}
 
 	public static TravelDto convertToDto(Travel travel) {
-		TravelDto travelDto = mapper.map(travel, TravelDto.class);
-
-		return travelDto;
+		return mapper.map(travel, TravelDto.class);
 	}
 
 	public static Set<TravelDto> convertToDto(Set<Travel> travels) {
-		Type targetType = new TypeToken<Set<TravelDto>>() {
-		}.getType();
-		Set<TravelDto> travelsDto = mapper.map(travels, targetType);
-
-		return travelsDto;
+		return travels.stream().map(item -> convertToDto(item)).collect(Collectors.toSet());
 	}
 
 	public static List<TravelDto> convertToDto(List<Travel> travels) {
-		Type targetType = new TypeToken<List<TravelDto>>() {
-		}.getType();
-		List<TravelDto> travelsDto = mapper.map(travels, targetType);
-
-		return travelsDto;
+		return travels.stream().map(item -> convertToDto(item)).collect(Collectors.toList());
 	}
 
 	public static Travel convertToEntity(TravelDto travelDto) {
-		Travel travel = mapper.map(travelDto, Travel.class);
-
-		return travel;
+		return mapper.map(travelDto, Travel.class);
 	}
 
 	public static Set<Travel> convertToEntity(Set<TravelDto> travelsDtos) {
-		Type targetType = new TypeToken<Set<Travel>>() {
-		}.getType();
-		Set<Travel> travels = mapper.map(travelsDtos, targetType);
-
-		return travels;
+		return travelsDtos.stream().map(item -> convertToEntity(item)).collect(Collectors.toSet());
 	}
 }
