@@ -27,6 +27,7 @@ export default {
   "project.global.fields.actualPrice": "Prezo actual",
   "project.global.fields.duration": "Duración",
   "project.global.fields.description": "Descrición",
+  "project.global.fields.details": "Detalle",
   "project.global.fields.shipmentInfo": "Información de envío",
   "project.global.fields.amount": "Puxa",
   "project.global.fields.state": "Estado",

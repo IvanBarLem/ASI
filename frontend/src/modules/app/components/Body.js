@@ -1,23 +1,21 @@
+import { Box } from "@mui/material";
 import React from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
-import { Box } from "@mui/material";
-
-import AppGlobalComponents from "./AppGlobalComponents";
-import Home from "./Home";
-import {
-  Login,
-  SignUp,
-  UpdateProfile,
-  ChangePassword,
-  Logout,
-} from "../../users";
+import { AgentList } from "../../agents";
 import { CreatePack, FindPacks } from "../../packs";
 import {
-  Travels,
   Accommodations,
   Activities,
-  Transports,
+  Transports, Travels
 } from "../../products";
+import {
+  ChangePassword, Login,
+  Logout, SignUp,
+  UpdateProfile
+} from "../../users";
+import AppGlobalComponents from "./AppGlobalComponents";
+import Home from "./Home";
+
 
 const Body = (props) => (
   <Box sx={{ margin: 4 }}>
@@ -52,6 +50,7 @@ const Body = (props) => (
           <Route exact path="/activities" component={Activities} />
         )}
         {props.loggedIn && <Route exact path="/packs" component={FindPacks} />}
+        {props.loggedIn && <Route exact path="/agents" component={AgentList} />}
         {!props.loggedIn && (
           <Route exact path="/users/login" component={Login} />
         )}

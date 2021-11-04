@@ -1,22 +1,21 @@
-import React from "react";
-//import {FormattedMessage} from 'react-intl';
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-  Drawer,
-  Collapse,
-} from "@mui/material";
-import ListIcon from "@material-ui/icons/List";
-import { Link } from "react-router-dom";
 import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import ExtensionIcon from "@mui/icons-material/Extension";
+import ListIcon from "@material-ui/icons/List";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import CommuteIcon from "@mui/icons-material/Commute";
+import ExtensionIcon from "@mui/icons-material/Extension";
+import GroupIcon from '@mui/icons-material/Group';
 import HotelIcon from "@mui/icons-material/Hotel";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
+//import {FormattedMessage} from 'react-intl';
+import {
+  Collapse, Divider,
+  Drawer, List,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+} from "@mui/material";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Dropdown = (props) => {
   const [open, setOpen] = React.useState(true);
@@ -84,6 +83,12 @@ const Dropdown = (props) => {
             </ListItem>
           </List>
         </Collapse>
+        <ListItem button component={Link} to="/agents">
+          <ListItemIcon>
+            <GroupIcon />
+          </ListItemIcon>
+          <ListItemText>Agentes/Estadísticas</ListItemText>
+        </ListItem>
       </List>
     </Drawer>
   );
