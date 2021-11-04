@@ -76,4 +76,6 @@ export default {
   "project.products.transports": "Transportes",
   "project.products.accommodations": "Aloxamentos",
   "project.products.activities": "Actividades",
+
+  "project.agents.kpi.respectingLastMonth": "respecto ao último mes",
 };
