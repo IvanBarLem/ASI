@@ -39,65 +39,67 @@ const calculateTotalProductsKPI = (products) => {
 const products = [
   {
     id: 1,
-    category: "Transporte",
-    name: "Amazonas Salvaje",
+    category: 4,
+    name: "Bus",
     price: 14.99,
     location: "Amazonas",
-    total_sales: 2000,
+    total_sales: 20000,
   },
   {
     id: 3,
-    category: "Transporte",
-    name: "Tibet Espiritual",
+    category: 4,
+    name: "Coche",
     price: 290,
     location: "Tibet",
-    total_sales: 800,
+    total_sales: 5000,
   },
   {
     id: 4,
-    category: "Viaje",
-    name: "Tibet Espiritual",
-    price: 290,
-    location: "Tibet",
-    total_sales: 800,
+    category: 3,
+    name: "Madrid - Paris",
+    price: 800,
+    location: "Madrid",
+    total_sales: 1200,
   },
   {
     id: 5,
-    category: "Viaje",
-    name: "Tibet Espiritual",
-    price: 290,
-    location: "Tibet",
+    category: 3,
+    name: "Londres - Nueva York",
+    price: 2000,
+    location: "Londres",
     total_sales: 800,
   },
   {
     id: 7,
-    category: "Alojamiento",
-    name: "Tibet Espiritual",
-    price: 290,
-    location: "Tibet",
-    total_sales: 800,
+    category: 1,
+    name: "Hotel",
+    price: 80,
+    location: "Madrid",
+    total_sales: 40000,
   },
   {
     id: 8,
-    category: "Alojamiento",
-    name: "Tibet Espiritual",
-    price: 290,
+    category: 1,
+    name: "Camping",
+    price: 10,
     location: "Tibet",
-    total_sales: 800,
+    total_sales: 50000,
   },
   {
     id: 9,
-    category: "Actividad",
-    name: "Tibet Espiritual",
-    price: 290,
-    location: "Tibet",
-    total_sales: 800,
+    category: 2,
+    name: "Golf",
+    price: 50,
+    location: "Madrid",
+    total_sales: 400,
   },
 ];
 
 const ProductList = () => {
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState(0);
+
+  const [productFilters, setProductFilters] = useState(products);
 
   const [productSelected, setProductSelected] = useState(null);
 
@@ -107,6 +109,58 @@ const ProductList = () => {
     productSelected && productSelected.id === product.id
       ? setProductSelected(null)
       : setProductSelected(product);
+  };
+
+  const handleCategory = (categorySelected) => {
+    setCategory(categorySelected);
+    setProductSelected(null);
+
+    if (categorySelected !== 0 && location !== "") {
+      const result = products.filter(
+        (product) =>
+          product.category === categorySelected &&
+          product.location.includes(location.trim())
+      );
+      setProductFilters(result);
+    } else if (location === "" && categorySelected !== 0) {
+      const result = products.filter(
+        (product) => product.category === categorySelected
+      );
+      setProductFilters(result);
+    } else if (location !== "" && categorySelected === 0) {
+      const result = products.filter((product) =>
+        product.location.includes(location)
+      );
+      setProductFilters(result);
+    } else {
+      setProductFilters(products);
+    }
+  };
+
+  const handleLocation = (locationSelected) => {
+    setLocation(locationSelected.trim());
+    setProductSelected(null);
+
+    if (category !== 0 && locationSelected.trim() !== "") {
+      const result = products.filter(
+        (product) =>
+          product.location.includes(locationSelected.trim()) &&
+          product.category === category
+      );
+      setProductFilters(result);
+    } else if (category === 0 && locationSelected !== "") {
+      const result = products.filter((product) =>
+        product.location.includes(locationSelected.trim())
+      );
+      setProductFilters(result);
+    } else if (category !== 0 && locationSelected === "") {
+      const result = products.filter(
+        (product) => product.category === category
+      );
+      setProductFilters(result);
+    } else {
+      setProductFilters(products);
+    }
   };
 
   return (
@@ -126,7 +180,7 @@ const ProductList = () => {
                   labelId="category"
                   id="category-select"
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => handleCategory(e.target.value)}
                 >
                   <MenuItem value={0}>Ninguna</MenuItem>
                   <MenuItem value={1}>Alojamiento</MenuItem>
@@ -144,7 +198,7 @@ const ProductList = () => {
                   }
                   variant="outlined"
                   value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  onChange={(e) => handleLocation(e.target.value)}
                 />
               </FormControl>
             </ListItem>
@@ -172,7 +226,7 @@ const ProductList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products.map((product) => (
+                {productFilters.map((product) => (
                   <TableRow
                     key={product.id}
                     selected={
@@ -183,14 +237,10 @@ const ProductList = () => {
                     sx={{ cursor: "pointer" }}
                   >
                     <TableCell onClick={() => onClickInCell(product)}>
-                      {product.category === "Actividad" && (
-                        <LocalActivityIcon />
-                      )}
-                      {product.category === "Transporte" && <CommuteIcon />}
-                      {product.category === "Viaje" && (
-                        <AirplanemodeActiveIcon />
-                      )}
-                      {product.category === "Alojamiento" && <HotelIcon />}
+                      {product.category === 2 && <LocalActivityIcon />}
+                      {product.category === 4 && <CommuteIcon />}
+                      {product.category === 3 && <AirplanemodeActiveIcon />}
+                      {product.category === 1 && <HotelIcon />}
                     </TableCell>
                     <TableCell onClick={() => onClickInCell(product)}>
                       <Typography>{product.name}</Typography>
@@ -227,39 +277,41 @@ const ProductList = () => {
           sx={{ color: theme.palette.primary.contrastText }}
           variant="h5"
         >
-          Estadísticas de la empresa
+          Estadísticas de los productos
         </Typography>
       </Paper>
-      <Grid sx={{ margin: 1, paddingTop: 1 }} spacing={1} container>
-        <Grid item>
-          <KPI
-            name="KPI de productos"
-            respecting={
-              <FormattedMessage id="project.products.kpi.respectingTotalProducts" />
-            }
-            kpi={
-              productSelected
-                ? productSelected.price * productSelected.total_sales
-                : 0
-            }
-            otherKpi={calculateTotalProductsKPI(products)}
-          />
+      {productSelected ? (
+        <Grid sx={{ margin: 1, paddingTop: 1 }} spacing={1} container>
+          <Grid item>
+            <KPI
+              name="KPI de productos"
+              productName={productSelected.name}
+              otherName={"Facturación de productos"}
+              respecting={
+                <FormattedMessage id="project.products.kpi.respectingTotalProducts" />
+              }
+              kpi={productSelected.price * productSelected.total_sales}
+              otherKpi={calculateTotalProductsKPI(products)}
+            />
+          </Grid>
+          <Grid item>
+            <KPI
+              name="KPI de facturación"
+              productName={productSelected.name}
+              otherName={"Facturación de la empresa"}
+              respecting={
+                <FormattedMessage id="project.products.kpi.respectingTotalBilling" />
+              }
+              kpi={productSelected.price * productSelected.total_sales}
+              otherKpi={20000000}
+            />
+          </Grid>
         </Grid>
-        <Grid item>
-          <KPI
-            name="KPI de facturación"
-            respecting={
-              <FormattedMessage id="project.products.kpi.respectingTotalBilling" />
-            }
-            kpi={
-              productSelected
-                ? productSelected.price * productSelected.total_sales
-                : 0
-            }
-            otherKpi={2000000}
-          />
-        </Grid>
-      </Grid>
+      ) : (
+        <Typography margin={10} textAlign="center" variant="h6">
+          Selecciona un producto
+        </Typography>
+      )}
     </React.Fragment>
   );
 };
