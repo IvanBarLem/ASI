@@ -3,16 +3,19 @@ import ListIcon from "@material-ui/icons/List";
 import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import CommuteIcon from "@mui/icons-material/Commute";
 import ExtensionIcon from "@mui/icons-material/Extension";
-import GroupIcon from '@mui/icons-material/Group';
+import GroupIcon from "@mui/icons-material/Group";
 import HotelIcon from "@mui/icons-material/Hotel";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 //import {FormattedMessage} from 'react-intl';
 import {
-  Collapse, Divider,
-  Drawer, List,
+  Collapse,
+  Divider,
+  Drawer,
+  List,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -88,6 +91,12 @@ const Dropdown = (props) => {
             <GroupIcon />
           </ListItemIcon>
           <ListItemText>Agentes/Estadísticas</ListItemText>
+        </ListItem>
+        <ListItem button component={Link} to="/products">
+          <ListItemIcon>
+            <ShoppingCartIcon />
+          </ListItemIcon>
+          <ListItemText>Estadísticas de productos</ListItemText>
         </ListItem>
       </List>
     </Drawer>
