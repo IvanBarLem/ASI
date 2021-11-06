@@ -1,6 +1,7 @@
 package es.udc.asiproject.service.impl;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +12,10 @@ import es.udc.asiproject.persistence.dao.UserDao;
 import es.udc.asiproject.persistence.model.User;
 import es.udc.asiproject.persistence.model.User.RoleType;
 import es.udc.asiproject.service.PermissionCheckerService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import es.udc.asiproject.service.UserService;
 import es.udc.asiproject.service.exceptions.DuplicateInstanceException;
 import es.udc.asiproject.service.exceptions.IncorrectLoginException;
@@ -84,4 +89,14 @@ public class UserServiceImpl implements UserService {
 			user.setPassword(passwordEncoder.encode(newPassword));
 		}
 	}
+
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<User> findAllUsers(Integer pageNumber, Integer pageSize) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "outstanding", "createdAt");
+
+		return userDao.findAll(pageable);
+	}
+
 }

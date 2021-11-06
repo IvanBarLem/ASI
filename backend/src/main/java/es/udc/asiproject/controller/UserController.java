@@ -8,13 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.util.List;
 
 import es.udc.asiproject.controller.dto.AuthenticatedUserDto;
 import es.udc.asiproject.controller.dto.ChangePasswordParamsDto;
@@ -32,6 +35,10 @@ import es.udc.asiproject.service.exceptions.IncorrectLoginException;
 import es.udc.asiproject.service.exceptions.IncorrectPasswordException;
 import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 import es.udc.asiproject.service.exceptions.PermissionException;
+import es.udc.asiproject.controller.dto.UserDto;
+import es.udc.asiproject.controller.dto.PageDto;
+import es.udc.asiproject.controller.mapper.PageMapper;
+import es.udc.asiproject.controller.mapper.UserMapper;
 
 @RestController
 @RequestMapping("/users")
@@ -102,4 +109,12 @@ public class UserController {
 
 		return jwtGenerator.generate(jwtInfo);
 	}
+
+	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
+	public PageDto<UserDto> findUser(@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "8") int pageSize) {
+		return PageMapper.convertToDto(userService.findAllUsers(pageNumber, pageSize), UserMapper::convertToDto);
+	}
+
 }

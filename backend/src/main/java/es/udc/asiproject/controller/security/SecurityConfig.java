@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
 				.antMatchers("/users/signUp", "/users/login", "/users/loginFromServiceToken").permitAll()
-				.antMatchers("/**").hasRole(RoleType.USER.name());
+				.antMatchers("/**").hasRole(RoleType.GERENTE.name());
 	}
 
 	@Bean

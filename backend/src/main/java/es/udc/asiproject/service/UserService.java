@@ -5,6 +5,8 @@ import es.udc.asiproject.service.exceptions.DuplicateInstanceException;
 import es.udc.asiproject.service.exceptions.IncorrectLoginException;
 import es.udc.asiproject.service.exceptions.IncorrectPasswordException;
 import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
+import org.springframework.data.domain.Page;
+import java.util.List;
 
 public interface UserService {
 	void signUp(User user) throws DuplicateInstanceException;
@@ -17,4 +19,7 @@ public interface UserService {
 
 	void changePassword(Long id, String oldPassword, String newPassword)
 			throws InstanceNotFoundException, IncorrectPasswordException;
+
+	Page<User> findAllUsers(Integer pageNumber, Integer pageSize);
+
 }
