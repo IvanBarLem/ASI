@@ -35,6 +35,10 @@ export default {
   "project.global.fields.noneBidUp": "No hay pujas",
   "project.global.fields.finalized": "Finalizado",
   "project.global.fields.minPrice": "Precio mínimo",
+  "project.global.fields.totalSales": "Ventas totales",
+  "project.global.fields.location": "Localización",
+  "project.global.fields.category": "Categoría",
+  "project.global.fields.filters": "Filtros",
   "project.global.validator.email":
     "Introduzca una dirección de correo electrónico correcta",
   "project.global.validator.passwordsDoNotMatch":
@@ -78,7 +82,6 @@ export default {
   "project.products.accommodations": "Alojamientos",
   "project.products.activities": "Actividades",
 
-  "project.agents.kpi.respectingLastMonth": "respecto al último mes",
   "project.agents.velocimeter.Objective": "Objetivo",
   "project.agents.velocimeter.objectiveFulfilled": "Objetivo conseguido",
   "project.agents.agentList.billing": "Facturación total",
@@ -86,4 +89,7 @@ export default {
   "project.agents.agentList.businessStats": "Estadísticas de la empresa",
   "project.agents.agentList.billingObjective": "Objetivo de facturación",
   "project.agents.agentList.salesNumObjective": "Objetivo de ventas",
+  "project.agents.kpi.respectingLastMonth": "respecto al último mes",
+  "project.products.kpi.respectingTotalProducts": "respecto al total de productos",
+  "project.products.kpi.respectingTotalBilling": "respecto al total de facturación",
 };

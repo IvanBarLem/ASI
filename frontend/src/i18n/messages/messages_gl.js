@@ -34,6 +34,10 @@ export default {
   "project.global.fields.noneBidUp": "Non hai puxas",
   "project.global.fields.finalized": "Rematado",
   "project.global.fields.minPrice": "Prezo mínimo",
+  "project.global.fields.totalSales": "Ventas totales",
+  "project.global.fields.location": "Localización",
+  "project.global.fields.category": "Categoría",
+  "project.global.fields.filters": "Filtros",
   "project.global.validator.email":
     "Introduza unha direción de correo electrónico correcta",
   "project.global.validator.passwordsDoNotMatch":
@@ -85,4 +89,7 @@ export default {
   "project.agents.agentList.businessStats": "Estadísticas da empresa",
   "project.agents.agentList.billingObjective": "Obxectivo de facturación",
   "project.agents.agentList.salesNumObjective": "Obxectivo de ventas",
+  "project.agents.kpi.respectingLastMonth": "respeto ao último mes",
+  "project.products.kpi.respectingTotalProducts": "respeto ao total de produtos",
+  "project.products.kpi.respectingTotalBilling": "respeto ao total de facturación",
 };

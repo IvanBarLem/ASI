@@ -34,6 +34,10 @@ export default {
   "project.global.fields.noneBidUp": "None bid up",
   "project.global.fields.finalized": "Finalized",
   "project.global.fields.minPrice": "Min. price",
+  "project.global.fields.totalSales": "Total sales",
+  "project.global.fields.location": "Localization",
+  "project.global.fields.category": "Category",
+  "project.global.fields.filters": "Filters",
   "project.global.validator.email": "Provide a correct e-mail address",
   "project.global.validator.passwordsDoNotMatch": "Passwords do not match",
   "project.global.validator.required": "Required field",
@@ -75,7 +79,6 @@ export default {
   "project.products.accommodations": "Accommodations",
   "project.products.activities": "Activities",
 
-  "project.agents.kpi.respectingLastMonth": "compared to last month",
   "project.agents.velocimeter.Objective": "Objective",
   "project.agents.velocimeter.objectiveFulfilled": "Objective fulfilled",
   "project.agents.agentList.billing": "Total business billing",
@@ -83,4 +86,7 @@ export default {
   "project.agents.agentList.businessStats": "Business statistics",
   "project.agents.agentList.billingObjective": "Billing objective",
   "project.agents.agentList.salesNumObjective": "Sales objective",
+  "project.agents.kpi.respectingLastMonth": "compared to last month",
+  "project.products.kpi.respectingTotalProducts": "compared to total products",
+  "project.products.kpi.respectingTotalBilling": "compared to total of billing",
 };
