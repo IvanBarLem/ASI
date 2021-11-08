@@ -76,4 +76,11 @@ export default {
   "project.products.activities": "Activities",
 
   "project.agents.kpi.respectingLastMonth": "compared to last month",
+  "project.agents.velocimeter.Objective": "Objective",
+  "project.agents.velocimeter.objectiveFulfilled": "Objective fulfilled",
+  "project.agents.agentList.billing": "Total business billing",
+  "project.agents.agentList.salesNum": "Sales number",
+  "project.agents.agentList.businessStats": "Business statistics",
+  "project.agents.agentList.billingObjective": "Billing objective",
+  "project.agents.agentList.salesNumObjective": "Sales objective",
 };

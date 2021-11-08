@@ -87,7 +87,7 @@ const Dropdown = (props) => {
           <ListItemIcon>
             <GroupIcon />
           </ListItemIcon>
-          <ListItemText>Agentes/Estadísticas</ListItemText>
+          <ListItemText>Estadísticas/Agentes</ListItemText>
         </ListItem>
       </List>
     </Drawer>

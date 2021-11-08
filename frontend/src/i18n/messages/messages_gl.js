@@ -78,4 +78,11 @@ export default {
   "project.products.activities": "Actividades",
 
   "project.agents.kpi.respectingLastMonth": "respecto ao último mes",
+  "project.agents.velocimeter.Objective": "Obxectivo",
+  "project.agents.velocimeter.objectiveFulfilled": "Obxectivo conseguido",
+  "project.agents.agentList.billing": "Facturación total",
+  "project.agents.agentList.salesNum": "Num. ventas",
+  "project.agents.agentList.businessStats": "Estadísticas da empresa",
+  "project.agents.agentList.billingObjective": "Obxectivo de facturación",
+  "project.agents.agentList.salesNumObjective": "Obxectivo de ventas",
 };

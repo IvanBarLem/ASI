@@ -17,14 +17,14 @@ const KPI = ({ name, kpi, lastMonthKpi }) => {
     const kpiDiff = lastMonthKpi === 0 ? 0 : (kpi / lastMonthKpi - 1) * 100
 
     return (
-        <Paper>
-            <Box sx={{ padding: 1 }}>
+        <Paper sx={{ height: "100%" }}>
+            <Box sx={{ padding: 1, height: 50 }}>
                 <Typography sx={{ fontWeight: 600 }} variant="h5">
                     {name}
                 </Typography>
             </Box>
             <Divider />
-            <Grid container spacing={1}>
+            <Grid container spacing={1} sx={{ height: "calc(100% - 50px)" }}>
                 <Grid item sx={{ margin: 1 }}>
                     <Grid container>
                         {kpi > lastMonthKpi ?
@@ -37,7 +37,7 @@ const KPI = ({ name, kpi, lastMonthKpi }) => {
                         </Typography>
                     </Grid>
                 </Grid>
-                <Grid item>
+                <Grid item >
                     <Divider orientation="vertical" />
                 </Grid>
                 <Grid item sx={{ margin: 1 }}>
@@ -46,7 +46,7 @@ const KPI = ({ name, kpi, lastMonthKpi }) => {
                             {kpiDiff > 0 ? "+" : ""}{kpiDiff.toFixed(1)}%
                         </Typography>
                         <Typography variant="h6" sx={{ maxWidth: 150 }}>
-                            <FormattedMessage id="project.agents.kpi.respectingLastMonth" /> ({lastMonthKpi})
+                            <FormattedMessage id="project.agents.kpi.respectingLastMonth" /> ({lastMonthKpi.toFixed(1)})
                         </Typography>
                     </Box>
                 </Grid>
