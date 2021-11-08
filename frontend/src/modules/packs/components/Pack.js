@@ -14,7 +14,6 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { FormattedMessage } from "react-intl";
 
 const Pack = ({ item }) => {
-  console.log(item);
   const image =
     "https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png";
 
@@ -98,8 +97,8 @@ const Pack = ({ item }) => {
             {item.duration - 1 ? (
               <FormattedMessage id="project.packs.findpacks.days" />
             ) : (
-              <FormattedMessage id="project.packs.findpacks.day" />
-            )}
+                <FormattedMessage id="project.packs.findpacks.day" />
+              )}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
             <IconButton disabled>
@@ -114,8 +113,8 @@ const Pack = ({ item }) => {
             ) : item.persons === "Friends" ? (
               <FormattedMessage id="project.packs.CreatePack.select.friends" />
             ) : (
-              ""
-            )}
+                      ""
+                    )}
           </Typography>
           <Divider />
           <Grid sx={{ marginTop: "6px" }} container spacing={1}>
