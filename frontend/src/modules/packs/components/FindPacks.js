@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import * as actions from '../actions';
 import FindPacksResult from './FindPacksResult';
 
@@ -12,10 +12,10 @@ const FindPacks = () => {
         return () => {
             dispatch(actions.clearPackSearch());
         }
-    });
+    }, []);
 
     return (
-        <FindPacksResult/>
+        <FindPacksResult />
     )
 }
 

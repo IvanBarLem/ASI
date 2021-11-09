@@ -8,7 +8,6 @@ import {
   Grid,
   Divider,
   IconButton,
-  Checkbox,
 } from "@mui/material";
 import TimerIcon from "@mui/icons-material/Timer";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
@@ -64,13 +63,13 @@ const Pack = ({ item, creating }) => {
         sx={
           item.outstanding && !item.hidden
             ? {
-                boxShadow: "0px 0px 22px 5px #ED6C02",
-                height: "100%",
-                maxWidth: 360,
-                minWidth: 280,
-              }
+              boxShadow: "0px 0px 22px 5px #ED6C02",
+              height: "100%",
+              maxWidth: 360,
+              minWidth: 280,
+            }
             : item.hidden && !item.outstanding
-            ? {
+              ? {
                 height: "100%",
                 maxWidth: 360,
                 minWidth: 280,
@@ -79,22 +78,22 @@ const Pack = ({ item, creating }) => {
                 background:
                   "repeating-linear-gradient( 45deg, #ebebeb, #ebebeb 5px, #e5e5f7 5px, #e5e5f7 25px )",
               }
-            : item.hidden && item.outstanding
-            ? {
-                backgroundColor: "#ebebeb",
-                opacity: "0.8",
-                background:
-                  "repeating-linear-gradient( 45deg, #ebebeb, #ebebeb 5px, #e5e5f7 5px, #e5e5f7 25px )",
-                height: "100%",
-                maxWidth: 360,
-                minWidth: 280,
-                boxShadow: "0px 0px 22px 5px #ED6C02",
-              }
-            : {
-                height: "100%",
-                maxWidth: 360,
-                minWidth: 280,
-              }
+              : item.hidden && item.outstanding
+                ? {
+                  backgroundColor: "#ebebeb",
+                  opacity: "0.8",
+                  background:
+                    "repeating-linear-gradient( 45deg, #ebebeb, #ebebeb 5px, #e5e5f7 5px, #e5e5f7 25px )",
+                  height: "100%",
+                  maxWidth: 360,
+                  minWidth: 280,
+                  boxShadow: "0px 0px 22px 5px #ED6C02",
+                }
+                : {
+                  height: "100%",
+                  maxWidth: 360,
+                  minWidth: 280,
+                }
         }
       >
         <CardMedia
@@ -134,8 +133,8 @@ const Pack = ({ item, creating }) => {
             {item.duration - 1 ? (
               <FormattedMessage id="project.packs.findpacks.days" />
             ) : (
-              <FormattedMessage id="project.packs.findpacks.day" />
-            )}
+                <FormattedMessage id="project.packs.findpacks.day" />
+              )}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
             <IconButton disabled>
@@ -150,8 +149,8 @@ const Pack = ({ item, creating }) => {
             ) : item.persons === "Friends" ? (
               <FormattedMessage id="project.packs.CreatePack.select.friends" />
             ) : (
-              ""
-            )}
+                      ""
+                    )}
           </Typography>
           <Divider />
           <Grid sx={{ marginTop: "6px" }} container spacing={1}>
@@ -181,16 +180,16 @@ const Pack = ({ item, creating }) => {
                       No destacar
                     </Button>
                   ) : (
-                    <Button
-                      size="small"
-                      fullWidth
-                      variant="contained"
-                      startIcon={<StarIcon />}
-                      color="warning"
-                    >
-                      Destacar
-                    </Button>
-                  )}
+                      <Button
+                        size="small"
+                        fullWidth
+                        variant="contained"
+                        startIcon={<StarIcon />}
+                        color="warning"
+                      >
+                        Destacar
+                      </Button>
+                    )}
                 </Grid>
                 <Grid item xs={6}>
                   {item.hidden ? (
@@ -199,21 +198,21 @@ const Pack = ({ item, creating }) => {
                       fullWidth
                       variant="outlined"
                       startIcon={<VisibilityIcon />}
-                      //                      color="grey"
+                    //                      color="grey"
                     >
                       Mostrar
                     </Button>
                   ) : (
-                    <Button
-                      size="small"
-                      fullWidth
-                      variant="contained"
-                      startIcon={<VisibilityOffIcon />}
+                      <Button
+                        size="small"
+                        fullWidth
+                        variant="contained"
+                        startIcon={<VisibilityOffIcon />}
                       //                     color="grey"
-                    >
-                      Ocultar
-                    </Button>
-                  )}
+                      >
+                        Ocultar
+                      </Button>
+                    )}
                 </Grid>
               </Grid>
             </Fragment>
