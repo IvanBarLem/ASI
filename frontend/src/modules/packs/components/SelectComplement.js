@@ -7,6 +7,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
+import { Grid } from "@mui/material";
 
 export const SelectComplement = ({
   options,
@@ -38,7 +39,10 @@ export const SelectComplement = ({
         renderValue={(selected) => (
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
             {selected.map((value) => (
-              <Chip key={value.id} label={value.name} />
+              <Chip
+                key={value.id}
+                label={value.name + " +" + value.price + " €"}
+              />
             ))}
           </Box>
         )}
@@ -46,7 +50,15 @@ export const SelectComplement = ({
       >
         {options.map((option) => (
           <MenuItem key={option.id} value={option}>
-            {option.name}
+            <Grid container xs={12}>
+              <Grid item xs={9}>
+                {option.name}
+              </Grid>
+              <Grid item xs={3}>
+                {option.price}
+                {" €"}
+              </Grid>
+            </Grid>
           </MenuItem>
         ))}
       </Select>

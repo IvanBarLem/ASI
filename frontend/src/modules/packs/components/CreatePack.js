@@ -135,6 +135,19 @@ const CreatePack = () => {
     getBase64(e.target.files[0]).then((image) => setImagePreview(image));
   };
 
+  const calculatePrice = () => {
+    let price = 0;
+
+    transportsSelected.map((transport) => (price = transport.price + price));
+    accommodationsSelected.map(
+      (accommodation) => (price = accommodation.price + price)
+    );
+    activitiesSelected.map((activity) => (price = activity.price + price));
+    travelsSelected.map((travel) => (price = travel.price + price));
+
+    return price.toFixed(2);
+  };
+
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -330,20 +343,41 @@ const CreatePack = () => {
               }}
             >
               {activeStep === 3 ? (
-                <Typography
-                  variant="h5"
-                  sx={{
-                    width: "100%",
-                    textAlign: "center",
-                    marginBottom: "15px",
-                  }}
-                >
-                  <FormattedMessage id="project.packs.CreatePack.save" />
-                </Typography>
+                <Box>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      width: "100%",
+                      textAlign: "center",
+                      marginBottom: "15px",
+                    }}
+                  >
+                    <FormattedMessage id="project.packs.CreatePack.save" />
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      width: "100%",
+                      textAlign: "center",
+                      marginBottom: "15px",
+                    }}
+                  >
+                    {"Precio recomendado: "}
+                    {calculatePrice()}
+                    {" €"}
+                  </Typography>
+                </Box>
               ) : (
-                <Typography variant="h5">
-                  <FormattedMessage id="project.packs.CreatePack.previsualization" />
-                </Typography>
+                <Box>
+                  <Typography variant="h5">
+                    <FormattedMessage id="project.packs.CreatePack.previsualization" />
+                  </Typography>
+                  <Typography variant="body2">
+                    {"Precio recomendado: "}
+                    {calculatePrice()}
+                    {" €"}
+                  </Typography>
+                </Box>
               )}
             </Box>
             <Box
