@@ -74,6 +74,11 @@ export default {
   "project.packs.CreatePack.select.families": "Familias",
   "project.packs.CreatePack.select.friends": "Amigos",
   "project.packs.CreatePack.previsualization": "Previsualización",
+  "project.packs.unhighlight": "Non destacar",
+  "project.packs.highlight": "Destacar",
+  "project.packs.show": "Amosar",
+  "project.packs.unshow": "Ocultar",
+
   "project.packs.foundNoPacks": "Non existen paquetes ainda",
   "project.products.foundNoProducts": "Non existen productos ainda",
   "project.packs.ERP": "Precio recomendado:",

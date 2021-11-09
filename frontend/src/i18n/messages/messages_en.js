@@ -74,6 +74,11 @@ export default {
   "project.packs.CreatePack.previsualization": "Previsualization",
   "project.packs.foundNoPacks": "There are no packs yet",
   "project.packs.ERP": "Estimated Retail Price:",
+  "project.packs.unhighlight": "Unhighlight",
+  "project.packs.highlight": "Highlight",
+  "project.packs.show": "Show",
+  "project.packs.unshow": "Unshow",
+
   "project.products.foundNoProducts": "There are no products yet",
   "project.products.travels": "Travels",
   "project.products.transports": "Transports",

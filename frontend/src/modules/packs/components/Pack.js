@@ -193,7 +193,7 @@ const Pack = ({ item, creating }) => {
                       color="warning"
                       onClick={() => outstand()}
                     >
-                      No destacar
+                      <FormattedMessage id="project.packs.unhighlight" />
                     </Button>
                   ) : (
                     <Button
@@ -204,7 +204,7 @@ const Pack = ({ item, creating }) => {
                       color="warning"
                       onClick={() => outstand()}
                     >
-                      Destacar
+                      <FormattedMessage id="project.packs.highlight" />
                     </Button>
                   )}
                 </Grid>
@@ -215,10 +215,9 @@ const Pack = ({ item, creating }) => {
                       fullWidth
                       variant="outlined"
                       startIcon={<VisibilityIcon />}
-                      //                      color="grey"
                       onClick={() => hide()}
                     >
-                      Mostrar
+                      <FormattedMessage id="project.packs.show" />
                     </Button>
                   ) : (
                     <Button
@@ -227,9 +226,8 @@ const Pack = ({ item, creating }) => {
                       variant="contained"
                       startIcon={<VisibilityOffIcon />}
                       onClick={() => hide()}
-                      //                     color="grey"
                     >
-                      Ocultar
+                      <FormattedMessage id="project.packs.unshow" />
                     </Button>
                   )}
                 </Grid>

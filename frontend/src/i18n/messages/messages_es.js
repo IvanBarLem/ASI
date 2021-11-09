@@ -78,6 +78,11 @@ export default {
   "project.packs.foundNoPacks": "No existen paquetes aún",
   "project.packs.ERP": "Precio recomendado:",
   "project.products.foundNoProducts": "No existen productos aún",
+  "project.packs.unhighlight": "No destacar",
+  "project.packs.highlight": "Destacar",
+  "project.packs.show": "Mostrar",
+  "project.packs.unshow": "Ocultar",
+
   "project.products.travels": "Viajes",
   "project.products.transports": "Transportes",
   "project.products.accommodations": "Alojamientos",
