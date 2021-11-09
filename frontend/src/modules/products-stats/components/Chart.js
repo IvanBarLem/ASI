@@ -107,6 +107,7 @@ export default function Chart(props) {
         fill="#cb3234"
         dataKey="value"
         onMouseEnter={onPieEnter}
+        onMouseLeave={() => setActiveIndex(0)}
       />
     </PieChart>
   );
