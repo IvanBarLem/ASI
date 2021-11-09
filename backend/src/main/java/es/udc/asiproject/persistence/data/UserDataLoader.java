@@ -22,23 +22,23 @@ public class UserDataLoader implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 	if (userDao.count() == 0) {
-	    User user1 = new User(passwordEncoder.encode("pass"), "Jose", "Perez", "gerente@gmail.com");
+	    User user1 = new User(passwordEncoder.encode("pass"), "Gerente", "Perez", "gerente@gmail.com");
 	    user1.setRole(RoleType.GERENTE);
 	    userDao.save(user1);
 
-	    User user2 = new User(passwordEncoder.encode("pass"), "Ana", "Ferrer", "agente1@gmail.com");
+	    User user2 = new User(passwordEncoder.encode("pass"), "Agente1", "Ferrer", "agente1@gmail.com");
 	    user2.setRole(RoleType.AGENTE);
 	    userDao.save(user2);
 
-	    User user3 = new User(passwordEncoder.encode("pass"), "Marcos", "Gil", "agente2@gmail.com");
+	    User user3 = new User(passwordEncoder.encode("pass"), "Agente2", "Gil", "agente2@gmail.com");
 	    user3.setRole(RoleType.AGENTE);
 	    userDao.save(user3);
 
-	    User user4 = new User(passwordEncoder.encode("pass"), "Felipe", "Pita", "agente3@gmail.com");
+	    User user4 = new User(passwordEncoder.encode("pass"), "Agente3", "Pita", "agente3@gmail.com");
 	    user4.setRole(RoleType.AGENTE);
 	    userDao.save(user4);
 
-	    User user5 = new User(passwordEncoder.encode("pass"), "Manuel", "Salgado", "informatico@gmail.com");
+	    User user5 = new User(passwordEncoder.encode("pass"), "Informático", "Salgado", "informatico@gmail.com");
 	    user5.setRole(RoleType.INFORMATICO);
 	    userDao.save(user5);
 	}

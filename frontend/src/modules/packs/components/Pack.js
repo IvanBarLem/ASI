@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Typography,
   Card,
@@ -20,9 +20,11 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import * as actions from "../actions";
+import users from "../../users";
 
 const Pack = ({ item, creating }) => {
   const dispatch = useDispatch();
+  const isGerente = useSelector(users.selectors.isGerente);
   const image =
     "https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png";
 
@@ -46,10 +48,6 @@ const Pack = ({ item, creating }) => {
       ++position;
     });
     return products;
-  };
-
-  const findAllPacks = () => {
-    dispatch(actions.findAllPacks(0));
   };
 
   const hide = () => {
@@ -179,7 +177,7 @@ const Pack = ({ item, creating }) => {
               </Grid>
             ))}
           </Grid>
-          {!creating && (
+          {!creating && isGerente && (
             <Fragment>
               <Divider sx={{ marginTop: "10px" }} />
               <Grid container spacing={1} sx={{ marginTop: "6px" }}>
