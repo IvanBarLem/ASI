@@ -362,7 +362,7 @@ const CreatePack = () => {
                       marginBottom: "15px",
                     }}
                   >
-                    {"Precio recomendado: "}
+                    <FormattedMessage id="project.packs.ERP" />{" "}
                     {calculatePrice()}
                     {" €"}
                   </Typography>
@@ -373,7 +373,7 @@ const CreatePack = () => {
                     <FormattedMessage id="project.packs.CreatePack.previsualization" />
                   </Typography>
                   <Typography variant="body2">
-                    {"Precio recomendado: "}
+                    <FormattedMessage id="project.packs.ERP" />{" "}
                     {calculatePrice()}
                     {" €"}
                   </Typography>
@@ -402,6 +402,7 @@ const CreatePack = () => {
                   activities: activitiesSelected,
                   travels: travelsSelected,
                 }}
+                creating={true}
               />
               <Errors
                 errors={backendErrors}

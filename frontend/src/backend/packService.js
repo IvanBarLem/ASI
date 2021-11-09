@@ -4,7 +4,7 @@ export const createPack = (pack, onSuccess, onErrors) =>
   appFetch(`/packs/create`, config("POST", pack), onSuccess, onErrors);
 
 export const findPacks = (page, onSuccess) => {
-  let path = `/packs?page=${page}`;
+  let path = `/packs/hidden?page=${page}`;
 
   appFetch(path, config("GET"), onSuccess);
 };
