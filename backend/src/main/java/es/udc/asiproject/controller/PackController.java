@@ -63,20 +63,20 @@ public class PackController {
 	return PackMapper.convertToDto(packService.updatePack(pack));
     }
 
-    @PutMapping("/toogleHighlight/{id}")
+    @PutMapping("/toggleHighlight/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void toogleHighlightPack(Long userId, @PathVariable("id") Long packId)
+    public void toggleHighlightPack(Long userId, @PathVariable("id") Long packId)
 	    throws InstanceNotFoundException, InvalidOperationException {
 
-	packService.toogleHighlightPack(packId);
+	packService.toggleHighlightPack(packId);
     }
 
-    @PutMapping("/toogleHide/{id}")
+    @PutMapping("/toggleHide/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void toogleHidePack(Long userId, @PathVariable("id") Long packId)
+    public void toggleHidePack(Long userId, @PathVariable("id") Long packId)
 	    throws InstanceNotFoundException, InvalidOperationException {
 
-	packService.toogleHidePack(packId);
+	packService.toggleHidePack(packId);
     }
 
     @DeleteMapping("/{id}")

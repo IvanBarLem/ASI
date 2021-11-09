@@ -16,13 +16,11 @@ export const findAllPacks = (page, onSuccess) => {
 };
 
 export const hidePack = (id, onSuccess) => {
-  let path = `/packs/toogleHidden/${id}`;
-
+  let path = `/packs/toggleHide/${id}`;
   appFetch(path, config("PUT"), onSuccess);
 };
 
 export const outstandingPack = (id, onSuccess) => {
-  let path = `/pack/toogleHighligth/${id}`;
-
+  let path = `/packs/toggleHighlight/${id}`;
   appFetch(path, config("PUT"), onSuccess);
 };

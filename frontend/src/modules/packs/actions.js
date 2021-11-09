@@ -50,14 +50,12 @@ export const createPack = (pack, onSuccess, onErrors) => (dispatch) =>
     onErrors
   );
 
-export const hidePack = (id, onSuccess) => (dispatch) =>
+export const hidePack = (id) => (dispatch) =>
   backend.packService.hidePack(id, () => {
-    findAllPacks(0);
-    onSuccess();
+    dispatch(findAllPacks(0));
   });
 
-export const outstandingPack = (id, onSuccess) => (dispatch) =>
+export const outstandingPack = (id) => (dispatch) =>
   backend.packService.outstandingPack(id, () => {
-    findAllPacks(0);
-    onSuccess();
+    dispatch(findAllPacks(0));
   });

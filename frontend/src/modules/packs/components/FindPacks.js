@@ -8,7 +8,7 @@ const FindPacks = () => {
   const initialPage = 0;
 
   useEffect(() => {
-    dispatch(actions.findPacks(initialPage));
+    dispatch(actions.findAllPacks(initialPage));
     return () => {
       dispatch(actions.clearPackSearch());
     };

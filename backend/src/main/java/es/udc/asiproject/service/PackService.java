@@ -17,9 +17,9 @@ public interface PackService {
 
     Pack updatePack(Pack pack) throws InstanceNotFoundException, InvalidOperationException;
 
-    void toogleHighlightPack(Long packId) throws InstanceNotFoundException;
+    void toggleHighlightPack(Long packId) throws InstanceNotFoundException;
 
-    void toogleHidePack(Long packId) throws InstanceNotFoundException;
+    void toggleHidePack(Long packId) throws InstanceNotFoundException;
 
     void removePack(Long id) throws InstanceNotFoundException;
 }

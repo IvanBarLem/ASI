@@ -48,12 +48,16 @@ const Pack = ({ item, creating }) => {
     return products;
   };
 
-  const hide = (id) => {
-    dispatch(actions.hidePack(item.id), () => null);
+  const findAllPacks = () => {
+    dispatch(actions.findAllPacks(0));
   };
 
-  const outstand = (id) => {
-    dispatch(actions.outstandingPack(item.id), () => null);
+  const hide = () => {
+    dispatch(actions.hidePack(item.id));
+  };
+
+  const outstand = () => {
+    dispatch(actions.outstandingPack(item.id));
   };
 
   return (

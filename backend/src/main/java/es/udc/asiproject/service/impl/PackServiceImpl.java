@@ -148,7 +148,7 @@ public class PackServiceImpl implements PackService {
     }
 
     @Override
-    public void toogleHighlightPack(Long packId) throws InstanceNotFoundException {
+    public void toggleHighlightPack(Long packId) throws InstanceNotFoundException {
 	Pack pack = packDao.findById(packId)
 		.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), packId));
 	pack.setOutstanding(!pack.getOutstanding());
@@ -157,7 +157,7 @@ public class PackServiceImpl implements PackService {
     }
 
     @Override
-    public void toogleHidePack(Long packId) throws InstanceNotFoundException {
+    public void toggleHidePack(Long packId) throws InstanceNotFoundException {
 	Pack pack = packDao.findById(packId)
 		.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), packId));
 	pack.setHidden(!pack.getHidden());

@@ -6,7 +6,7 @@ const SERVICE_TOKEN_NAME = "serviceToken";
 let networkErrorCallback;
 let reauthenticationCallback;
 
-const isJson = response => {
+const isJson = (response) => {
   const contentType = response.headers.get("content-type");
 
   return contentType && contentType.indexOf("application/json") !== -1;
@@ -27,7 +27,7 @@ const handleOkResponse = (response, onSuccess) => {
   }
 
   if (isJson(response)) {
-    response.json().then(payload => onSuccess(payload));
+    response.json().then((payload) => onSuccess(payload));
   }
 
   return true;
@@ -48,7 +48,7 @@ const handle4xxResponse = (response, onErrors) => {
   }
 
   if (onErrors) {
-    response.json().then(payload => {
+    response.json().then((payload) => {
       if (payload.globalError || payload.fieldErrors) {
         onErrors(payload);
       }
@@ -70,12 +70,12 @@ const handleResponse = (response, onSuccess, onErrors) => {
   throw new NetworkError();
 };
 
-export const init = callback => (networkErrorCallback = callback);
+export const init = (callback) => (networkErrorCallback = callback);
 
-export const setReauthenticationCallback = callback =>
+export const setReauthenticationCallback = (callback) =>
   (reauthenticationCallback = callback);
 
-export const setServiceToken = serviceToken =>
+export const setServiceToken = (serviceToken) =>
   sessionStorage.setItem(SERVICE_TOKEN_NAME, serviceToken);
 
 export const getServiceToken = () => sessionStorage.getItem(SERVICE_TOKEN_NAME);
@@ -112,5 +112,5 @@ export const config = (method, body) => {
 
 export const appFetch = (path, options, onSuccess, onErrors) =>
   fetch(`${BACKEND_URL}${path}`, options)
-    .then(response => handleResponse(response, onSuccess, onErrors))
+    .then((response) => handleResponse(response, onSuccess, onErrors))
     .catch(networkErrorCallback);
