@@ -30,7 +30,7 @@ const FindPacksResult = () => {
         <Box>
           <Grid container spacing={4}>
             {packSearch.result.content.map((row) => (
-              <Pack key={row.id} item={row} />
+              <Pack key={row.id} item={row} creating={false} />
             ))}
             <Grid
               item
