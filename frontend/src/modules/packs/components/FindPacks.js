@@ -8,11 +8,11 @@ const FindPacks = () => {
   const initialPage = 0;
 
   useEffect(() => {
-    dispatch(actions.findAllPacks(initialPage));
+    dispatch(actions.findPacks(initialPage));
     return () => {
       dispatch(actions.clearPackSearch());
     };
-  });
+  }, []);
 
   return <FindPacksResult />;
 };
