@@ -76,6 +76,7 @@ export default {
   "project.packs.CreatePack.select.friends": "Amigos",
   "project.packs.CreatePack.previsualization": "Previsualización",
   "project.packs.foundNoPacks": "No existen paquetes aún",
+  "project.packs.ERP": "Precio recomendado:",
   "project.products.foundNoProducts": "No existen productos aún",
   "project.products.travels": "Viajes",
   "project.products.transports": "Transportes",
@@ -97,6 +98,8 @@ export default {
   "project.agents.fields.week": "7 días",
   "project.agents.agentList.period": "Período",
   "project.agents.agentList.selectAgent": "Ningún agente seleccionado",
-  "project.products.kpi.respectingTotalProducts": "respecto al total de productos",
-  "project.products.kpi.respectingTotalBilling": "respecto al total de facturación",
+  "project.products.kpi.respectingTotalProducts":
+    "respecto al total de productos",
+  "project.products.kpi.respectingTotalBilling":
+    "respecto al total de facturación",
 };

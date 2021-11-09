@@ -73,6 +73,7 @@ export default {
   "project.packs.CreatePack.select.friends": "Friends",
   "project.packs.CreatePack.previsualization": "Previsualization",
   "project.packs.foundNoPacks": "There are no packs yet",
+  "project.packs.ERP": "Estimated Retail Price:",
   "project.products.foundNoProducts": "There are no products yet",
   "project.products.travels": "Travels",
   "project.products.transports": "Transports",
