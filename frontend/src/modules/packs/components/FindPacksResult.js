@@ -15,7 +15,7 @@ const FindPacksResult = () => {
   const [page, setPage] = React.useState(1);
 
   const handlePageChange = (event, value) => {
-    dispatch(actions.findPacks(value - 1));
+    dispatch(actions.findAllPacks(value - 1));
     setPage(value);
     window.scrollTo(0, 0);
   };

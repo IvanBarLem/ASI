@@ -12,7 +12,8 @@ const packSearch = (state = initialState.packSearch, action) => {
   switch (action.type) {
     case actionTypes.FIND_PACKS_COMPLETED:
       return action.packSearch;
-
+    case actionTypes.FIND_ALL_PACKS_COMPLETED:
+      return action.packSearch;
     case actionTypes.CLEAR_PACK_SEARCH:
       return initialState.packSearch;
 

@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import { useDispatch } from "react-redux";
 import {
   Typography,
   Card,
@@ -8,7 +9,6 @@ import {
   Grid,
   Divider,
   IconButton,
-  Checkbox,
 } from "@mui/material";
 import TimerIcon from "@mui/icons-material/Timer";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
@@ -19,8 +19,10 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import * as actions from "../actions";
 
 const Pack = ({ item, creating }) => {
+  const dispatch = useDispatch();
   const image =
     "https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png";
 
@@ -44,6 +46,14 @@ const Pack = ({ item, creating }) => {
       ++position;
     });
     return products;
+  };
+
+  const hide = (id) => {
+    dispatch(actions.hidePack(item.id), () => null);
+  };
+
+  const outstand = (id) => {
+    dispatch(actions.outstandingPack(item.id), () => null);
   };
 
   return (
@@ -177,6 +187,7 @@ const Pack = ({ item, creating }) => {
                       variant="outlined"
                       startIcon={<StarBorderIcon />}
                       color="warning"
+                      onClick={() => outstand()}
                     >
                       No destacar
                     </Button>
@@ -187,6 +198,7 @@ const Pack = ({ item, creating }) => {
                       variant="contained"
                       startIcon={<StarIcon />}
                       color="warning"
+                      onClick={() => outstand()}
                     >
                       Destacar
                     </Button>
@@ -200,6 +212,7 @@ const Pack = ({ item, creating }) => {
                       variant="outlined"
                       startIcon={<VisibilityIcon />}
                       //                      color="grey"
+                      onClick={() => hide()}
                     >
                       Mostrar
                     </Button>
@@ -209,6 +222,7 @@ const Pack = ({ item, creating }) => {
                       fullWidth
                       variant="contained"
                       startIcon={<VisibilityOffIcon />}
+                      onClick={() => hide()}
                       //                     color="grey"
                     >
                       Ocultar
