@@ -1,164 +1,197 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+    Box,
+    Button, Grid, Paper,
+    TextField, Typography
+} from "@mui/material";
+import { default as React, useState } from "react";
 import { FormattedMessage } from "react-intl";
-
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { Errors } from "../../common";
 import * as actions from "../actions";
 import * as selectors from "../selectors";
-import { useHistory } from "react-router";
+
+const useStyles = makeStyles((theme) => ({
+    paper: {
+        paddingBottom: theme.spacing(1),
+    },
+    paperBody: {
+        margin: theme.spacing(2),
+    },
+    row: {
+        marginLeft: theme.spacing(1),
+        paddingRight: theme.spacing(2),
+        marginTop: theme.spacing(2)
+    }
+}));
 
 const ChangePassword = () => {
-  const user = useSelector(selectors.getUser);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [backendErrors, setBackendErrors] = useState(null);
-  const [passwordsDoNotMatch, setPasswordsDoNotMatch] = useState(false);
-  let form;
-  let confirmNewPasswordInput;
+    const classes = useStyles();
+    const user = useSelector(selectors.getUser);
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmNewPassword, setConfirmNewPassword] = useState("");
+    const [backendErrors, setBackendErrors] = useState(null);
+    const [passwordsDoNotMatch, setPasswordsDoNotMatch] = useState(false);
+    const [invalid, setInvalid] = useState(false);
 
-  function handleOldPasswordChange(event) {
-    setOldPassword(event.target.value);
-  }
-
-  function handleNewPasswordChange(event) {
-    setNewPassword(event.target.value);
-  }
-
-  function handleConfirmNewPasswordChange(event) {
-    confirmNewPasswordInput.setCustomValidity("");
-    setConfirmNewPassword(event.target.value);
-    setPasswordsDoNotMatch(false);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    if (form.checkValidity() && checkConfirmNewPassword()) {
-      changePassword();
-    } else {
-      setBackendErrors(null);
-      form.classList.add("was-validated");
+    const handleSubmit = event => {
+        event.preventDefault();
+        if (checkConfirmNewPassword()) {
+            dispatch(actions.changePassword(user.id, oldPassword, newPassword,
+                () => history.push('/'),
+                errors => setBackendErrors(errors)));
+        }
     }
-  }
 
-  function checkConfirmNewPassword() {
-    if (newPassword !== confirmNewPassword) {
-      setPasswordsDoNotMatch(true);
-      confirmNewPasswordInput.setCustomValidity("error");
-      return false;
-    } else {
-      return true;
+    function checkConfirmNewPassword() {
+        if (newPassword !== confirmNewPassword) {
+            setPasswordsDoNotMatch(true);
+            return false;
+        } else {
+            return true;
+        }
     }
-  }
 
-  function changePassword() {
-    dispatch(
-      actions.changePassword(
-        user.id,
-        oldPassword,
-        newPassword,
-        () => history.push("/"),
-        (errors) => setBackendErrors(errors)
-      )
+    const handleOldPasswordChange = (value) => {
+        setInvalid(false);
+        setOldPassword(value);
+    }
+
+    const handleNewPasswordChange = (value) => {
+        setInvalid(false);
+        setPasswordsDoNotMatch(false)
+        setNewPassword(value);
+    }
+
+    const handleConfirmNewPasswordChange = (value) => {
+        setInvalid(false);
+        setPasswordsDoNotMatch(false)
+        setConfirmNewPassword(value);
+    }
+
+    function handleErrorsClose() {
+        setBackendErrors(null);
+    }
+
+    const handleInvalid = (event) => {
+        event.preventDefault();
+        setInvalid(true);
+    };
+
+    return (
+        <React.Fragment>
+            <Errors errors={backendErrors} onClose={() => handleErrorsClose()} />
+            <form
+                onSubmit={(e) => handleSubmit(e)}
+                onInvalid={(e) => handleInvalid(e)}
+            >
+                <Paper className={classes.paper}>
+                    <Box
+                        sx={{
+                            bgcolor: "primary.dark",
+                            color: "primary.contrastText",
+                            padding: 1,
+                            borderRadius: 1,
+                            borderBottomLeftRadius: 0,
+                            borderBottomRightRadius: 0,
+                        }}
+                    >
+                        <Typography variant="h5">
+                            <FormattedMessage id="project.users.ChangePassword.title" />
+                        </Typography>
+                    </Box>
+                    <Box className="paperBody">
+                        <Grid className={classes.row} container>
+                            <Grid item xs={12} md={4}>
+                                <Typography>
+                                    <FormattedMessage id="project.users.ChangePassword.fields.oldPassword" />
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    id="oldpassword"
+                                    label={
+                                        <FormattedMessage id="project.global.validator.required" />
+                                    }
+                                    variant="outlined"
+                                    value={oldPassword}
+                                    onChange={(e) => handleOldPasswordChange(e.target.value)}
+                                    error={invalid}
+                                    size="small"
+                                    type="password"
+                                    required
+                                    fullWidth
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid className={classes.row} container>
+                            <Grid item xs={12} md={4}>
+                                <Typography>
+                                    <FormattedMessage id="project.users.ChangePassword.fields.newPassword" />
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    id="newPassword"
+                                    label={
+                                        <FormattedMessage id="project.global.validator.required" />
+                                    }
+                                    variant="outlined"
+                                    value={newPassword}
+                                    onChange={(e) => handleNewPasswordChange(e.target.value)}
+                                    error={invalid || passwordsDoNotMatch}
+                                    size="small"
+                                    type="password"
+                                    required
+                                    fullWidth
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid className={classes.row} container>
+                            <Grid item xs={12} md={4}>
+                                <Typography>
+                                    <FormattedMessage id="project.users.ChangePassword.fields.confirmNewPassword" />
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <TextField
+                                    id="confirmNewPassword"
+                                    label={
+                                        <FormattedMessage id="project.global.validator.required" />
+                                    }
+                                    variant="outlined"
+                                    value={confirmNewPassword}
+                                    onChange={(e) => handleConfirmNewPasswordChange(e.target.value)}
+                                    size="small"
+                                    type="password"
+                                    error={invalid || passwordsDoNotMatch}
+                                    helperText={passwordsDoNotMatch ?
+                                        <FormattedMessage id='project.global.validator.passwordsDoNotMatch' />
+                                        :
+                                        ""
+                                    }
+                                    required
+                                    fullWidth
+                                />
+                            </Grid>
+                        </Grid>
+                        <Grid className={classes.row} container>
+                            <Grid item md={4} />
+                            <Grid item xs={12} md={4}>
+                                <Button color="primary" variant="contained" type="submit">
+                                    <FormattedMessage id="project.global.buttons.save" />
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Paper>
+            </form>
+        </React.Fragment>
     );
-  }
-
-  function handleErrorsClose() {
-    setBackendErrors(null);
-  }
-
-  return (
-    <div>
-      <Errors errors={backendErrors} onClose={() => handleErrorsClose()} />
-      <div className="card bg-light border-dark">
-        <h5 className="card-header">
-          <FormattedMessage id="project.users.ChangePassword.title" />
-        </h5>
-        <div className="card-body">
-          <form
-            ref={(node) => (form = node)}
-            className="needs-validation"
-            noValidate
-            onSubmit={(e) => handleSubmit(e)}
-          >
-            <div className="form-group row">
-              <label htmlFor="oldPassword" className="col-md-3 col-form-label">
-                <FormattedMessage id="project.users.ChangePassword.fields.oldPassword" />
-              </label>
-              <div className="col-md-4">
-                <input
-                  type="password"
-                  id="confirmNewPassword"
-                  className="form-control"
-                  value={oldPassword}
-                  onChange={(e) => handleOldPasswordChange(e)}
-                  autoFocus
-                  required
-                />
-                <div className="invalid-feedback">
-                  <FormattedMessage id="project.global.validator.required" />
-                </div>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label htmlFor="newPassword" className="col-md-3 col-form-label">
-                <FormattedMessage id="project.users.ChangePassword.fields.newPassword" />
-              </label>
-              <div className="col-md-4">
-                <input
-                  type="password"
-                  id="newPassword"
-                  className="form-control"
-                  value={newPassword}
-                  onChange={(e) => handleNewPasswordChange(e)}
-                  required
-                />
-                <div className="invalid-feedback">
-                  <FormattedMessage id="project.global.validator.required" />
-                </div>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label
-                htmlFor="confirmNewPassword"
-                className="col-md-3 col-form-label"
-              >
-                <FormattedMessage id="project.users.ChangePassword.fields.confirmNewPassword" />
-              </label>
-              <div className="col-md-4">
-                <input
-                  ref={(node) => (confirmNewPasswordInput = node)}
-                  type="password"
-                  id="confirmNewPassword"
-                  className="form-control"
-                  value={confirmNewPassword}
-                  onChange={(e) => handleConfirmNewPasswordChange(e)}
-                  required
-                />
-                <div className="invalid-feedback">
-                  {passwordsDoNotMatch ? (
-                    <FormattedMessage id="project.global.validator.passwordsDoNotMatch" />
-                  ) : (
-                    <FormattedMessage id="project.global.validator.required" />
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="form-group row">
-              <div className="offset-md-3 col-md-1">
-                <button type="submit" className="btn btn-primary">
-                  <FormattedMessage id="project.global.buttons.save" />
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
 };
 
 export default ChangePassword;
