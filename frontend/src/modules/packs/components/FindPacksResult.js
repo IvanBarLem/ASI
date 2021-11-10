@@ -16,7 +16,9 @@ const FindPacksResult = () => {
   const [page, setPage] = React.useState(1);
 
   const handlePageChange = (event, value) => {
-    dispatch(actions.findPacks(value - 1));
+    isGerente
+      ? dispatch(actions.findAllPacks(value - 1))
+      : dispatch(actions.findPacks(value - 1));
     setPage(value);
     window.scrollTo(0, 0);
   };
@@ -28,29 +30,29 @@ const FindPacksResult = () => {
           <FormattedMessage id="project.packs.foundNoPacks" />
         </Alert>
       ) : (
-        <Box>
-          <Grid container spacing={4}>
-            {packSearch.result.content.map((row) => (
-              <Pack key={row.id} item={row} />
-            ))}
-            <Grid
-              item
-              xs={12}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Pagination
-                count={packSearch.result.totalPages}
-                page={page}
-                onChange={handlePageChange}
-              />
+          <Box>
+            <Grid container spacing={4}>
+              {packSearch.result.content.map((row) => (
+                <Pack key={row.id} item={row} />
+              ))}
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Pagination
+                  count={packSearch.result.totalPages}
+                  page={page}
+                  onChange={handlePageChange}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </Box>
-      )}
+          </Box>
+        )}
       {isGerente ? (
         <Fab
           sx={{ position: "fixed", bottom: 50, right: 50 }}
@@ -62,8 +64,8 @@ const FindPacksResult = () => {
           <AddIcon />
         </Fab>
       ) : (
-        <React.Fragment />
-      )}
+          <React.Fragment />
+        )}
     </React.Fragment>
   );
 };
