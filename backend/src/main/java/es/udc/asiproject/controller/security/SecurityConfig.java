@@ -27,10 +27,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
 		.antMatchers("/users/signUp", "/users/login", "/users/loginFromServiceToken").permitAll()
-		.antMatchers(HttpMethod.GET, "/packs").authenticated().antMatchers("/products/**/hidden")
-		.hasRole(RoleType.INFORMATICO.name()).antMatchers(HttpMethod.GET, "/products/**")
-		.hasRole(RoleType.AGENTE.name()).antMatchers("/products/**").hasRole(RoleType.INFORMATICO.name())
-		.antMatchers("/**").hasRole(RoleType.GERENTE.name());
+		.antMatchers(HttpMethod.GET, "/packs").hasRole(RoleType.AGENTE.name())
+		.antMatchers("/products/**/hidden").hasRole(RoleType.INFORMATICO.name())
+		.antMatchers(HttpMethod.GET, "/products/**")
+		.hasAnyRole(RoleType.AGENTE.name(), RoleType.INFORMATICO.name()).antMatchers("/products/**")
+		.hasRole(RoleType.INFORMATICO.name()).antMatchers("/**").hasRole(RoleType.GERENTE.name());
     }
 
     @Bean

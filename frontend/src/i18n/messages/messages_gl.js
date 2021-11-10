@@ -74,8 +74,14 @@ export default {
   "project.packs.CreatePack.select.families": "Familias",
   "project.packs.CreatePack.select.friends": "Amigos",
   "project.packs.CreatePack.previsualization": "Previsualización",
+  "project.packs.unhighlight": "Non destacar",
+  "project.packs.highlight": "Destacar",
+  "project.packs.show": "Amosar",
+  "project.packs.unshow": "Ocultar",
+
   "project.packs.foundNoPacks": "Non existen paquetes ainda",
   "project.products.foundNoProducts": "Non existen productos ainda",
+  "project.packs.ERP": "Precio recomendado:",
   "project.products.travels": "Viaxes",
   "project.products.transports": "Transportes",
   "project.products.accommodations": "Aloxamentos",
@@ -96,6 +102,8 @@ export default {
   "project.agents.fields.week": "7 días",
   "project.agents.agentList.period": "Período",
   "project.agents.agentList.selectAgent": "Ningún axente seleccionado",
-  "project.products.kpi.respectingTotalProducts": "respeto ao total de produtos",
-  "project.products.kpi.respectingTotalBilling": "respeto ao total de facturación",
+  "project.products.kpi.respectingTotalProducts":
+    "respeto ao total de produtos",
+  "project.products.kpi.respectingTotalBilling":
+    "respeto ao total de facturación",
 };

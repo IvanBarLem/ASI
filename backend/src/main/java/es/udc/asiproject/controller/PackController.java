@@ -28,44 +28,60 @@ import es.udc.asiproject.service.exceptions.InvalidOperationException;
 @RestController
 @RequestMapping("/packs")
 public class PackController {
-	@Autowired
-	private PackService packService;
+    @Autowired
+    private PackService packService;
 
-	@PostMapping("/create")
-	@ResponseStatus(HttpStatus.CREATED)
-	public PackDto createPack(@Validated({ InsertValidation.class }) @RequestBody PackDto packDto)
-			throws InstanceNotFoundException, InvalidOperationException {
-		Pack pack = PackMapper.convertToEntity(packDto);
+    @PostMapping("/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public PackDto createPack(@Validated({ InsertValidation.class }) @RequestBody PackDto packDto)
+	    throws InstanceNotFoundException, InvalidOperationException {
+	Pack pack = PackMapper.convertToEntity(packDto);
 
-		return PackMapper.convertToDto(packService.createPack(pack));
-	}
+	return PackMapper.convertToDto(packService.createPack(pack));
+    }
 
-	@GetMapping
-	@ResponseStatus(HttpStatus.OK)
-	public PageDto<PackDto> findPacks(@RequestParam(defaultValue = "0") int pageNumber,
-			@RequestParam(defaultValue = "8") int pageSize) {
-		return PageMapper.convertToDto(packService.findPacks(pageNumber, pageSize), PackMapper::convertToDto);
-	}
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public PageDto<PackDto> findPacks(@RequestParam(defaultValue = "0") int page,
+	    @RequestParam(defaultValue = "8") int pageSize) {
+	return PageMapper.convertToDto(packService.findPacks(page, pageSize), PackMapper::convertToDto);
+    }
 
-	@GetMapping("/hidden")
-	@ResponseStatus(HttpStatus.OK)
-	public PageDto<PackDto> findAllPacks(@RequestParam(defaultValue = "0") int pageNumber,
-			@RequestParam(defaultValue = "8") int pageSize) {
-		return PageMapper.convertToDto(packService.findAllPacks(pageNumber, pageSize), PackMapper::convertToDto);
-	}
+    @GetMapping("/hidden")
+    @ResponseStatus(HttpStatus.OK)
+    public PageDto<PackDto> findAllPacks(@RequestParam(defaultValue = "0") int page,
+	    @RequestParam(defaultValue = "8") int pageSize) {
+	return PageMapper.convertToDto(packService.findAllPacks(page, pageSize), PackMapper::convertToDto);
+    }
 
-	@PutMapping
-	@ResponseStatus(HttpStatus.OK)
-	public PackDto updatePack(@Validated({ UpdateValidation.class }) @RequestBody PackDto packDto)
-			throws InstanceNotFoundException, InvalidOperationException {
-		Pack pack = PackMapper.convertToEntity(packDto);
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public PackDto updatePack(@Validated({ UpdateValidation.class }) @RequestBody PackDto packDto)
+	    throws InstanceNotFoundException, InvalidOperationException {
+	Pack pack = PackMapper.convertToEntity(packDto);
 
-		return PackMapper.convertToDto(packService.updatePack(pack));
-	}
+	return PackMapper.convertToDto(packService.updatePack(pack));
+    }
 
-	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void removeAccommodation(@PathVariable("id") Long id) throws InstanceNotFoundException {
-		packService.removePack(id);
-	}
+    @PutMapping("/toggleHighlight/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void toggleHighlightPack(Long userId, @PathVariable("id") Long packId)
+	    throws InstanceNotFoundException, InvalidOperationException {
+
+	packService.toggleHighlightPack(packId);
+    }
+
+    @PutMapping("/toggleHide/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void toggleHidePack(Long userId, @PathVariable("id") Long packId)
+	    throws InstanceNotFoundException, InvalidOperationException {
+
+	packService.toggleHidePack(packId);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void removeAccommodation(@PathVariable("id") Long id) throws InstanceNotFoundException {
+	packService.removePack(id);
+    }
 }

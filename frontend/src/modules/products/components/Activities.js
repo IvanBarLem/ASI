@@ -223,16 +223,16 @@ const Activities = () => {
                         sx={
                           row.hidden
                             ? {
-                                backgroundColor: "#bdbdbd",
-                                "&:last-child td, &:last-child th": {
-                                  border: 0,
-                                },
-                              }
+                              backgroundColor: "#bdbdbd",
+                              "&:last-child td, &:last-child th": {
+                                border: 0,
+                              },
+                            }
                             : {
-                                "&:last-child td, &:last-child th": {
-                                  border: 0,
-                                },
-                              }
+                              "&:last-child td, &:last-child th": {
+                                border: 0,
+                              },
+                            }
                         }
                       >
                         {editing === row.id ? (
@@ -257,23 +257,24 @@ const Activities = () => {
                               />
                             </TableCell>
                             <TableCell align="right">
-                              <IconButton color="primary">
-                                <SaveIcon
-                                  onClick={() => {
-                                    handleEditing(
-                                      null,
-                                      name,
-                                      price,
-                                      row.hidden
-                                    );
-                                    handleUpdate(
-                                      row.id,
-                                      name,
-                                      price,
-                                      row.hidden
-                                    );
-                                  }}
-                                />
+                              <IconButton
+                                onClick={() => {
+                                  handleEditing(
+                                    null,
+                                    name,
+                                    price,
+                                    row.hidden
+                                  );
+                                  handleUpdate(
+                                    row.id,
+                                    name,
+                                    price,
+                                    row.hidden
+                                  );
+                                }}
+                                color="primary"
+                              >
+                                <SaveIcon />
                               </IconButton>
                               <IconButton
                                 color="error"
@@ -291,61 +292,61 @@ const Activities = () => {
                             </TableCell>
                           </React.Fragment>
                         ) : (
-                          <React.Fragment>
-                            <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.price}</TableCell>
-                            <TableCell align="right">
-                              {row.hidden ? (
+                            <React.Fragment>
+                              <TableCell>{row.name}</TableCell>
+                              <TableCell>{row.price}</TableCell>
+                              <TableCell align="right">
+                                {row.hidden ? (
+                                  <IconButton
+                                    color="warning"
+                                    onClick={() =>
+                                      handleVisibility(
+                                        row.id,
+                                        row.name,
+                                        row.price,
+                                        !row.hidden
+                                      )
+                                    }
+                                  >
+                                    <VisibilityOffIcon />
+                                  </IconButton>
+                                ) : (
+                                    <IconButton
+                                      color="success"
+                                      onClick={() =>
+                                        handleVisibility(
+                                          row.id,
+                                          row.name,
+                                          row.price,
+                                          !row.hidden
+                                        )
+                                      }
+                                    >
+                                      <VisibilityIcon />
+                                    </IconButton>
+                                  )}
                                 <IconButton
-                                  color="warning"
+                                  color="primary"
                                   onClick={() =>
-                                    handleVisibility(
+                                    handleEditing(
                                       row.id,
                                       row.name,
                                       row.price,
-                                      !row.hidden
+                                      row.hidden
                                     )
                                   }
                                 >
-                                  <VisibilityOffIcon />
+                                  <EditIcon />
                                 </IconButton>
-                              ) : (
                                 <IconButton
-                                  color="success"
-                                  onClick={() =>
-                                    handleVisibility(
-                                      row.id,
-                                      row.name,
-                                      row.price,
-                                      !row.hidden
-                                    )
-                                  }
+                                  color="error"
+                                  onClick={() => handleDelete(row.id)}
                                 >
-                                  <VisibilityIcon />
+                                  <DeleteIcon />
                                 </IconButton>
-                              )}
-                              <IconButton
-                                color="primary"
-                                onClick={() =>
-                                  handleEditing(
-                                    row.id,
-                                    row.name,
-                                    row.price,
-                                    row.hidden
-                                  )
-                                }
-                              >
-                                <EditIcon />
-                              </IconButton>
-                              <IconButton
-                                color="error"
-                                onClick={() => handleDelete(row.id)}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </TableCell>
-                          </React.Fragment>
-                        )}
+                              </TableCell>
+                            </React.Fragment>
+                          )}
                       </TableRow>
                     ))}
                   </TableBody>
@@ -359,18 +360,18 @@ const Activities = () => {
           </Grid>
         </Box>
       ) : (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Alert severity="info">
-            <FormattedMessage id="project.products.foundNoProducts" />
-          </Alert>
-        </Box>
-      )}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Alert severity="info">
+              <FormattedMessage id="project.products.foundNoProducts" />
+            </Alert>
+          </Box>
+        )}
       <Fab
         sx={{ position: "fixed", bottom: 50, right: 50 }}
         color={adding ? "secondary" : "primary"}

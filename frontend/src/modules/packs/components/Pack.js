@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Typography,
   Card,
@@ -12,8 +13,18 @@ import {
 import TimerIcon from "@mui/icons-material/Timer";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { FormattedMessage } from "react-intl";
+import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import Button from "@mui/material/Button";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import * as actions from "../actions";
+import users from "../../users";
 
-const Pack = ({ item }) => {
+const Pack = ({ item, creating }) => {
+  const dispatch = useDispatch();
+  const isGerente = useSelector(users.selectors.isGerente);
   const image =
     "https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png";
 
@@ -39,6 +50,14 @@ const Pack = ({ item }) => {
     return products;
   };
 
+  const hide = () => {
+    dispatch(actions.hidePack(item.id));
+  };
+
+  const outstand = () => {
+    dispatch(actions.outstandingPack(item.id));
+  };
+
   return (
     <Grid
       key={item.id}
@@ -54,11 +73,41 @@ const Pack = ({ item }) => {
       xl={3}
     >
       <Card
-        sx={{
-          height: "100%",
-          maxWidth: 360,
-          minWidth: 280,
-        }}
+        sx={
+          item.outstanding && !item.hidden
+            ? {
+                boxShadow: "0px 0px 22px 5px #ED6C02",
+                height: "100%",
+                maxWidth: 360,
+                minWidth: 280,
+              }
+            : item.hidden && !item.outstanding
+            ? {
+                height: "100%",
+                maxWidth: 360,
+                minWidth: 280,
+                backgroundColor: "#ebebeb",
+                opacity: "0.8",
+                background:
+                  "repeating-linear-gradient( 45deg, #ebebeb, #ebebeb 5px, #e5e5f7 5px, #e5e5f7 25px )",
+              }
+            : item.hidden && item.outstanding
+            ? {
+                backgroundColor: "#ebebeb",
+                opacity: "0.8",
+                background:
+                  "repeating-linear-gradient( 45deg, #ebebeb, #ebebeb 5px, #e5e5f7 5px, #e5e5f7 25px )",
+                height: "100%",
+                maxWidth: 360,
+                minWidth: 280,
+                boxShadow: "0px 0px 22px 5px #ED6C02",
+              }
+            : {
+                height: "100%",
+                maxWidth: 360,
+                minWidth: 280,
+              }
+        }
       >
         <CardMedia
           component="img"
@@ -84,7 +133,7 @@ const Pack = ({ item }) => {
             />
           </Grid>
           <Typography gutterBottom variant="h5" component="div">
-            {item.title}
+            {item.title} {item.hidden && <VisibilityOffOutlinedIcon />}
           </Typography>
           <Typography gutterBottom variant="body1" component="div">
             {item.description}
@@ -97,8 +146,8 @@ const Pack = ({ item }) => {
             {item.duration - 1 ? (
               <FormattedMessage id="project.packs.findpacks.days" />
             ) : (
-                <FormattedMessage id="project.packs.findpacks.day" />
-              )}
+              <FormattedMessage id="project.packs.findpacks.day" />
+            )}
           </Typography>
           <Typography gutterBottom variant="body2" component="div">
             <IconButton disabled>
@@ -113,8 +162,8 @@ const Pack = ({ item }) => {
             ) : item.persons === "Friends" ? (
               <FormattedMessage id="project.packs.CreatePack.select.friends" />
             ) : (
-                      ""
-                    )}
+              ""
+            )}
           </Typography>
           <Divider />
           <Grid sx={{ marginTop: "6px" }} container spacing={1}>
@@ -128,6 +177,61 @@ const Pack = ({ item }) => {
               </Grid>
             ))}
           </Grid>
+          {!creating && isGerente && (
+            <Fragment>
+              <Divider sx={{ marginTop: "10px" }} />
+              <Grid container spacing={1} sx={{ marginTop: "6px" }}>
+                <Grid item xs={6}>
+                  {item.outstanding ? (
+                    <Button
+                      size="small"
+                      fullWidth
+                      variant="outlined"
+                      startIcon={<StarBorderIcon />}
+                      color="warning"
+                      onClick={() => outstand()}
+                    >
+                      <FormattedMessage id="project.packs.unhighlight" />
+                    </Button>
+                  ) : (
+                    <Button
+                      size="small"
+                      fullWidth
+                      variant="contained"
+                      startIcon={<StarIcon />}
+                      color="warning"
+                      onClick={() => outstand()}
+                    >
+                      <FormattedMessage id="project.packs.highlight" />
+                    </Button>
+                  )}
+                </Grid>
+                <Grid item xs={6}>
+                  {item.hidden ? (
+                    <Button
+                      size="small"
+                      fullWidth
+                      variant="outlined"
+                      startIcon={<VisibilityIcon />}
+                      onClick={() => hide()}
+                    >
+                      <FormattedMessage id="project.packs.show" />
+                    </Button>
+                  ) : (
+                    <Button
+                      size="small"
+                      fullWidth
+                      variant="contained"
+                      startIcon={<VisibilityOffIcon />}
+                      onClick={() => hide()}
+                    >
+                      <FormattedMessage id="project.packs.unshow" />
+                    </Button>
+                  )}
+                </Grid>
+              </Grid>
+            </Fragment>
+          )}
         </CardContent>
       </Card>
     </Grid>

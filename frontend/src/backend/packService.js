@@ -8,3 +8,19 @@ export const findPacks = (page, onSuccess) => {
 
   appFetch(path, config("GET"), onSuccess);
 };
+
+export const findAllPacks = (page, onSuccess) => {
+  let path = `/packs/hidden?page=${page}`;
+
+  appFetch(path, config("GET"), onSuccess);
+};
+
+export const hidePack = (id, onSuccess) => {
+  let path = `/packs/toggleHide/${id}`;
+  appFetch(path, config("PUT"), onSuccess);
+};
+
+export const outstandingPack = (id, onSuccess) => {
+  let path = `/packs/toggleHighlight/${id}`;
+  appFetch(path, config("PUT"), onSuccess);
+};
