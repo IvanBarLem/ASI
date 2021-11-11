@@ -6,146 +6,160 @@ import { Errors } from "../../common";
 import * as actions from "../actions";
 import * as selectors from "../selectors";
 import { useHistory } from "react-router";
+import {
+	Paper,
+	Typography,
+	Box,
+	Grid,
+	TextField,
+	Button
+} from "@mui/material";
+import { makeStyles } from "@material-ui/core/styles";
 
-const UpdateProfile = (props) => {
-  const user = useSelector(selectors.getUser);
-  const dispatch = useDispatch();
-  const history = useHistory();
+const useStyles = makeStyles((theme) => ({
+	paper: {
+		paddingBottom: theme.spacing(1),
+	},
+	paperBody: {
+		margin: theme.spacing(2),
+	},
+	row: {
+		marginLeft: theme.spacing(1),
+		paddingRight: theme.spacing(2),
+		marginTop: theme.spacing(2)
+	}
+}));
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [backendErrors, setBackendErrors] = useState(null);
-  let form;
+const UpdateProfile = () => {
+	const classes = useStyles();
+	const user = useSelector(selectors.getUser);
+	const dispatch = useDispatch();
+	const history = useHistory();
 
-  useEffect(() => {
-    setFirstName(user.firstName);
-    setLastName(user.lastName);
-    setEmail(user.email);
-  }, [user]);
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [backendErrors, setBackendErrors] = useState(null);
+	const [invalid, setInvalid] = useState(false);
+	let form;
 
-  function handleFirstNameChange(event) {
-    setFirstName(event.target.value);
-  }
+	useEffect(() => {
+		setFirstName(user.firstName);
+		setLastName(user.lastName);
+	}, [user]);
 
-  function handleLastNameChange(event) {
-    setLastName(event.target.value);
-  }
+	function handleSubmit(event) {
+		event.preventDefault();
 
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
-  }
+		if (form.checkValidity()) {
+			setInvalid(false)
+			updateProfile();
+		} else {
+			setBackendErrors(null);
+			setInvalid(true)
+			form.classList.add("was-validated");
+		}
+	}
 
-  function handleSubmit(event) {
-    event.preventDefault();
+	function updateProfile() {
+		dispatch(
+			actions.updateProfile(
+				{
+					id: user.id,
+					firstName: firstName.trim(),
+					lastName: lastName.trim(),
+				},
+				() => history.push("/"),
+				(errors) => setBackendErrors(errors)
+			)
+		);
+	}
 
-    if (form.checkValidity()) {
-      updateProfile();
-    } else {
-      setBackendErrors(null);
-      form.classList.add("was-validated");
-    }
-  }
+	function handleErrorsClose() {
+		setBackendErrors(null);
+	}
 
-  function updateProfile() {
-    dispatch(
-      actions.updateProfile(
-        {
-          id: user.id,
-          firstName: firstName.trim(),
-          lastName: lastName.trim(),
-          email: email.trim(),
-        },
-        () => history.push("/"),
-        (errors) => setBackendErrors(errors)
-      )
-    );
-  }
-
-  function handleErrorsClose() {
-    setBackendErrors(null);
-  }
-  return (
-    <div>
-      <Errors errors={backendErrors} onClose={() => handleErrorsClose()} />
-      <div className="card bg-light border-dark">
-        <h5 className="card-header">
-          <FormattedMessage id="project.users.UpdateProfile.title" />
-        </h5>
-        <div className="card-body">
-          <form
-            ref={(node) => (form = node)}
-            className="needs-validation"
-            noValidate
-            onSubmit={(e) => handleSubmit(e)}
-          >
-            <div className="form-group row">
-              <label htmlFor="firstName" className="col-md-3 col-form-label">
-                <FormattedMessage id="project.global.fields.firstName" />
-              </label>
-              <div className="col-md-4">
-                <input
-                  type="text"
-                  id="firstName"
-                  className="form-control"
-                  value={firstName}
-                  onChange={(e) => handleFirstNameChange(e)}
-                  autoFocus
-                  required
-                />
-                <div className="invalid-feedback">
-                  <FormattedMessage id="project.global.validator.required" />
-                </div>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label htmlFor="lastName" className="col-md-3 col-form-label">
-                <FormattedMessage id="project.global.fields.lastName" />
-              </label>
-              <div className="col-md-4">
-                <input
-                  type="text"
-                  id="lastName"
-                  className="form-control"
-                  value={lastName}
-                  onChange={(e) => handleLastNameChange(e)}
-                  required
-                />
-                <div className="invalid-feedback">
-                  <FormattedMessage id="project.global.validator.required" />
-                </div>
-              </div>
-            </div>
-            <div className="form-group row">
-              <label htmlFor="email" className="col-md-3 col-form-label">
-                <FormattedMessage id="project.global.fields.email" />
-              </label>
-              <div className="col-md-4">
-                <input
-                  type="email"
-                  id="email"
-                  className="form-control"
-                  value={email}
-                  onChange={(e) => handleEmailChange(e)}
-                  required
-                />
-                <div className="invalid-feedback">
-                  <FormattedMessage id="project.global.validator.email" />
-                </div>
-              </div>
-            </div>
-            <div className="form-group row">
-              <div className="offset-md-3 col-md-1">
-                <button type="submit" className="btn btn-primary">
-                  <FormattedMessage id="project.global.buttons.save" />
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<React.Fragment>
+			<Errors errors={backendErrors} onClose={() => handleErrorsClose()} />
+			<form
+				ref={(node) => (form = node)}
+				className="needs-validation"
+				noValidate
+				onSubmit={(e) => handleSubmit(e)}
+			>
+				<Paper className={classes.paper}>
+					<Box
+						sx={{
+							bgcolor: "primary.dark",
+							color: "primary.contrastText",
+							padding: 1,
+							borderRadius: 1,
+							borderBottomLeftRadius: 0,
+							borderBottomRightRadius: 0,
+						}}
+					>
+						<Typography variant="h5">
+							<FormattedMessage id="project.users.UpdateProfile.title" />
+						</Typography>
+					</Box>
+					<Box className={classes.paperBody}>
+						<Grid className={classes.row} container>
+							<Grid item xs={12} md={3}>
+								<Typography>
+									<FormattedMessage id="project.global.fields.firstName" />
+								</Typography>
+							</Grid>
+							<Grid item xs={12} md={4}>
+								<TextField
+									id="fistName"
+									label={
+										<FormattedMessage id="project.global.validator.required" />
+									}
+									variant="outlined"
+									value={firstName}
+									error={invalid}
+									onChange={(e) => setFirstName(e.target.value)}
+									size="small"
+									required
+									fullWidth
+								/>
+							</Grid>
+						</Grid>
+						<Grid className={classes.row} container>
+							<Grid item xs={12} md={3}>
+								<Typography>
+									<FormattedMessage id="project.global.fields.lastName" />
+								</Typography>
+							</Grid>
+							<Grid item xs={12} md={4}>
+								<TextField
+									id="lastName"
+									label={
+										<FormattedMessage id="project.global.validator.required" />
+									}
+									variant="outlined"
+									value={lastName}
+									error={invalid}
+									onChange={(e) => setLastName(e.target.value)}
+									size="small"
+									required
+									fullWidth
+								/>
+							</Grid>
+						</Grid>
+						<Grid className={classes.row} container>
+							<Grid item md={3} />
+							<Grid item xs={12} md={4}>
+								<Button color="primary" variant="contained" type="submit">
+									<FormattedMessage id="project.global.buttons.save" />
+								</Button>
+							</Grid>
+						</Grid>
+					</Box>
+				</Paper>
+			</form>
+		</React.Fragment>
+	);
 };
 
 export default UpdateProfile;

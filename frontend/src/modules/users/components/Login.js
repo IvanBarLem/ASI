@@ -1,107 +1,174 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { useDispatch } from 'react-redux';
-import { useHistory, Link } from 'react-router-dom';
+import { makeStyles } from "@material-ui/core/styles";
+import {
+	Alert, Box,
+	Button, Grid, Paper,
+	TextField, Typography
+} from "@mui/material";
+import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { connect, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { Errors } from "../../common";
+import * as actions from "../actions";
+import "../users.css";
 
-import { Errors } from '../../common';
-import * as actions from '../actions';
+const useStyles = makeStyles((theme) => ({
+	paper: {
+		paddingBottom: theme.spacing(1),
+	},
+	header: {
+		backgroundColor: theme.palette.primary.main,
+		color: theme.palette.primary.contrastText,
+		padding: theme.spacing(1),
+		borderTopLeftRadius: theme.spacing(1),
+		borderTopRightRadius: theme.spacing(1),
+	},
+	paperBody: {
+		margin: theme.spacing(2),
+	},
+	row: {
+		paddingRight: theme.spacing(2),
+		marginBottom: theme.spacing(1),
+		marginLeft: theme.spacing(1),
+	}
+}));
 
 const Login = () => {
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
-    const [backendErrors, setBackendErrors] = useState(null);
-    let form;
+	const classes = useStyles();
+	const dispatch = useDispatch();
+	const history = useHistory();
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [backendErrors, setBackendErrors] = useState(null);
+	const [invalid, setInvalid] = useState(false);
+	let form;
 
-    const handleSubmit = event => {
-        event.preventDefault();
+	const validateEmail = (email) => {
+		var re = /\S+@\S+\.\S+/;
+		return re.test(email) && email !== "";
+	};
 
-        if (form.checkValidity()) {
-            dispatch(actions.login(
-                userName.trim(),
-                password,
-                () => history.push('/'),
-                errors => setBackendErrors(errors),
-                () => {
-                    history.push('/users/login');
-                    dispatch(actions.logout());
-                }
-            ));
-        } else {
-            setBackendErrors(null);
-        }
-    }
+	const handleSubmit = (event) => {
+		event.preventDefault();
 
-    // const login = () => {
-    //     this.props.dispatch(actions.login(
-    //         this.state.userName.trim(),
-    //         this.state.password,
-    //         () => this.props.history.push('/'),
-    //         errors => this.setBackendErrors(errors),
-    //         reauthenticationCallback(this.props.dispatch, this.props.history)
-    //     ));
-    // }
+		if (form.checkValidity()) {
+			dispatch(
+				actions.login(
+					email.trim(),
+					password,
+					() => history.push("/packs"),
+					(errors) => setBackendErrors(errors),
+					() => {
+						history.push("/users/login");
+						dispatch(actions.logout());
+					}
+				)
+			);
+		} else {
+			setBackendErrors(null);
+		}
+	};
 
-    return (
-        <div>
-            <p className="text-center">
-                <Link to="/users/signup">
-                    <FormattedMessage id="project.users.SignUp.title" />
-                </Link>
-            </p>
-            <Errors errors={backendErrors} onClose={() => setBackendErrors(null)} />
-            <div className="card bg-light border-dark">
-                <h5 className="card-header">
-                    <FormattedMessage id="project.users.Login.title" />
-                </h5>
-                <div className="card-body">
-                    <form ref={node => form = node}
-                        className="needs-validation" noValidate
-                        onSubmit={(e) => handleSubmit(e)}
-                    >
-                        <div className="form-group row">
-                            <label htmlFor="userName" className="col-md-3 col-form-label">
-                                <FormattedMessage id="project.global.fields.userName" />
-                            </label>
-                            <div className="col-md-4">
-                                <input type="text" id="userName" className="form-control"
-                                    value={userName}
-                                    onChange={(e) => setUserName(e.target.value)}
-                                    autoFocus
-                                    required />
-                                <div className="invalid-feedback">
-                                    <FormattedMessage id='project.global.validator.required' />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <label htmlFor="password" className="col-md-3 col-form-label">
-                                <FormattedMessage id="project.global.fields.password" />
-                            </label>
-                            <div className="col-md-4">
-                                <input type="password" id="password" className="form-control"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required />
-                                <div className="invalid-feedback">
-                                    <FormattedMessage id='project.global.validator.required' />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <div className="offset-md-3 col-md-1">
-                                <button type="submit" className="btn btn-primary">
-                                    <FormattedMessage id="project.users.Login.title" />
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    );
-}
+	const handleInvalid = (event) => {
+		event.preventDefault();
+		setInvalid(true);
+	};
+
+	return (
+		<div>
+			<Errors errors={backendErrors} onClose={() => setBackendErrors(null)} />
+			<form
+				ref={(node) => (form = node)}
+				onSubmit={(e) => handleSubmit(e)}
+				onInvalid={(e) => handleInvalid(e)}
+			>
+				<Paper className={classes.paper}>
+					<Box
+						sx={{
+							bgcolor: "primary.dark",
+							color: "primary.contrastText",
+							padding: 1,
+							borderRadius: 1,
+							borderBottomLeftRadius: 0,
+							borderBottomRightRadius: 0,
+						}}
+					>
+						<Typography variant="h5">
+							<FormattedMessage id="project.users.Login.title" />
+						</Typography>
+					</Box>
+					<Box className="paperBody">
+						<Grid className={classes.row} container>
+							<Grid item xs={12} md={3}>
+								<Typography>
+									<FormattedMessage id="project.global.fields.email" />
+								</Typography>
+							</Grid>
+							<Grid item xs={12} md={4}>
+								<TextField
+									id="email"
+									label={
+										<FormattedMessage id="project.global.validator.required" />
+									}
+									variant="outlined"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+									size="small"
+									error={!validateEmail(email) && invalid}
+									required
+									fullWidth
+									type="email"
+								/>
+							</Grid>
+						</Grid>
+						{!validateEmail(email) && invalid ?
+							<Grid className={classes.row} container>
+								<Grid item xs={12} md={3} />
+								<Grid item xs={12} md={4}>
+									<Alert severity="error">
+										<FormattedMessage id="project.global.validator.email" />
+									</Alert>
+								</Grid>
+							</Grid>
+							:
+							<div />
+						}
+						<Grid className={classes.row} container>
+							<Grid item xs={12} md={3}>
+								<Typography>
+									<FormattedMessage id="project.global.fields.password" />
+								</Typography>
+							</Grid>
+							<Grid item xs={12} md={4}>
+								<TextField
+									id="password"
+									label={
+										<FormattedMessage id="project.global.validator.required" />
+									}
+									variant="outlined"
+									type="password"
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+									error={password === "" && invalid}
+									size="small"
+									required
+									fullWidth
+								/>
+							</Grid>
+						</Grid>
+						<Grid className={classes.row} container>
+							<Grid item md={3} />
+							<Grid item xs={12} md={4}>
+								<Button color="primary" variant="contained" type="submit">
+									<FormattedMessage id="project.users.Login.title" />
+								</Button>
+							</Grid>
+						</Grid>
+					</Box>
+				</Paper>
+			</form>
+		</div>
+	);
+};
 
 export default connect()(Login);
