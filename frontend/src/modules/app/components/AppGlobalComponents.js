@@ -25,7 +25,7 @@ const ConnectedLoader = connect(loadingMapStateToProps)(Loader);
 
 const AppGlobalComponents = (props) => (
 
-    <Box>
+    <Box sx={props.dropDownMarginClasses}>
         <ConnectedErrorDialog />
         <ConnectedLoader />
     </Box>
