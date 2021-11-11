@@ -27,7 +27,9 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(2),
 	},
 	row: {
-		marginBottom: theme.spacing(1)
+		paddingRight: theme.spacing(2),
+		marginBottom: theme.spacing(1),
+		marginLeft: theme.spacing(1),
 	}
 }));
 
@@ -96,7 +98,7 @@ const Login = () => {
 						</Typography>
 					</Box>
 					<Box className="paperBody">
-						<Grid className="row" container>
+						<Grid className={classes.row} container>
 							<Grid item xs={12} md={3}>
 								<Typography>
 									<FormattedMessage id="project.global.fields.email" />
@@ -120,7 +122,7 @@ const Login = () => {
 							</Grid>
 						</Grid>
 						{!validateEmail(email) && invalid ?
-							<Grid className="row" container>
+							<Grid className={classes.row} container>
 								<Grid item xs={12} md={3} />
 								<Grid item xs={12} md={4}>
 									<Alert severity="error">
@@ -131,7 +133,7 @@ const Login = () => {
 							:
 							<div />
 						}
-						<Grid className="row" container>
+						<Grid className={classes.row} container>
 							<Grid item xs={12} md={3}>
 								<Typography>
 									<FormattedMessage id="project.global.fields.password" />
@@ -154,7 +156,7 @@ const Login = () => {
 								/>
 							</Grid>
 						</Grid>
-						<Grid className="row" container>
+						<Grid className={classes.row} container>
 							<Grid item md={3} />
 							<Grid item xs={12} md={4}>
 								<Button color="primary" variant="contained" type="submit">

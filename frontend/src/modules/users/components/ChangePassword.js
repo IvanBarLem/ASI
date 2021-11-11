@@ -104,7 +104,7 @@ const ChangePassword = () => {
                             <FormattedMessage id="project.users.ChangePassword.title" />
                         </Typography>
                     </Box>
-                    <Box className="paperBody">
+                    <Box className={classes.paperBody}>
                         <Grid className={classes.row} container>
                             <Grid item xs={12} md={4}>
                                 <Typography>

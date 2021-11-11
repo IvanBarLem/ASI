@@ -1,7 +1,8 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { Box } from '@mui/material';
 
-import {ErrorDialog, Loader} from '../../common';
+import { ErrorDialog, Loader } from '../../common';
 import * as actions from '../actions';
 import * as selectors from '../selectors';
 
@@ -10,10 +11,10 @@ const errorMapStateToProps = state => ({
 });
 
 const errorMapDispatchToProps = dispatch => ({
-    onClose: () =>dispatch(actions.error(null))
+    onClose: () => dispatch(actions.error(null))
 });
 
-const ConnectedErrorDialog = 
+const ConnectedErrorDialog =
     connect(errorMapStateToProps, errorMapDispatchToProps)(ErrorDialog);
 
 const loadingMapStateToProps = state => ({
@@ -22,12 +23,12 @@ const loadingMapStateToProps = state => ({
 
 const ConnectedLoader = connect(loadingMapStateToProps)(Loader);
 
-const AppGlobalComponents = () => (
+const AppGlobalComponents = (props) => (
 
-    <div>
-        <ConnectedErrorDialog/>
-        <ConnectedLoader/>
-    </div>
+    <Box>
+        <ConnectedErrorDialog />
+        <ConnectedLoader />
+    </Box>
 
 );
 
