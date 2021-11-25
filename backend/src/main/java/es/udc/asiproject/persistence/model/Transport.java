@@ -10,6 +10,10 @@ public class Transport extends Product {
 		super(name, price);
 	}
 
+	public Transport() {
+		super();
+	}
+
 	public Transport(Long id, String name, BigDecimal price, Boolean hidden) {
 		super(id, name, price, hidden);
 	}

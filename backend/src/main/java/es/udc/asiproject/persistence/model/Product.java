@@ -41,6 +41,9 @@ public class Product {
 		this.hidden = hidden;
 	}
 
+	public Product() {
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -10,6 +10,10 @@ public class Activity extends Product {
 		super(name, price);
 	}
 
+	public Activity() {
+		super();
+	}
+
 	public Activity(Long id, String name, BigDecimal price, Boolean hidden) {
 		super(id, name, price, hidden);
 	}
