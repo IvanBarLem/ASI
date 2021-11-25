@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/packs").hasRole(RoleType.AGENTE.name())
 		.antMatchers("/products/**/hidden").hasRole(RoleType.INFORMATICO.name())
 		.antMatchers(HttpMethod.GET, "/products/**")
-		.hasAnyRole(RoleType.AGENTE.name(), RoleType.INFORMATICO.name()).antMatchers("/products/**")
+		.hasAnyRole(RoleType.AGENTE.name(), RoleType.INFORMATICO.name(), RoleType.GERENTE.name()).antMatchers("/products/**")
 		.hasRole(RoleType.INFORMATICO.name()).antMatchers("/**").hasRole(RoleType.GERENTE.name());
     }
 
