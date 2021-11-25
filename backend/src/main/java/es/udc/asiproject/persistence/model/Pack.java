@@ -205,8 +205,8 @@ public class Pack {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(image);
-		result = prime * result + Objects.hash(accommodations, activities, createdAt, description, duration, hidden, id,
-				outstanding, persons, price, title, transports, travels);
+		result = prime * result
+				+ Objects.hash(createdAt, description, duration, hidden, id, outstanding, persons, price, title);
 		return result;
 	}
 
@@ -219,12 +219,17 @@ public class Pack {
 		if (getClass() != obj.getClass())
 			return false;
 		Pack other = (Pack) obj;
-		return Objects.equals(accommodations, other.accommodations) && Objects.equals(activities, other.activities)
-				&& Objects.equals(createdAt, other.createdAt) && Objects.equals(description, other.description)
+		return Objects.equals(createdAt, other.createdAt) && Objects.equals(description, other.description)
 				&& Objects.equals(duration, other.duration) && Objects.equals(hidden, other.hidden)
 				&& Objects.equals(id, other.id) && Arrays.equals(image, other.image)
 				&& Objects.equals(outstanding, other.outstanding) && Objects.equals(persons, other.persons)
-				&& Objects.equals(price, other.price) && Objects.equals(title, other.title)
-				&& Objects.equals(transports, other.transports) && Objects.equals(travels, other.travels);
+				&& Objects.equals(price, other.price) && Objects.equals(title, other.title);
+	}
+
+	@Override
+	public String toString() {
+		return "Pack [id=" + id + ", title=" + title + ", description=" + description + ", image="
+				+ Arrays.toString(image) + ", price=" + price + ", duration=" + duration + ", persons=" + persons
+				+ ", outstanding=" + outstanding + ", hidden=" + hidden + ", createdAt=" + createdAt + "]";
 	}
 }

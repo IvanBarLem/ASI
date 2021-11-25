@@ -1,6 +1,7 @@
 package es.udc.asiproject.persistence.model;
 
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -30,6 +32,8 @@ public class User {
 	@Enumerated(EnumType.ORDINAL)
 	@Column(nullable = false)
 	private RoleType role;
+	@OneToMany
+	private Set<Sale> sales;
 
 	public User() {
 	}
