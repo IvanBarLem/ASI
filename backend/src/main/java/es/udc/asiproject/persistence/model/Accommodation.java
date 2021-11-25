@@ -10,6 +10,10 @@ public class Accommodation extends Product {
 		super(name, price);
 	}
 
+	public Accommodation() {
+		super();
+	}
+
 	public Accommodation(Long id, String name, BigDecimal price, Boolean hidden) {
 		super(id, name, price, hidden);
 	}

@@ -10,6 +10,10 @@ public class Travel extends Product {
 		super(name, price);
 	}
 
+	public Travel() {
+		super();
+	}
+
 	public Travel(Long id, String name, BigDecimal price, Boolean hidden) {
 		super(id, name, price, hidden);
 	}
