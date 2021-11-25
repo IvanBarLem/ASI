@@ -39,6 +39,7 @@ export default {
   "project.global.fields.location": "Localización",
   "project.global.fields.category": "Categoría",
   "project.global.fields.filters": "Filtros",
+  "project.global.fields.newPassword": "Nueva contraseña",
   "project.global.validator.email":
     "Introduzca una dirección de correo electrónico correcta",
   "project.global.validator.passwordsDoNotMatch":

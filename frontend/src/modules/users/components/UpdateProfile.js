@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	row: {
 		marginLeft: theme.spacing(1),
+		paddingRight: theme.spacing(2),
 		marginTop: theme.spacing(2)
 	}
 }));
@@ -81,11 +82,11 @@ const UpdateProfile = () => {
 		<React.Fragment>
 			<Errors errors={backendErrors} onClose={() => handleErrorsClose()} />
 			<form
-	          ref={(node) => (form = node)}
-	          className="needs-validation"
-	          noValidate
-	          onSubmit={(e) => handleSubmit(e)}
-	        >
+				ref={(node) => (form = node)}
+				className="needs-validation"
+				noValidate
+				onSubmit={(e) => handleSubmit(e)}
+			>
 				<Paper className={classes.paper}>
 					<Box
 						sx={{
@@ -101,7 +102,7 @@ const UpdateProfile = () => {
 							<FormattedMessage id="project.users.UpdateProfile.title" />
 						</Typography>
 					</Box>
-					<Box className="paperBody">
+					<Box className={classes.paperBody}>
 						<Grid className={classes.row} container>
 							<Grid item xs={12} md={3}>
 								<Typography>

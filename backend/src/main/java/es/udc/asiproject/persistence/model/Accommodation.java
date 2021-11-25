@@ -6,9 +6,6 @@ import javax.persistence.Entity;
 
 @Entity
 public class Accommodation extends Product {
-	public Accommodation() {
-	}
-
 	public Accommodation(String name, BigDecimal price) {
 		super(name, price);
 	}
@@ -31,5 +28,11 @@ public class Accommodation extends Product {
 		if (getClass() != obj.getClass())
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Accommodation [id=" + getId() + ", name()=" + getName() + ", price()=" + getPrice() + ", hidden()="
+				+ getHidden() + "]";
 	}
 }

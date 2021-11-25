@@ -25,9 +25,8 @@ public class Product {
 	private Boolean hidden;
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Pack> packs;
-
-	public Product() {
-	}
+	@ManyToMany(fetch = FetchType.LAZY)
+	private Set<Sale> sales;
 
 	public Product(String name, BigDecimal price) {
 		this.name = name;
@@ -82,9 +81,17 @@ public class Product {
 		this.packs = packs;
 	}
 
+	public Set<Sale> getSales() {
+		return sales;
+	}
+
+	public void setSales(Set<Sale> sales) {
+		this.sales = sales;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(hidden, id, name, packs, price);
+		return Objects.hash(hidden, id, name, price);
 	}
 
 	@Override
@@ -97,6 +104,11 @@ public class Product {
 			return false;
 		Product other = (Product) obj;
 		return Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(packs, other.packs) && Objects.equals(price, other.price);
+				&& Objects.equals(price, other.price);
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", hidden=" + hidden + "]";
 	}
 }

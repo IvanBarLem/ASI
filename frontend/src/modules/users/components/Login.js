@@ -1,23 +1,15 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { FormattedMessage } from "react-intl";
-import { useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
-import {
-	Paper,
-	Typography,
-	Box,
-	Grid,
-	TextField,
-	Button,
-	Divider,
-	Alert
-} from "@mui/material";
 import { makeStyles } from "@material-ui/core/styles";
-
+import {
+	Alert, Box,
+	Button, Grid, Paper,
+	TextField, Typography
+} from "@mui/material";
+import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { connect, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Errors } from "../../common";
 import * as actions from "../actions";
-
 import "../users.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +27,9 @@ const useStyles = makeStyles((theme) => ({
 		margin: theme.spacing(2),
 	},
 	row: {
-		marginBottom: theme.spacing(1)
+		paddingRight: theme.spacing(2),
+		marginBottom: theme.spacing(1),
+		marginLeft: theme.spacing(1),
 	}
 }));
 
@@ -104,7 +98,7 @@ const Login = () => {
 						</Typography>
 					</Box>
 					<Box className="paperBody">
-						<Grid className="row" container>
+						<Grid className={classes.row} container>
 							<Grid item xs={12} md={3}>
 								<Typography>
 									<FormattedMessage id="project.global.fields.email" />
@@ -128,18 +122,18 @@ const Login = () => {
 							</Grid>
 						</Grid>
 						{!validateEmail(email) && invalid ?
-							<Grid className="row" container>
-								<Grid item xs={12} md={3}/>
+							<Grid className={classes.row} container>
+								<Grid item xs={12} md={3} />
 								<Grid item xs={12} md={4}>
-								 	<Alert severity="error">
-									 	<FormattedMessage id="project.global.validator.email" />
-								 	</Alert>	
+									<Alert severity="error">
+										<FormattedMessage id="project.global.validator.email" />
+									</Alert>
 								</Grid>
 							</Grid>
 							:
-							<div/>
+							<div />
 						}
-						<Grid className="row" container>
+						<Grid className={classes.row} container>
 							<Grid item xs={12} md={3}>
 								<Typography>
 									<FormattedMessage id="project.global.fields.password" />
@@ -162,7 +156,7 @@ const Login = () => {
 								/>
 							</Grid>
 						</Grid>
-						<Grid className="row" container>
+						<Grid className={classes.row} container>
 							<Grid item md={3} />
 							<Grid item xs={12} md={4}>
 								<Button color="primary" variant="contained" type="submit">
@@ -170,10 +164,6 @@ const Login = () => {
 								</Button>
 							</Grid>
 						</Grid>
-						<Divider />
-						<Link to="/users/signup">
-							<FormattedMessage id="project.users.SignUp.title" />
-						</Link>
 					</Box>
 				</Paper>
 			</form>

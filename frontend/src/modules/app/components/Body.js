@@ -15,7 +15,6 @@ import users, {
   ChangePassword,
   Login,
   Logout,
-  SignUp,
   UpdateProfile,
 } from "../../users";
 import AppGlobalComponents from "./AppGlobalComponents";
@@ -28,7 +27,7 @@ const Body = (props) => {
   return (
     <Box sx={{ margin: 4 }}>
       <Box sx={props.dropDownMarginClasses} m={2}>
-        <AppGlobalComponents />
+        <AppGlobalComponents dropDownMarginClasses={props.dropDownMarginClasses} />
         <Switch>
           <Route exact path="/" component={Home} />
           {props.loggedIn && (
@@ -73,9 +72,6 @@ const Body = (props) => {
           )}
           {!props.loggedIn && (
             <Route exact path="/users/login" component={Login} />
-          )}
-          {!props.loggedIn && (
-            <Route exact path="/users/signup" component={SignUp} />
           )}
           <Route component={Home} />
         </Switch>
