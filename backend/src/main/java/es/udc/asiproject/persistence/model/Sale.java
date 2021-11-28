@@ -112,6 +112,22 @@ public class Sale {
 		this.travels = travels;
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(createdAt, id, price, state);
