@@ -8,6 +8,7 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import SurfingIcon from "@mui/icons-material/Surfing";
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 //import {FormattedMessage} from 'react-intl';
 import {
   Collapse,
@@ -54,7 +55,17 @@ const Dropdown = (props) => {
             <ListItemText>Packs</ListItemText>
           </ListItem>
         )}
-        {isInformatico && (
+        {isGerente && (
+          <React.Fragment>
+            <ListItem button component={Link} to="/sales">
+              <ListItemIcon>
+                <PointOfSaleIcon />
+              </ListItemIcon>
+              <ListItemText>Ventas</ListItemText>
+            </ListItem>
+          </React.Fragment>
+        )}
+        {(isInformatico || isGerente) && (
           <React.Fragment>
             <ListItem button onClick={handleClick}>
               <ListItemIcon>

@@ -44,6 +44,14 @@ export default {
   "project.global.validator.passwordsDoNotMatch":
     "As contrasinais non coinciden",
   "project.global.validator.required": "Campo obrigatorio",
+  "project.global.fields.client": "Cliente",
+  "project.global.fields.agent": "Axente",
+  "project.global.fields.travels": "Viaxes",
+  "project.global.fields.acommodations": "Aloxamentos",
+  "project.global.fields.transports": "Transportes",
+  "project.global.fields.activities": "Atividades",
+  "project.global.fields.action": "Acción",
+  "project.global.fields.id": "ID",
 
   "project.users.ChangePassword.fields.confirmNewPassword":
     "Confirmar contrasinal nova",
@@ -107,4 +115,11 @@ export default {
     "respeto ao total de produtos",
   "project.products.kpi.respectingTotalBilling":
     "respeto ao total de facturación",
+
+  "project.sales.state.created": "Creada",
+  "project.sales.state.blocked": "Bloqueada",
+  "project.sales.state.paid": "Pagada",
+  "project.sales.salesTable.blockSale": "Bloquear venta",
+  "project.sales.salesTable.paySale": "Pagar venta",
+  "project.sales.salesTable.watchBill": "Ver factura",
 };

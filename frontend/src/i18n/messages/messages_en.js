@@ -42,6 +42,14 @@ export default {
   "project.global.validator.email": "Provide a correct e-mail address",
   "project.global.validator.passwordsDoNotMatch": "Passwords do not match",
   "project.global.validator.required": "Required field",
+  "project.global.fields.client": "Client",
+  "project.global.fields.agent": "Agent",
+  "project.global.fields.travels": "Travels",
+  "project.global.fields.acommodations": "Acommodations",
+  "project.global.fields.transports": "Transports",
+  "project.global.fields.activities": "Activities",
+  "project.global.fields.action": "Action",
+  "project.global.fields.id": "ID",
 
   "project.users.ChangePassword.fields.confirmNewPassword":
     "Confirm new password",
@@ -103,4 +111,11 @@ export default {
   "project.agents.agentList.selectAgent": "No agent selected",
   "project.products.kpi.respectingTotalProducts": "compared to total products",
   "project.products.kpi.respectingTotalBilling": "compared to total of billing",
+
+  "project.sales.state.created": "Created",
+  "project.sales.state.blocked": "Blocked",
+  "project.sales.state.paid": "Paid",
+  "project.sales.salesTable.blockSale": "Block sale",
+  "project.sales.salesTable.paySale": "Pay sale",
+  "project.sales.salesTable.watchBill": "Watch bill",
 };

@@ -45,6 +45,14 @@ export default {
   "project.global.validator.passwordsDoNotMatch":
     "Las contraseñas no coinciden",
   "project.global.validator.required": "Campo obligatorio",
+  "project.global.fields.client": "Cliente",
+  "project.global.fields.agent": "Agente",
+  "project.global.fields.travels": "Viajes",
+  "project.global.fields.acommodations": "Alojamientos",
+  "project.global.fields.transports": "Transportes",
+  "project.global.fields.activities": "Actividades",
+  "project.global.fields.action": "Acción",
+  "project.global.fields.id": "ID",
 
   "project.users.ChangePassword.fields.confirmNewPassword":
     "Confirmar contraseña nueva",
@@ -108,4 +116,11 @@ export default {
     "respecto al total de productos",
   "project.products.kpi.respectingTotalBilling":
     "respecto al total de facturación",
+
+  "project.sales.state.created": "Creada",
+  "project.sales.state.blocked": "Bloqueada",
+  "project.sales.state.paid": "Pagada",
+  "project.sales.salesTable.blockSale": "Bloquear venta",
+  "project.sales.salesTable.paySale": "Pagar venta",
+  "project.sales.salesTable.watchBill": "Ver factura",
 };
