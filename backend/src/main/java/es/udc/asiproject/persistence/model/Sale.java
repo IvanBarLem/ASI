@@ -25,23 +25,32 @@ public class Sale {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Enumerated(EnumType.ORDINAL)
 	@Column(nullable = false)
 	private SaleState state;
+
 	@Column(nullable = false, precision = 12, scale = 2)
 	private BigDecimal price;
+
 	@Column(nullable = false, updatable = false)
 	private Date createdAt;
+
 	@ManyToOne
 	public User agent;
+
 	@ManyToOne
 	public User client;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Accommodation> accommodations;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Activity> activities;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Transport> transports;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<Travel> travels;
 

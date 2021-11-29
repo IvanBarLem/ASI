@@ -5,11 +5,22 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.Optional;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.asiproject.persistence.dao.AccommodationDao;
+import es.udc.asiproject.persistence.dao.ActivityDao;
+import es.udc.asiproject.persistence.dao.PackDao;
+import es.udc.asiproject.persistence.dao.TransportDao;
+import es.udc.asiproject.persistence.dao.TravelDao;
 import es.udc.asiproject.persistence.dao.SaleDao;
 import es.udc.asiproject.persistence.dao.UserDao;
 import es.udc.asiproject.persistence.model.Accommodation;
@@ -23,15 +34,109 @@ import es.udc.asiproject.persistence.model.User.RoleType;
 import es.udc.asiproject.service.SaleService;
 import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 import es.udc.asiproject.service.exceptions.PermissionException;
-
+import es.udc.asiproject.service.exceptions.InvalidOperationException;
 @Service
 public class SaleServiceImpl implements SaleService {
 
 	@Autowired
+	AccommodationDao accommodationDao;
+	@Autowired
+	ActivityDao activityDao;
+	@Autowired
+	TransportDao transportDao;
+	@Autowired
+	TravelDao travelDao;
+	@Autowired
 	UserDao userDao;
-
 	@Autowired
 	SaleDao saleDao;
+
+	private void validateSale(Sale sale) throws InvalidOperationException, InstanceNotFoundException {
+		if (sale.getAccommodations().isEmpty() && sale.getActivities().isEmpty() && sale.getTransports().isEmpty()
+				&& sale.getTravels().isEmpty()) {
+			throw new InvalidOperationException("Empty Sale Error");
+		}
+
+		Set<Accommodation> accommodations = new HashSet<Accommodation>();
+		for (Accommodation accommodation : sale.getAccommodations()) {
+			Optional<Accommodation> optional = accommodationDao.findById(accommodation.getId());
+
+			if (optional.isPresent()) {
+				accommodations.add(optional.get());
+			} else {
+				throw new InstanceNotFoundException(Accommodation.class.getSimpleName(), accommodation.getId());
+			}
+		}
+		sale.setAccommodations(accommodations);
+
+		Set<Activity> activities = new HashSet<Activity>();
+		for (Activity activity : sale.getActivities()) {
+			Optional<Activity> optional = activityDao.findById(activity.getId());
+
+			if (optional.isPresent()) {
+				activities.add(optional.get());
+			} else {
+				throw new InstanceNotFoundException(Activity.class.getSimpleName(), activity.getId());
+			}
+		}
+		sale.setActivities(activities);
+
+		Set<Transport> transports = new HashSet<Transport>();
+		for (Transport transport : sale.getTransports()) {
+			Optional<Transport> optional = transportDao.findById(transport.getId());
+
+			if (optional.isPresent()) {
+				transports.add(optional.get());
+			} else {
+				throw new InstanceNotFoundException(Transport.class.getSimpleName(), transport.getId());
+			}
+		}
+		sale.setTransports(transports);
+
+		Set<Travel> travels = new HashSet<Travel>();
+		for (Travel travel : sale.getTravels()) {
+			Optional<Travel> optional = travelDao.findById(travel.getId());
+
+			if (optional.isPresent()) {
+				travels.add(optional.get());
+			} else {
+				throw new InstanceNotFoundException(Travel.class.getSimpleName(), travel.getId());
+			}
+		}
+		sale.setTravels(travels);
+	}
+
+	@Override
+	@Transactional
+	public Sale createSale(Sale sale) throws InstanceNotFoundException, InvalidOperationException {
+		validateSale(sale);
+
+		sale.setCreatedAt(new Date());
+		sale.setState(SaleState.NORMAL);
+
+		return saleDao.save(sale);
+	}
+
+  @Override
+	@Transactional
+	public Sale updateSale(Sale sale) throws InstanceNotFoundException, InvalidOperationException {
+		Sale oldSale = saleDao.findById(sale.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Sale.class.getSimpleName(), sale.getId()));
+
+		validateSale(sale);
+
+		oldSale.setState(sale.getState());
+		oldSale.setPrice(sale.getPrice());
+		oldSale.setAgent(sale.getAgent());
+		oldSale.setClient(sale.getClient());
+		oldSale.setAccommodations(sale.getAccommodations());
+		oldSale.setActivities(sale.getActivities());
+		oldSale.setTransports(sale.getTransports());
+		oldSale.setTravels(sale.getTravels());
+
+		return oldSale;
+	}
+
 
 	@Override
 	public Page<Sale> findSales(Long userId, Long clientFilterId, Long agentFilterId, Integer pageNumber,
@@ -108,6 +213,23 @@ public class SaleServiceImpl implements SaleService {
 		} else
 			throw new InstanceNotFoundException(Sale.class.getSimpleName(), saleId);
 
+	}
+
+	@Override
+	public void freezeSale(Long userId, Long saleId) throws InstanceNotFoundException, PermissionException {
+
+		Optional<Sale> saleToFreeze = saleDao.findById(saleId);
+
+		if (saleToFreeze.isPresent()) {
+			if (saleToFreeze.get().getClient().getId() == userId) {
+				saleToFreeze.get().setState(SaleState.FREEZE);
+				saleDao.save(saleToFreeze.get());
+			} 
+			else
+				throw new PermissionException();
+		} 
+		else
+			throw new InstanceNotFoundException(Sale.class.getSimpleName(), saleId);
 	}
 
 	@Override
