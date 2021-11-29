@@ -11,6 +11,7 @@ import {
   Travels,
 } from "../../products";
 import { ProductList } from "../../products-stats";
+import CreateSale from "../../sales/components/CreateSale";
 import users, {
   ChangePassword,
   Login,
@@ -27,7 +28,9 @@ const Body = (props) => {
   return (
     <Box sx={{ margin: 4 }}>
       <Box sx={props.dropDownMarginClasses} m={2}>
-        <AppGlobalComponents dropDownMarginClasses={props.dropDownMarginClasses} />
+        <AppGlobalComponents
+          dropDownMarginClasses={props.dropDownMarginClasses}
+        />
         <Switch>
           <Route exact path="/" component={Home} />
           {props.loggedIn && (
@@ -69,6 +72,9 @@ const Body = (props) => {
           )}
           {isGerente && (
             <Route exact path="/products" component={ProductList} />
+          )}
+          {isAgente && (
+            <Route exact path="/create-sale" component={CreateSale} />
           )}
           {!props.loggedIn && (
             <Route exact path="/users/login" component={Login} />

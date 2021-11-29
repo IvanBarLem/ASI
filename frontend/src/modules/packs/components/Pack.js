@@ -21,10 +21,12 @@ import Button from "@mui/material/Button";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import * as actions from "../actions";
 import users from "../../users";
+import { Link } from "react-router-dom";
 
 const Pack = ({ item, creating }) => {
   const dispatch = useDispatch();
   const isGerente = useSelector(users.selectors.isGerente);
+  const isAgente = useSelector(users.selectors.isAgente);
   const image =
     "https://www.sinrumbofijo.com/wp-content/uploads/2016/05/default-placeholder.png";
 
@@ -228,6 +230,26 @@ const Pack = ({ item, creating }) => {
                       <FormattedMessage id="project.packs.unshow" />
                     </Button>
                   )}
+                </Grid>
+              </Grid>
+            </Fragment>
+          )}
+          {isAgente && (
+            <Fragment>
+              <Divider sx={{ marginTop: "10px" }} />
+              <Grid container spacing={1} sx={{ marginTop: "6px" }}>
+                <Grid item xs={12}>
+                  <Button
+                    size="small"
+                    fullWidth
+                    variant="contained"
+                    startIcon={<StarBorderIcon />}
+                    component={Link}
+                    to={{ pathname: "/create-sale", state: { item } }}
+                  >
+                    {/* <FormattedMessage id="project.packs.unhighlight" /> */}
+                    Añadir venta
+                  </Button>
                 </Grid>
               </Grid>
             </Fragment>
