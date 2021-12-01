@@ -1,5 +1,7 @@
 package es.udc.asiproject.controller.dto;
 
+import java.util.Objects;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -18,7 +20,7 @@ public class LoginParamsDto {
 	}
 
 	public void setEmail(String email) {
-		this.email = email.trim();
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -27,5 +29,27 @@ public class LoginParamsDto {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, password);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LoginParamsDto other = (LoginParamsDto) obj;
+		return Objects.equals(email, other.email) && Objects.equals(password, other.password);
+	}
+
+	@Override
+	public String toString() {
+		return "LoginParamsDto [email=" + email + ", password=" + password + "]";
 	}
 }

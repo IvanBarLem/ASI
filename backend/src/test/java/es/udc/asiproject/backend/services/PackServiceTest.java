@@ -28,6 +28,7 @@ import es.udc.asiproject.persistence.dao.TravelDao;
 import es.udc.asiproject.persistence.model.Accommodation;
 import es.udc.asiproject.persistence.model.Activity;
 import es.udc.asiproject.persistence.model.Pack;
+import es.udc.asiproject.persistence.model.Product;
 import es.udc.asiproject.persistence.model.Transport;
 import es.udc.asiproject.persistence.model.Travel;
 import es.udc.asiproject.service.PackService;
@@ -56,28 +57,32 @@ public class PackServiceTest {
 	}
 
 	private Accommodation seedAccommodationDatabase() {
-		Accommodation accommodation = new Accommodation("Hesperia marineda", new BigDecimal(1.23));
+		Accommodation accommodation = Accommodation.builder().name("Hesperia marineda").location("Madrid")
+				.price(new BigDecimal(1.23)).hidden(false).build();
 		accommodationDao.save(accommodation);
 
 		return accommodation;
 	}
 
 	private Activity seedActivityDatabase() {
-		Activity activity = new Activity("Motos de Agua", new BigDecimal(1.23));
+		Activity activity = Activity.builder().name("Motos de Agua").location("Madrid").price(new BigDecimal(1.23))
+				.hidden(false).build();
 		activityDao.save(activity);
 
 		return activity;
 	}
 
 	private Transport seedTransportDatabase() {
-		Transport transport = new Transport("Patineta", new BigDecimal(1.23));
+		Transport transport = Transport.builder().name("Patineta").location("Madrid").price(new BigDecimal(1.23))
+				.hidden(false).build();
 		transportDao.save(transport);
 
 		return transport;
 	}
 
 	private Travel seedTravelDatabase() {
-		Travel travel = new Travel("Egipto Antiguo", new BigDecimal(1.23));
+		Travel travel = Travel.builder().name("Egipto Antiguo").location("Madrid").price(new BigDecimal(1.23))
+				.hidden(false).build();
 		travelDao.save(travel);
 
 		return travel;
@@ -85,33 +90,14 @@ public class PackServiceTest {
 
 	@SuppressWarnings("serial")
 	private Pack createPack() {
-		Pack pack = new Pack();
-		pack.setTitle("title");
-		pack.setDescription("description");
-		pack.setImage(new Byte[] { 1, 2, 3 });
-		pack.setPrice(new BigDecimal(1.23));
-		pack.setDuration((short) 5);
-		pack.setPersons("persons");
-		pack.setOutstanding(false);
-		pack.setHidden(false);
-		pack.setCreatedAt(new Date());
-		pack.setAccommodations(new HashSet<Accommodation>() {
+		Pack pack = Pack.builder().title("title").description("description").image(new Byte[] { 1, 2, 3 })
+				.price(new BigDecimal(1.23)).duration(5).persons("persons").outstanding(false).hidden(false)
+				.createdAt(new Date()).build();
+		pack.setProducts(new HashSet<Product>() {
 			{
 				add(seedAccommodationDatabase());
-			}
-		});
-		pack.setActivities(new HashSet<Activity>() {
-			{
 				add(seedActivityDatabase());
-			}
-		});
-		pack.setTransports(new HashSet<Transport>() {
-			{
 				add(seedTransportDatabase());
-			}
-		});
-		pack.setTravels(new HashSet<Travel>() {
-			{
 				add(seedTravelDatabase());
 			}
 		});
@@ -134,10 +120,7 @@ public class PackServiceTest {
 			assertEquals(false, outputPack.getOutstanding());
 			assertEquals(false, outputPack.getHidden());
 			assertEquals(inputPack.getCreatedAt(), outputPack.getCreatedAt());
-			assertEquals(inputPack.getAccommodations(), outputPack.getAccommodations());
-			assertEquals(inputPack.getActivities(), outputPack.getActivities());
-			assertEquals(inputPack.getTransports(), outputPack.getTransports());
-			assertEquals(inputPack.getTravels(), outputPack.getTravels());
+			assertEquals(inputPack.getProducts(), outputPack.getProducts());
 		});
 	}
 
@@ -276,29 +259,17 @@ public class PackServiceTest {
 		inputPack.setDescription(inputPack.getDescription() + "X");
 		inputPack.setImage(new Byte[] { 3, 2, 1 });
 		inputPack.setPrice(new BigDecimal(3.21));
-		inputPack.setDuration((short) 8);
+		inputPack.setDuration(8);
 		inputPack.setOutstanding(true);
 		inputPack.setHidden(true);
-		inputPack.setAccommodations(new HashSet<Accommodation>() {
+		inputPack.setProducts(new HashSet<Product>() {
 			{
 				add(seedAccommodationDatabase());
-			}
-		});
-		inputPack.setActivities(new HashSet<Activity>() {
-			{
 				add(seedActivityDatabase());
 				add(seedActivityDatabase());
-			}
-		});
-		inputPack.setTransports(new HashSet<Transport>() {
-			{
 				add(seedTransportDatabase());
 				add(seedTransportDatabase());
 				add(seedTransportDatabase());
-			}
-		});
-		inputPack.setTravels(new HashSet<Travel>() {
-			{
 				add(seedTravelDatabase());
 				add(seedTravelDatabase());
 				add(seedTravelDatabase());
@@ -319,11 +290,7 @@ public class PackServiceTest {
 			assertEquals(inputPack.getOutstanding(), outputPack.getOutstanding());
 			assertEquals(inputPack.getHidden(), outputPack.getHidden());
 			assertEquals(inputPack.getCreatedAt(), outputPack.getCreatedAt());
-			assertEquals(inputPack.getAccommodations(), outputPack.getAccommodations());
-			assertEquals(inputPack.getActivities(), outputPack.getActivities());
-			assertEquals(inputPack.getTransports(), outputPack.getTransports());
-			assertEquals(inputPack.getTravels(), outputPack.getTravels());
-			assertEquals(4, outputPack.getTravels().size());
+			assertEquals(inputPack.getProducts(), outputPack.getProducts());
 		});
 	}
 

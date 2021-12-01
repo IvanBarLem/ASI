@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.asiproject.persistence.dao.UserDao;
 import es.udc.asiproject.persistence.model.User;
-import es.udc.asiproject.persistence.model.User.RoleType;
+import es.udc.asiproject.persistence.model.enums.RoleType;
 import es.udc.asiproject.service.PermissionCheckerService;
 import es.udc.asiproject.service.UserService;
 import es.udc.asiproject.service.exceptions.DuplicateInstanceException;
