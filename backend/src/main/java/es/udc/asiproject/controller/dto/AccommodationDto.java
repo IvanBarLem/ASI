@@ -17,6 +17,9 @@ public class AccommodationDto {
 	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
 	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String name;
+	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
+	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
+	private String location;
 	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	@Positive(groups = { InsertValidation.class, UpdateValidation.class })
 	private BigDecimal price;
@@ -39,7 +42,15 @@ public class AccommodationDto {
 	}
 
 	public void setName(String name) {
-		this.name = name.trim();
+		this.name = name;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public BigDecimal getPrice() {
@@ -74,5 +85,11 @@ public class AccommodationDto {
 		AccommodationDto other = (AccommodationDto) obj;
 		return Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
 				&& Objects.equals(price, other.price);
+	}
+
+	@Override
+	public String toString() {
+		return "AccommodationDto [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price
+				+ ", hidden=" + hidden + "]";
 	}
 }
