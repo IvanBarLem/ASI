@@ -148,6 +148,9 @@ public class Sale {
 
 	@Override
 	public String toString() {
-		return "Sale [id=" + id + ", state=" + state + ", price=" + price + ", createdAt=" + createdAt + "]";
+		return "Sale [id=" + id + ", state=" + state + ", price=" + price + ", createdAt=" + createdAt + ", agent="
+				+ agent + ", client=" + client + ", accommodations=" + accommodations + ", activities=" + activities
+				+ ", transports=" + transports + ", travels=" + travels + "]";
 	}
+
 }

@@ -1,7 +1,5 @@
 package es.udc.asiproject.service;
 
-import java.io.FileNotFoundException;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,7 @@ public interface SaleService {
 
 	void paySale(Long userId, Long saleId) throws InstanceNotFoundException, PermissionException;
 
-	void generateBill(Long userId, Long saleId)
-			throws InstanceNotFoundException, PermissionException, FileNotFoundException;
+//	ByteArrayResource generateBill(Long userId, Long saleId)
+//			throws InstanceNotFoundException, PermissionException, FileNotFoundException, IOException;
 
 }

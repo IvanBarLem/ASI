@@ -1,7 +1,5 @@
 package es.udc.asiproject.controller;
 
-import java.io.FileNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +26,7 @@ public class SaleController {
 	@Autowired
 	private SaleService saleService;
 
-	@GetMapping("/sales")
+	@GetMapping("/findSales")
 	@ResponseStatus(HttpStatus.OK)
 	public PageDto<SaleDto> findSales(@RequestAttribute Long userId,
 			@RequestParam(required = false) Long clientFilterId, @RequestParam(required = false) Long agentFilterId,
@@ -48,12 +46,14 @@ public class SaleController {
 		saleService.paySale(userId, saleId);
 	}
 
-	@GetMapping("/generateBill/{saleId}")
-	@ResponseStatus(HttpStatus.OK)
-	public void generateBill(@RequestAttribute Long userId, @PathVariable Long saleId)
-			throws InstanceNotFoundException, PermissionException, FileNotFoundException {
-
-		saleService.generateBill(userId, saleId);
-	}
+	/*
+	 * @GetMapping("/generateBill/{saleId}")
+	 * 
+	 * @ResponseStatus(HttpStatus.OK) public void generateBill(@RequestAttribute
+	 * Long userId, @PathVariable Long saleId) throws InstanceNotFoundException,
+	 * PermissionException, FileNotFoundException, IOException {
+	 * 
+	 * ByteArrayResource resource = saleService.generateBill(userId, saleId); }
+	 */
 
 }
