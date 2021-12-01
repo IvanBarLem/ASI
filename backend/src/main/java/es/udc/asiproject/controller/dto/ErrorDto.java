@@ -1,6 +1,7 @@
 package es.udc.asiproject.controller.dto;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ErrorDto {
 	private String globalError;
@@ -28,5 +29,27 @@ public class ErrorDto {
 
 	public void setFieldErrors(List<FieldErrorDto> fieldErrors) {
 		this.fieldErrors = fieldErrors;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(fieldErrors, globalError);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ErrorDto other = (ErrorDto) obj;
+		return Objects.equals(fieldErrors, other.fieldErrors) && Objects.equals(globalError, other.globalError);
+	}
+
+	@Override
+	public String toString() {
+		return "ErrorDto [globalError=" + globalError + ", fieldErrors=" + fieldErrors + "]";
 	}
 }

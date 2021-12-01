@@ -6,37 +6,64 @@ import javax.persistence.Entity;
 
 @Entity
 public class Travel extends Product {
-	public Travel(String name, BigDecimal price) {
-		super(name, price);
-	}
-
 	public Travel() {
-		super();
 	}
 
-	public Travel(Long id, String name, BigDecimal price, Boolean hidden) {
-		super(id, name, price, hidden);
+	public Travel(Builder builder) {
+		this.id = builder.id;
+		this.name = builder.name;
+		this.location = builder.location;
+		this.price = builder.price;
+		this.hidden = builder.hidden;
 	}
 
-	@Override
-	public int hashCode() {
-		return super.hashCode();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		return true;
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	@Override
 	public String toString() {
-		return "Travel [id=" + getId() + ", name()=" + getName() + ", price()=" + getPrice() + ", hidden()="
-				+ getHidden() + "]";
+		return "Travel [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price + ", hidden="
+				+ hidden + ", packs=" + packs + ", sales=" + sales + "]";
+	}
+
+	public static class Builder {
+		private Long id;
+		private String name;
+		private String location;
+		private BigDecimal price;
+		private Boolean hidden;
+
+		public Builder() {
+		}
+
+		public Builder id(Long id) {
+			this.id = id;
+			return Builder.this;
+		}
+
+		public Builder name(String name) {
+			this.name = name;
+			return Builder.this;
+		}
+
+		public Builder location(String location) {
+			this.location = location;
+			return Builder.this;
+		}
+
+		public Builder price(BigDecimal price) {
+			this.price = price;
+			return Builder.this;
+		}
+
+		public Builder hidden(Boolean hidden) {
+			this.hidden = hidden;
+			return Builder.this;
+		}
+
+		public Travel build() {
+			return new Travel(this);
+		}
 	}
 }
