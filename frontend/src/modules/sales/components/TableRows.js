@@ -1,19 +1,21 @@
 import React from "react";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import { Typography, Input } from "@mui/material";
+import { Typography, TextField } from "@mui/material";
 
-const TableRows = ({ item, value, handleUnits }) => {
+const TableRows = ({ item, value, handleProducts }) => {
   return (
     <TableRow key={JSON.stringify(item) + JSON.stringify(value)}>
       <TableCell component="th" scope="row" style={{ width: 50 }}>
-        <Input
+        <TextField
+          autoFocus
+          variant="standard"
           type="number"
           value={value}
-          onChange={(e) => handleUnits(item, e.target.value)}
-          label={null}
+          onChange={(e) => handleProducts(item, e.target.value)}
           size="small"
           sx={{ width: 50 }}
+          required
         />
       </TableCell>
       <TableCell style={{ width: 300 }}>

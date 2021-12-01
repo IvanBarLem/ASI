@@ -61,9 +61,6 @@ const CreateSale = () => {
   };
 
   const [persons, setPersons] = useState(howManyPeople());
-  const [days, setDays] = useState(
-    history.location.state ? history.location.state.item.duration : 1
-  );
   const [client, setClient] = useState(null);
   const [price, setPrice] = useState(
     history.location.state ? history.location.state.item.price : 0
@@ -152,20 +149,16 @@ const CreateSale = () => {
     );
   }, []);
 
-  const handleChangeDays = (value) => {
-    setDays(value);
-  };
-
-  const handleChangePersons = (value) => {
-    setPersons(value);
-  };
-
   const handleChangeClient = (value) => {
     setClient(value);
   };
 
   const handleChangePrice = (value) => {
-    setPrice(value);
+    if (value < 0) {
+      setPrice(0);
+    } else {
+      setPrice(value);
+    }
   };
 
   const handleChangeTransports = (value) => () => {
@@ -288,7 +281,6 @@ const CreateSale = () => {
         <Grid
           item
           xs={12}
-          md={4}
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -328,38 +320,6 @@ const CreateSale = () => {
             )}
           />
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          sx={{ marginBottom: 4 }}
-        >
-          <TextField
-            label="Nº de días"
-            type="number"
-            value={days}
-            onChange={(e) => handleChangeDays(e.target.value)}
-          />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          sx={{ marginBottom: 4 }}
-        >
-          <TextField
-            label="Nº de personas"
-            type="number"
-            value={persons}
-            onChange={(e) => handleChangePersons(e.target.value)}
-          />
-        </Grid>
         <Grid item xs={12}>
           <Typography variant="h6" align="center" gutterBottom={true}>
             Productos
@@ -373,6 +333,7 @@ const CreateSale = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          paddingX={1}
         >
           <SelectComplement
             options={travels}
@@ -393,6 +354,7 @@ const CreateSale = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          paddingX={1}
         >
           <SelectComplement
             options={transports}
@@ -415,6 +377,7 @@ const CreateSale = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          paddingX={1}
         >
           <SelectComplement
             options={accommodations}
@@ -437,6 +400,7 @@ const CreateSale = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          paddingX={1}
         >
           <SelectComplement
             options={activities}
@@ -473,7 +437,7 @@ const CreateSale = () => {
                       key={JSON.stringify(unit)}
                       value={unit.value}
                       item={unit.item}
-                      handleUnits={handleUnits}
+                      handleProducts={handleUnits}
                     />
                   ))}
                 <TableRow>
