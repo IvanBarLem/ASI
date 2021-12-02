@@ -33,7 +33,7 @@ const KPI = ({ name, productName, otherName, kpi, otherKpi, respecting }) => {
               {kpiDiff.toFixed(2)}%
             </Typography>
             <Typography variant="h6" sx={{ maxWidth: 150 }}>
-              {respecting} ({otherKpi}
+              {respecting} ({otherKpi + kpi}
               {" €"})
             </Typography>
           </Box>

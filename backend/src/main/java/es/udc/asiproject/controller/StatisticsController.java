@@ -48,11 +48,11 @@ public class StatisticsController {
 
 	@GetMapping("/products")
 	@ResponseStatus(HttpStatus.OK)
-	public PageDto<SalesProductDto> findPacks(@RequestParam(defaultValue = "all") String category,
+	public PageDto<SalesProductDto> findSalesProducts(@RequestParam(defaultValue = "all") String category,
 			@RequestParam(defaultValue = "") String location,
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
-			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "8") int pageSize) {
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int pageSize) {
 		return PageMapper.convertToDto(
 				statisticsService.findSalesProducts(category, location, startDate, endDate, page, pageSize),
 				SalesProductMapper::convertToDto);

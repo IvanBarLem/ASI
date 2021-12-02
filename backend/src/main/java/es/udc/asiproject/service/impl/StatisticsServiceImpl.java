@@ -104,7 +104,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 
@@ -120,7 +120,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 
@@ -136,7 +136,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 
@@ -152,7 +152,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 
@@ -168,7 +168,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 

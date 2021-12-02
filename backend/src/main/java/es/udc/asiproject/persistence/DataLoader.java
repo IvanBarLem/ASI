@@ -74,45 +74,45 @@ public class DataLoader implements ApplicationRunner {
 
 		if (accommodationDao.count() == 0) {
 			accommodationDao.save(Accommodation.builder().name("Hesperia").location("Madrid")
-					.price(new BigDecimal(50.0)).hidden(false).build());
+					.price(new BigDecimal(Math.random()*100)).hidden(false).build());
 			accommodationDao.save(Accommodation.builder().name("AC Hoteles").location("Madrid")
-					.price(new BigDecimal(49.99)).hidden(false).build());
+					.price(new BigDecimal(Math.random()*100)).hidden(false).build());
 			accommodationDao.save(Accommodation.builder().name("Casa Pepa").location("Madrid")
-					.price(new BigDecimal(70.99)).hidden(false).build());
+					.price(new BigDecimal(Math.random()*100)).hidden(false).build());
 			accommodationDao.save(Accommodation.builder().name("Pension Luis").location("Madrid")
-					.price(new BigDecimal(120.00)).hidden(false).build());
+					.price(new BigDecimal(Math.random()*100)).hidden(false).build());
 		}
 
 		if (activityDao.count() == 0) {
 			activityDao.save(Activity.builder().name("Paseo en Bicicleta").location("Madrid")
-					.price(new BigDecimal(10.00)).hidden(false).build());
-			activityDao.save(Activity.builder().name("Motos de Agua").location("Madrid").price(new BigDecimal(25.00))
+					.price(new BigDecimal(Math.random()*100)).hidden(false).build());
+			activityDao.save(Activity.builder().name("Motos de Agua").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
-			activityDao.save(Activity.builder().name("Karts").location("Madrid").price(new BigDecimal(15.00))
+			activityDao.save(Activity.builder().name("Karts").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
-			activityDao.save(Activity.builder().name("Surf").location("Madrid").price(new BigDecimal(30.00))
+			activityDao.save(Activity.builder().name("Surf").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
 		}
 
 		if (transportDao.count() == 0) {
-			transportDao.save(Transport.builder().name("Avión").location("Madrid").price(new BigDecimal(150.00))
+			transportDao.save(Transport.builder().name("Avión").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
-			transportDao.save(Transport.builder().name("Barco").location("Madrid").price(new BigDecimal(90.00))
+			transportDao.save(Transport.builder().name("Barco").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
-			transportDao.save(Transport.builder().name("Bus").location("Madrid").price(new BigDecimal(8.50))
+			transportDao.save(Transport.builder().name("Bus").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
-			transportDao.save(Transport.builder().name("Tren").location("Madrid").price(new BigDecimal(18.00))
+			transportDao.save(Transport.builder().name("Tren").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
 		}
 
 		if (travelDao.count() == 0) {
-			travelDao.save(Travel.builder().name("Madrid Cultural").location("Madrid").price(new BigDecimal(20.99))
+			travelDao.save(Travel.builder().name("Madrid Cultural").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
-			travelDao.save(Travel.builder().name("Amazonas Salvaje").location("Madrid").price(new BigDecimal(14.99))
+			travelDao.save(Travel.builder().name("Amazonas Salvaje").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
-			travelDao.save(Travel.builder().name("Caribe Tropical").location("Madrid").price(new BigDecimal(90.00))
+			travelDao.save(Travel.builder().name("Caribe Tropical").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
-			travelDao.save(Travel.builder().name("Tibet Espiritual").location("Madrid").price(new BigDecimal(290.00))
+			travelDao.save(Travel.builder().name("Tibet Espiritual").location("Madrid").price(new BigDecimal(Math.random()*100))
 					.hidden(false).build());
 		}
 
@@ -124,7 +124,7 @@ public class DataLoader implements ApplicationRunner {
 			List<Accommodation> accommodations = new ArrayList<Accommodation>();
 			for (Long accommodationId = 0L; accommodationId < 4; accommodationId++) {
 				Accommodation accommodation = Accommodation.builder().name("accommodation" + accommodationId)
-						.location("A Coruna").price(new BigDecimal(1.25)).hidden(false).build();
+						.location("A Coruna").price(new BigDecimal(Math.random()*100)).hidden(false).build();
 				accommodationDao.save(accommodation);
 				accommodations.add(accommodation);
 			}
@@ -132,7 +132,7 @@ public class DataLoader implements ApplicationRunner {
 			List<Activity> activities = new ArrayList<Activity>();
 			for (Long activityId = 0L; activityId < 5; activityId++) {
 				Activity activity = Activity.builder().name("activity" + activityId).location("Lugo")
-						.price(new BigDecimal(1)).hidden(false).build();
+						.price(new BigDecimal(Math.random()*100)).hidden(false).build();
 				activityDao.save(activity);
 				activities.add(activity);
 			}
@@ -140,7 +140,7 @@ public class DataLoader implements ApplicationRunner {
 			List<Transport> transports = new ArrayList<Transport>();
 			for (Long transportId = 0L; transportId < 10; transportId++) {
 				Transport transport = Transport.builder().name("transport" + transportId).location("Ourense")
-						.price(new BigDecimal(0.5)).hidden(false).build();
+						.price(new BigDecimal(Math.random()*100)).hidden(false).build();
 				transportDao.save(transport);
 				transports.add(transport);
 			}
@@ -148,7 +148,7 @@ public class DataLoader implements ApplicationRunner {
 			List<Travel> travels = new ArrayList<Travel>();
 			for (Long travelId = 0L; travelId < 2; travelId++) {
 				Travel travel = Travel.builder().name("travel" + travelId).location("Pontevedra")
-						.price(new BigDecimal(2.5)).hidden(false).build();
+						.price(new BigDecimal(Math.random()*100)).hidden(false).build();
 				travelDao.save(travel);
 				travels.add(travel);
 			}
@@ -158,23 +158,23 @@ public class DataLoader implements ApplicationRunner {
 						.firstName("Agente" + agentId).lastName("Pita").role(RoleType.AGENTE).build();
 				userDao.save(agent);
 
-				for (Long saleId = 0L; saleId < 5; saleId++) {
-					Sale sale = Sale.builder().state(SaleState.PAID).price(new BigDecimal(10)).agent(agent)
-							.client(client).createdAt(parseDate("202" + saleId + "-01-01")).build();
+				for (Long saleId = 0L; saleId < 50; saleId++) {
+					Sale sale = Sale.builder().state(SaleState.PAID).price(new BigDecimal(Math.random()*1000)).agent(agent)
+							.client(client).createdAt(saleId < 25 ? parseDate("2021-11-15") : parseDate("2021-12-15")).build();
 					saleDao.save(sale);
 
 					Set<SaleProduct> saleProduct = new HashSet<SaleProduct>();
 					for (Accommodation accommodation : accommodations) {
-						saleProduct.add(new SaleProduct(sale, accommodation, 4));
+						saleProduct.add(new SaleProduct(sale, accommodation, (int) Math.random()*10));
 					}
 					for (Activity activity : activities) {
-						saleProduct.add(new SaleProduct(sale, activity, 4));
+						saleProduct.add(new SaleProduct(sale, activity, (int) Math.random()*10));
 					}
 					for (Transport transport : transports) {
-						saleProduct.add(new SaleProduct(sale, transport, 4));
+						saleProduct.add(new SaleProduct(sale, transport, (int) Math.random()*10));
 					}
 					for (Travel travel : travels) {
-						saleProduct.add(new SaleProduct(sale, travel, 4));
+						saleProduct.add(new SaleProduct(sale, travel, (int) Math.random()*10));
 					}
 					sale.setProducts(saleProduct);
 

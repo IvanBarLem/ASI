@@ -6,6 +6,7 @@ import java.util.Objects;
 public class SalesProductDto {
 	private Long productId;
 	private String name;
+	private BigDecimal price;
 	private String location;
 	private String category;
 	private Long currentSales;
@@ -80,10 +81,18 @@ public class SalesProductDto {
 		this.previousBilling = previousBilling;
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(category, currentBilling, currentSales, location, name, previousBilling, previousSales,
-				productId);
+				price, productId);
 	}
 
 	@Override
@@ -98,13 +107,16 @@ public class SalesProductDto {
 		return Objects.equals(category, other.category) && Objects.equals(currentBilling, other.currentBilling)
 				&& Objects.equals(currentSales, other.currentSales) && Objects.equals(location, other.location)
 				&& Objects.equals(name, other.name) && Objects.equals(previousBilling, other.previousBilling)
-				&& Objects.equals(previousSales, other.previousSales) && Objects.equals(productId, other.productId);
+				&& Objects.equals(previousSales, other.previousSales) && Objects.equals(price, other.price)
+				&& Objects.equals(productId, other.productId);
 	}
 
 	@Override
 	public String toString() {
-		return "SalesProductDto [productId=" + productId + ", name=" + name + ", location=" + location + ", category="
-				+ category + ", currentSales=" + currentSales + ", currentBilling=" + currentBilling
-				+ ", previousSales=" + previousSales + ", previousBilling=" + previousBilling + "]";
+		return "SalesProductDto [productId=" + productId + ", name=" + name + ", price=" + price + ", location="
+				+ location + ", category=" + category + ", currentSales=" + currentSales + ", currentBilling="
+				+ currentBilling + ", previousSales=" + previousSales + ", previousBilling=" + previousBilling + "]";
 	}
+	
+	
 }
