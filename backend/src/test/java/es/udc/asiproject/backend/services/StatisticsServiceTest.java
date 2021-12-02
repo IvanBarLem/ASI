@@ -189,10 +189,10 @@ public class StatisticsServiceTest {
 
 		assertAll(() -> {
 			assertEquals(10, sales.getContent().size());
-			assertEquals(25, sales.getContent().get(0).getCurrentSales());
+			assertEquals(100, sales.getContent().get(0).getCurrentSales());
 			assertEquals(new BigDecimal(125).stripTrailingZeros(),
 					sales.getContent().get(0).getCurrentBilling().stripTrailingZeros());
-			assertEquals(5, sales.getContent().get(0).getPreviousSales());
+			assertEquals(20, sales.getContent().get(0).getPreviousSales());
 			assertEquals(new BigDecimal(25).stripTrailingZeros(),
 					sales.getContent().get(0).getPreviousBilling().stripTrailingZeros());
 		});
@@ -209,10 +209,10 @@ public class StatisticsServiceTest {
 			assertEquals(4, sales.getContent().size());
 			assertEquals("accommodation0", sales.getContent().get(0).getName());
 			assertEquals("A Coruna", sales.getContent().get(0).getLocation());
-			assertEquals(25, sales.getContent().get(0).getCurrentSales());
+			assertEquals(100, sales.getContent().get(0).getCurrentSales());
 			assertEquals(new BigDecimal(125).stripTrailingZeros(),
 					sales.getContent().get(0).getCurrentBilling().stripTrailingZeros());
-			assertEquals(5, sales.getContent().get(0).getPreviousSales());
+			assertEquals(20, sales.getContent().get(0).getPreviousSales());
 			assertEquals(new BigDecimal(25).stripTrailingZeros(),
 					sales.getContent().get(0).getPreviousBilling().stripTrailingZeros());
 		});
@@ -229,10 +229,10 @@ public class StatisticsServiceTest {
 			assertEquals(4, sales.getContent().size());
 			assertEquals("accommodation0", sales.getContent().get(0).getName());
 			assertEquals("A Coruna", sales.getContent().get(0).getLocation());
-			assertEquals(25, sales.getContent().get(0).getCurrentSales());
+			assertEquals(100, sales.getContent().get(0).getCurrentSales());
 			assertEquals(new BigDecimal(125).stripTrailingZeros(),
 					sales.getContent().get(0).getCurrentBilling().stripTrailingZeros());
-			assertEquals(5, sales.getContent().get(0).getPreviousSales());
+			assertEquals(20, sales.getContent().get(0).getPreviousSales());
 			assertEquals(new BigDecimal(25).stripTrailingZeros(),
 					sales.getContent().get(0).getPreviousBilling().stripTrailingZeros());
 		});
