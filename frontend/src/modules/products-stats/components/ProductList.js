@@ -1,6 +1,5 @@
 import {
   Alert,
-  Button,
   Grid,
   Pagination,
   Paper,
@@ -9,7 +8,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
@@ -282,7 +280,8 @@ const ProductList = () => {
               }
               kpi={productSelected.currentSales}
               otherKpi={
-                companyStatistics.currentSales - productSelected.currentSales
+                companyStatistics.numberOfProductsSold -
+                productSelected.currentSales
               }
               unid={"unid."}
             />

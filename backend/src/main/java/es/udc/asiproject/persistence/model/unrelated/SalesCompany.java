@@ -8,12 +8,14 @@ public class SalesCompany {
 	private BigDecimal currentBilling;
 	private Long previousSales;
 	private BigDecimal previousBilling;
+	private Long numberOfProductsSold;
 
-	public SalesCompany(Long currentSales, BigDecimal currentBilling, Long previousSales, BigDecimal previousBilling) {
+	public SalesCompany(Long currentSales, BigDecimal currentBilling, Long previousSales, BigDecimal previousBilling, Long numberOfProductsSold) {
 		this.currentSales = currentSales;
 		this.currentBilling = currentBilling;
 		this.previousSales = previousSales;
 		this.previousBilling = previousBilling;
+		this.numberOfProductsSold = numberOfProductsSold;
 	}
 
 	public Long getCurrentSales() {
@@ -48,9 +50,17 @@ public class SalesCompany {
 		this.previousBilling = previousBilling;
 	}
 
+	public Long getNumberOfProductsSold() {
+		return numberOfProductsSold;
+	}
+
+	public void setNumberOfProductsSold(Long numberOfProductsSold) {
+		this.numberOfProductsSold = numberOfProductsSold;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(currentBilling, currentSales, previousBilling, previousSales);
+		return Objects.hash(currentBilling, currentSales, numberOfProductsSold, previousBilling, previousSales);
 	}
 
 	@Override
@@ -63,6 +73,7 @@ public class SalesCompany {
 			return false;
 		SalesCompany other = (SalesCompany) obj;
 		return Objects.equals(currentBilling, other.currentBilling) && Objects.equals(currentSales, other.currentSales)
+				&& Objects.equals(numberOfProductsSold, other.numberOfProductsSold)
 				&& Objects.equals(previousBilling, other.previousBilling)
 				&& Objects.equals(previousSales, other.previousSales);
 	}
@@ -70,7 +81,9 @@ public class SalesCompany {
 	@Override
 	public String toString() {
 		return "SalesCompany [currentSales=" + currentSales + ", currentBilling=" + currentBilling + ", previousSales="
-				+ previousSales + ", previousBilling=" + previousBilling + "]";
+				+ previousSales + ", previousBilling=" + previousBilling + ", numberOfProductsSold="
+				+ numberOfProductsSold + "]";
 	}
+	
 
 }
