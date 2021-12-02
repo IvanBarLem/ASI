@@ -1,6 +1,8 @@
 import {
+  Alert,
   Button,
   Grid,
+  Pagination,
   Paper,
   Table,
   TableBody,
@@ -34,7 +36,7 @@ import { useDispatch } from "react-redux";
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState({ content: [], totalPages: 0 });
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("all");
   const [page, setPage] = useState(0);
@@ -68,7 +70,7 @@ const ProductList = () => {
     setCategory(categorySelected);
     dispatch(
       actions.getStatisticsProducts(
-        page,
+        0,
         location,
         categorySelected,
         (products) => {
@@ -82,7 +84,7 @@ const ProductList = () => {
     setLocation(locationSelected.trim());
     dispatch(
       actions.getStatisticsProducts(
-        page,
+        0,
         locationSelected.trim(),
         category,
         (products) => {
@@ -93,11 +95,16 @@ const ProductList = () => {
   };
 
   const handleChangePage = (event, page) => {
-    setPage(page);
+    setPage(page - 1);
     dispatch(
-      actions.getStatisticsProducts(page, location, category, (products) => {
-        setProducts(products);
-      })
+      actions.getStatisticsProducts(
+        page - 1,
+        location,
+        category,
+        (products) => {
+          setProducts(products);
+        }
+      )
     );
   };
 
@@ -120,11 +127,21 @@ const ProductList = () => {
                   value={category}
                   onChange={(e) => handleCategory(e.target.value)}
                 >
-                  <MenuItem value={"all"}>Ninguna</MenuItem>
-                  <MenuItem value={"accommodation"}>Alojamiento</MenuItem>
-                  <MenuItem value={"activity"}>Actividad</MenuItem>
-                  <MenuItem value={"travel"}>Viaje</MenuItem>
-                  <MenuItem value={"transport"}>Transporte</MenuItem>
+                  <MenuItem value={"all"}>
+                    <FormattedMessage id="project.statistics.products.all" />
+                  </MenuItem>
+                  <MenuItem value={"accommodation"}>
+                    <FormattedMessage id="project.packs.CreatePack.acommodations" />
+                  </MenuItem>
+                  <MenuItem value={"activity"}>
+                    <FormattedMessage id="project.packs.CreatePack.activities" />
+                  </MenuItem>
+                  <MenuItem value={"travel"}>
+                    <FormattedMessage id="project.packs.CreatePack.travels" />
+                  </MenuItem>
+                  <MenuItem value={"transport"}>
+                    <FormattedMessage id="project.packs.CreatePack.transports" />
+                  </MenuItem>
                 </Select>
               </FormControl>
             </ListItem>
@@ -143,29 +160,36 @@ const ProductList = () => {
           </List>
         </Grid>
         <Grid item xs={12} md={9} component={Paper}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell>
-                    <FormattedMessage id="project.global.fields.name" />
-                  </TableCell>
-                  <TableCell>
-                    <FormattedMessage id="project.global.fields.location" />
-                  </TableCell>
-                  <TableCell>
-                    <FormattedMessage id="project.global.fields.price" />
-                  </TableCell>
-                  <TableCell>
-                    <FormattedMessage id="project.global.fields.totalSales" />
-                  </TableCell>
-                  <TableCell />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {products &&
-                  products.content.map((product) => (
+          {products.content.length === 0 ? (
+            <Alert severity="info">
+              <FormattedMessage id="project.statistics.products.noProducts" />
+            </Alert>
+          ) : (
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell>
+                      <FormattedMessage id="project.global.fields.name" />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id="project.global.fields.location" />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id="project.global.fields.price" />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id="project.global.fields.currentBilling" />
+                    </TableCell>
+                    <TableCell>
+                      <FormattedMessage id="project.global.fields.totalSales" />
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {products.content.map((product) => (
                     <TableRow
                       key={product.productId + product.name}
                       selected={
@@ -204,28 +228,32 @@ const ProductList = () => {
                         onClick={() => onClickInCell(product)}
                         align="right"
                       >
-                        <Typography>{product.currentSales}</Typography>
+                        <Typography>
+                          {product.currentBilling}
+                          {" €"}
+                        </Typography>
                       </TableCell>
-                      <TableCell align="right">
-                        <Button>
-                          <FormattedMessage id="project.global.fields.details" />
-                        </Button>
+                      <TableCell
+                        align="right"
+                        onClick={() => onClickInCell(product)}
+                      >
+                        <Typography>{product.currentSales}</Typography>
                       </TableCell>
                     </TableRow>
                   ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          {products && products.totalPages && (
-            <TablePagination
-              component="div"
-              rowsPerPageOptions={[10]}
-              count={products.totalPages}
-              rowsPerPage={10}
-              page={page}
-              onPageChange={handleChangePage}
-            />
+                </TableBody>
+              </Table>
+            </TableContainer>
           )}
+          <Grid xs={12} display="flex" justifyContent="center">
+            {products && products.content.length > 0 && (
+              <Pagination
+                count={products.totalPages}
+                page={products.pageNumber + 1}
+                onChange={handleChangePage}
+              />
+            )}
+          </Grid>
         </Grid>
       </Grid>
       <Paper
@@ -239,7 +267,7 @@ const ProductList = () => {
           sx={{ color: theme.palette.primary.contrastText }}
           variant="h5"
         >
-          Estadísticas de los productos
+          <FormattedMessage id="project.statistics.products" />
         </Typography>
       </Paper>
       {productSelected ? (
@@ -256,6 +284,7 @@ const ProductList = () => {
               otherKpi={
                 companyStatistics.currentSales - productSelected.currentSales
               }
+              unid={"unid."}
             />
           </Grid>
           <Grid item>
@@ -271,12 +300,13 @@ const ProductList = () => {
                 companyStatistics.currentBilling -
                 productSelected.currentBilling
               }
+              unid={"€"}
             />
           </Grid>
         </Grid>
       ) : (
         <Typography margin={10} textAlign="center" variant="h6">
-          Selecciona un producto
+          <FormattedMessage id="project.statistics.products.select" />
         </Typography>
       )}
     </React.Fragment>

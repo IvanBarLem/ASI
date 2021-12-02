@@ -2,7 +2,15 @@ import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
 import React from "react";
 import Chart from "./Chart";
 
-const KPI = ({ name, productName, otherName, kpi, otherKpi, respecting }) => {
+const KPI = ({
+  name,
+  productName,
+  otherName,
+  kpi,
+  otherKpi,
+  respecting,
+  unid,
+}) => {
   const kpiDiff = otherKpi === 0 ? 0 : (kpi / otherKpi) * 100;
 
   return (
@@ -21,6 +29,7 @@ const KPI = ({ name, productName, otherName, kpi, otherKpi, respecting }) => {
               kpi={kpi}
               otherKpi={otherKpi}
               otherName={otherName}
+              unid={unid}
             />
           </Grid>
         </Grid>
@@ -34,7 +43,8 @@ const KPI = ({ name, productName, otherName, kpi, otherKpi, respecting }) => {
             </Typography>
             <Typography variant="h6" sx={{ maxWidth: 150 }}>
               {respecting} ({otherKpi + kpi}
-              {" €"})
+              {"  "}
+              {unid})
             </Typography>
           </Box>
         </Grid>

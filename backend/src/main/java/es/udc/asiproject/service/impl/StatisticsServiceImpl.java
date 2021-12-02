@@ -54,7 +54,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Transactional(readOnly = true)
 	public SalesCompany findSalesCompany(Date startDate, Date endDate) {
 		Date previousDate = previousDate(startDate, endDate);
-		Long currentSales = saleDao.countSalesByCreatedAt(startDate, endDate);
+		Long currentSales = saleDao.countProductsByCreatedAt(startDate, endDate);
 		BigDecimal currentBilling = saleDao.findBillingByCreatedAt(startDate, endDate);
 		Long previousSales = saleDao.countSalesByCreatedAt(previousDate, startDate);
 		BigDecimal previousBilling = saleDao.findBillingByCreatedAt(previousDate, startDate);

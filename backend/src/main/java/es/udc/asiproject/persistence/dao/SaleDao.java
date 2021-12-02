@@ -19,6 +19,11 @@ public interface SaleDao extends JpaRepository<Sale, Long>, JpaSpecificationExec
 			+ "WHERE s.state = es.udc.asiproject.persistence.model.enums.SaleState.PAID AND "
 			+ "s.createdAt BETWEEN :startDate AND :endDate")
 	BigDecimal findBillingByCreatedAt(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+	
+	@Query("SELECT COALESCE(SUM(p.quantity), 0) FROM Sale s JOIN s.products p "
+			+ "WHERE s.state = es.udc.asiproject.persistence.model.enums.SaleState.PAID AND "
+			+ "s.createdAt BETWEEN :startDate AND :endDate")
+	Long countProductsByCreatedAt(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 	@Query("SELECT COUNT(s.id) FROM Sale s WHERE s.state = es.udc.asiproject.persistence.model.enums.SaleState.PAID "
 			+ "AND s.agent.id = :id AND s.createdAt BETWEEN :startDate AND :endDate")
