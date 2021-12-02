@@ -7,7 +7,7 @@ const getDateRange = (days) => {
     today.setDate(today.getDate() - days);
     const priorStr = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay();
 
-    return { startDate: todayStr, endDate: priorStr };
+    return { startDate: priorStr, endDate: todayStr };
 }
 
 const findCompanyStatisticsCompleted = (companyStatistics) => ({
