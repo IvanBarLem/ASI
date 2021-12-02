@@ -75,7 +75,7 @@ const Body = (props) => {
           {props.loggedIn && (
             <Route exact path="/sales" component={FindSales} />
           )}
-          {isAgente || isGerente && (
+          {(isAgente || isGerente) && (
             <Route exact path="/create-sale" component={CreateSale} />
           )}
           {!props.loggedIn && (
