@@ -103,7 +103,7 @@ export default {
   "project.agents.agentList.agentStats": "Agent statistics",
   "project.agents.agentList.billingObjective": "Billing objective",
   "project.agents.agentList.salesNumObjective": "Sales objective",
-  "project.agents.kpi.respectingLastMonth": "compared to last month",
+  "project.agents.kpi.respectingLastPeriod": "compared to last period",
   "project.agents.fields.billing": "Billing",
   "project.agents.fields.salesNum": "Sales",
   "project.agents.fields.month": "30 days",

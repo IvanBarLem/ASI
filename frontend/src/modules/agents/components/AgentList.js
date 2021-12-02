@@ -1,6 +1,6 @@
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import {
-    Alert, Box, Button,
+    Alert, Box,
     FormControl, Grid,
     InputLabel, MenuItem, Paper,
     Select, Table,
@@ -8,7 +8,8 @@ import {
     TableCell,
     TableContainer,
     TableHead, TableRow,
-    TextField, Typography
+    TextField, Typography,
+    Pagination
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from 'react';
@@ -24,6 +25,7 @@ const AgentList = () => {
     const [agentSalesObjective, setAgentSalesObjective] = useState(0);
     const [agentSelected, setAgentSelected] = useState(null);
     const [period, setPeriod] = React.useState(0);
+    const [page, setPage] = React.useState(1);
     const agentSalesSearch = useSelector(selectors.getAgentSalesSearch);
     const monthly = 0;
 
@@ -33,61 +35,6 @@ const AgentList = () => {
             dispatch(actions.clearAgentSalesSearch())
         }
     }, [])
-
-    // const agents = [
-    //     {
-    //         id: 1,
-    //         firstName: "Pedro",
-    //         lastName: "Valle",
-    //         facturacionMes: 4000,
-    //         numVentasMes: 42,
-    //         facturacionMesPasado: 3840,
-    //         numVentasMesPasado: 41,
-    //         facturacionSemana: 749,
-    //         numVentasSemana: 9,
-    //         facturacionSemanaPasada: 811,
-    //         numVentasSemanaPasada: 10
-    //     },
-    //     {
-    //         id: 2,
-    //         firstName: "Pablo",
-    //         lastName: "Ramos",
-    //         facturacionMes: 5000,
-    //         numVentasMes: 48,
-    //         facturacionMesPasado: 4387,
-    //         numVentasMesPasado: 44,
-    //         facturacionSemana: 860,
-    //         numVentasSemana: 4,
-    //         facturacionSemanaPasada: 900,
-    //         numVentasSemanaPasada: 12
-    //     },
-    //     {
-    //         id: 3,
-    //         firstName: "Miguel",
-    //         lastName: "Gonzalez",
-    //         facturacionMes: 3000,
-    //         numVentasMes: 23,
-    //         facturacionMesPasado: 3244,
-    //         numVentasMesPasado: 25,
-    //         facturacionSemana: 957,
-    //         numVentasSemana: 12,
-    //         facturacionSemanaPasada: 711,
-    //         numVentasSemanaPasada: 6
-    //     },
-    //     {
-    //         id: 4,
-    //         firstName: "Fernando",
-    //         lastName: "Fuentes",
-    //         facturacionMes: 2400,
-    //         numVentasMes: 20,
-    //         facturacionMesPasado: 1200,
-    //         numVentasMesPasado: 10,
-    //         facturacionSemana: 400,
-    //         numVentasSemana: 3,
-    //         facturacionSemanaPasada: 532,
-    //         numVentasSemanaPasada: 5
-    //     }
-    // ];
 
     const changeAgentBillingObjective = (value) => {
         if (value >= 0) {
@@ -113,12 +60,22 @@ const AgentList = () => {
 
     const changePeriod = (value) => {
         setPeriod(value);
-        if (period === monthly) {
+        setAgentSelected(null)
+        if (value === monthly) {
             dispatch(actions.findAgentSales(0, 30));
         } else {
             dispatch(actions.findAgentSales(0, 7));
         }
     }
+
+    const handlePageChange = (event, value) => {
+        if (period === monthly) {
+            dispatch(actions.findAgentSales(value - 1, 30));
+        } else {
+            dispatch(actions.findAgentSales(value - 1, 7));
+        }
+        setPage(value);
+    };
 
     return (
         <React.Fragment>
@@ -206,6 +163,13 @@ const AgentList = () => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <Grid container display="flex" justifyContent="center">
+                            <Pagination
+                                count={agentSalesSearch.result.totalPages}
+                                page={page}
+                                onChange={handlePageChange}
+                            />
+                        </Grid>
                     </Paper>
                     <Box sx={{ marginTop: 3 }}>
                         {agentSelected === null ?

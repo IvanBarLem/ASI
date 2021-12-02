@@ -105,7 +105,7 @@ export default {
   "project.agents.agentList.agentStats": "Estadísticas dos axentes",
   "project.agents.agentList.billingObjective": "Obxectivo de facturación",
   "project.agents.agentList.salesNumObjective": "Obxectivo de ventas",
-  "project.agents.kpi.respectingLastMonth": "respeto ao último mes",
+  "project.agents.kpi.respectingLastPeriod": "respeto ao último período",
   "project.agents.fields.billing": "Facturación",
   "project.agents.fields.salesNum": "Ventas",
   "project.agents.fields.month": "30 días",

@@ -46,7 +46,7 @@ const KPI = ({ name, kpi, lastMonthKpi }) => {
                             {kpiDiff > 0 ? "+" : ""}{kpiDiff.toFixed(1)}%
                         </Typography>
                         <Typography variant="h6" sx={{ maxWidth: 150 }}>
-                            <FormattedMessage id="project.agents.kpi.respectingLastMonth" /> ({lastMonthKpi.toFixed(1)})
+                            <FormattedMessage id="project.agents.kpi.respectingLastPeriod" /> ({lastMonthKpi.toFixed(1)})
                         </Typography>
                     </Box>
                 </Grid>

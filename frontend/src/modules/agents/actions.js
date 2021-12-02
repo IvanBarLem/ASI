@@ -3,9 +3,11 @@ import backend from "../../backend";
 
 const getDateRange = (days) => {
     var today = new Date();
-    const todayStr = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay();
+    console.log(today)
+    const todayStr = today.toISOString().split("T")[0];
+    console.log(todayStr)
     today.setDate(today.getDate() - days);
-    const priorStr = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay();
+    const priorStr = today.toISOString().split("T")[0];
 
     return { startDate: priorStr, endDate: todayStr };
 }
