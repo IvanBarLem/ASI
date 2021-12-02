@@ -158,8 +158,8 @@ public class DataLoader implements ApplicationRunner {
 				for (Long saleId = 0L; saleId < 50; saleId++) {
 					Sale sale = Sale.builder().state(SaleState.PAID).price(new BigDecimal(getRandomNumber(1, 1000)))
 							.agent(agent).client(client)
-							.createdAt(saleId < 25 ? parseDate("2021-11-" + getRandomNumber(10, 30))
-									: parseDate("2021-12-" + getRandomNumber(10, 31)))
+							.createdAt(saleId < 25 ? parseDate("2021-"+ getRandomNumber(10, 11) + "-" + getRandomNumber(1, 15))
+									: parseDate("2021-"+ getRandomNumber(11, 12) +"-" + getRandomNumber(15, 30)))
 							.build();
 					saleDao.save(sale);
 
