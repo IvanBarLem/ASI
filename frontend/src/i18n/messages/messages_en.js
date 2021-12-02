@@ -38,6 +38,7 @@ export default {
   "project.global.fields.location": "Localization",
   "project.global.fields.category": "Category",
   "project.global.fields.filters": "Filters",
+  "project.global.fields.currentBilling": "Billing",
   "project.global.fields.newPassword": "newPassword",
   "project.global.validator.email": "Provide a correct e-mail address",
   "project.global.validator.passwordsDoNotMatch": "Passwords do not match",
@@ -118,4 +119,9 @@ export default {
   "project.sales.salesTable.blockSale": "Block sale",
   "project.sales.salesTable.paySale": "Pay sale",
   "project.sales.salesTable.watchBill": "Watch bill",
+
+  "project.statistics.products.noProducts": "Products not found",
+  "project.statistics.products": "Products stats",
+  "project.statistics.products.select": "Select a product",
+  "project.statistics.products.all": "All",
 };

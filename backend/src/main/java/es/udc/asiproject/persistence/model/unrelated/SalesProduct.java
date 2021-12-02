@@ -9,18 +9,20 @@ public class SalesProduct {
 	private Long productId;
 	private String name;
 	private String location;
+	private BigDecimal price;
 	private String category;
 	private Long currentSales;
 	private BigDecimal currentBilling;
 	private Long previousSales;
 	private BigDecimal previousBilling;
 
-	public SalesProduct(Product product, String category, Long currentSales, BigDecimal currentBilling,
+	public SalesProduct(Product product, BigDecimal price, String category, Long currentSales, BigDecimal currentBilling,
 			Long previousSales, BigDecimal previousBilling) {
 		this.productId = product.getId();
 		this.name = product.getName();
 		this.location = product.getLocation();
 		this.category = category;
+		this.price = price;
 		this.currentSales = currentSales;
 		this.currentBilling = currentBilling;
 		this.previousSales = previousSales;
@@ -90,11 +92,20 @@ public class SalesProduct {
 	public void setPreviousBilling(BigDecimal previousBilling) {
 		this.previousBilling = previousBilling;
 	}
+	
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(category, currentBilling, currentSales, location, name, previousBilling, previousSales,
-				productId);
+				price, productId);
 	}
 
 	@Override
@@ -109,13 +120,18 @@ public class SalesProduct {
 		return Objects.equals(category, other.category) && Objects.equals(currentBilling, other.currentBilling)
 				&& Objects.equals(currentSales, other.currentSales) && Objects.equals(location, other.location)
 				&& Objects.equals(name, other.name) && Objects.equals(previousBilling, other.previousBilling)
-				&& Objects.equals(previousSales, other.previousSales) && Objects.equals(productId, other.productId);
+				&& Objects.equals(previousSales, other.previousSales) && Objects.equals(price, other.price)
+				&& Objects.equals(productId, other.productId);
 	}
 
 	@Override
 	public String toString() {
-		return "SalesProduct [productId=" + productId + ", name=" + name + ", location=" + location + ", category="
-				+ category + ", currentSales=" + currentSales + ", currentBilling=" + currentBilling
+		return "SalesProduct [productId=" + productId + ", name=" + name + ", location=" + location + ", price=" + price
+				+ ", category=" + category + ", currentSales=" + currentSales + ", currentBilling=" + currentBilling
 				+ ", previousSales=" + previousSales + ", previousBilling=" + previousBilling + "]";
 	}
+	
+	
+	
+	
 }

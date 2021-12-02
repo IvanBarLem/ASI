@@ -6,4 +6,10 @@ import * as statisticsService from "./statisticsService";
 
 export { default as NetworkError } from "./NetworkError";
 
-export default { init, userService, packService, productService, statisticsService };
+export default {
+  init,
+  userService,
+  packService,
+  productService,
+  statisticsService,
+};

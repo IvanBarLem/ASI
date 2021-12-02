@@ -38,6 +38,7 @@ export default {
   "project.global.fields.location": "Localización",
   "project.global.fields.category": "Categoría",
   "project.global.fields.filters": "Filtros",
+  "project.global.fields.currentBilling": "Faturación",
   "project.global.fields.newPassword": "Novo contrasinal",
   "project.global.validator.email":
     "Introduza unha direción de correo electrónico correcta",
@@ -122,4 +123,9 @@ export default {
   "project.sales.salesTable.blockSale": "Bloquear venta",
   "project.sales.salesTable.paySale": "Pagar venta",
   "project.sales.salesTable.watchBill": "Ver factura",
+
+  "project.statistics.products.noProducts": "Non se atoparon productos",
+  "project.statistics.products": "Estadísticas dos produtos",
+  "project.statistics.products.select": "Seleciona un producto",
+  "project.statistics.products.all": "Todas",
 };

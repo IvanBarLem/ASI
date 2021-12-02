@@ -54,7 +54,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 	@Transactional(readOnly = true)
 	public SalesCompany findSalesCompany(Date startDate, Date endDate) {
 		Date previousDate = previousDate(startDate, endDate);
-		Long currentSales = saleDao.countSalesByCreatedAt(startDate, endDate);
+		Long currentSales = saleDao.countProductsByCreatedAt(startDate, endDate);
 		BigDecimal currentBilling = saleDao.findBillingByCreatedAt(startDate, endDate);
 		Long previousSales = saleDao.countSalesByCreatedAt(previousDate, startDate);
 		BigDecimal previousBilling = saleDao.findBillingByCreatedAt(previousDate, startDate);
@@ -104,7 +104,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 
@@ -120,7 +120,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 
@@ -136,7 +136,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 
@@ -152,7 +152,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 
@@ -168,7 +168,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, category(product), currentSales, currentBilling, previousSales,
+				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
 						previousBilling));
 			}
 
