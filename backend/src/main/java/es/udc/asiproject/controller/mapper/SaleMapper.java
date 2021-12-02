@@ -51,4 +51,15 @@ public class SaleMapper {
 		return sale;
 	}
 
+//	public static Sale createSaleConvertToEntity(CreateSaleParamsDto createSaleParamsDto) {
+//
+//		Sale sale = new Sale();
+//		sale.setPrice(createSaleParamsDto.getPrice());
+//		sale.setClient(createSaleParamsDto.getClientId());
+//		sale.setAccommodations(AccommodationMapper.convertToEntity(createSaleParamsDto.getAccommodations()));
+//		sale.setActivities(ActivityMapper.convertToEntity(createSaleParamsDto.getActivities()));
+//		sale.setTransports(TransportMapper.convertToEntity(createSaleParamsDto.getTransports()));
+//		sale.setTravels(TravelMapper.convertToEntity(createSaleParamsDto.getTravels()));
+//		return sale;	
+//	}
 }

@@ -25,7 +25,6 @@ import es.udc.asiproject.persistence.dao.TravelDao;
 import es.udc.asiproject.persistence.dao.UserDao;
 import es.udc.asiproject.persistence.model.Accommodation;
 import es.udc.asiproject.persistence.model.Activity;
-import es.udc.asiproject.persistence.model.Pack;
 import es.udc.asiproject.persistence.model.Sale;
 import es.udc.asiproject.persistence.model.Sale.SaleState;
 import es.udc.asiproject.persistence.model.Transport;
@@ -106,50 +105,44 @@ public class SaleServiceTest {
 	}
 
 	@SuppressWarnings("serial")
-	private Pack createPack() {
-		Pack pack = new Pack();
-		pack.setTitle("title");
-		pack.setDescription("description");
-		pack.setImage(new Byte[] { 1, 2, 3 });
-		pack.setPrice(new BigDecimal(1.23));
-		pack.setDuration((short) 5);
-		pack.setPersons("persons");
-		pack.setOutstanding(false);
-		pack.setHidden(false);
-		pack.setCreatedAt(new Date());
-		pack.setAccommodations(new HashSet<Accommodation>() {
+	private Sale createSale() {
+		Sale sale = new Sale();
+		sale.setPrice(new BigDecimal(1.23));
+		sale.setState(Sale.SaleState.NORMAL);
+		sale.setAgent(createAgent("manolo@gmail.com"));
+		sale.setClient(createUser("cliente@gmail.com"));
+		sale.setCreatedAt(new Date());
+		sale.setAccommodations(new HashSet<Accommodation>() {
 			{
 				add(seedAccommodationDatabase());
 			}
 		});
-		pack.setActivities(new HashSet<Activity>() {
+		sale.setActivities(new HashSet<Activity>() {
 			{
 				add(seedActivityDatabase());
 			}
 		});
-		pack.setTransports(new HashSet<Transport>() {
+		sale.setTransports(new HashSet<Transport>() {
 			{
 				add(seedTransportDatabase());
 			}
 		});
-		pack.setTravels(new HashSet<Travel>() {
+		sale.setTravels(new HashSet<Travel>() {
 			{
 				add(seedTravelDatabase());
 			}
 		});
 
-		return pack;
+		return sale;
 	}
 
 	@Test
 	public void testFindAllSales() throws ParseException {
-
-		Pack pack1 = createPack();
-		pack1.setCreatedAt(parseDate("2021-01-01"));
-		pack1 = packDao.save(pack1);
-		Pack pack2 = createPack();
-		pack2.setCreatedAt(parseDate("2018-01-01"));
-		pack2 = packDao.save(pack2);
+		/*
+		 * Pack pack1 = createPack(); pack1.setCreatedAt(parseDate("2021-01-01")); pack1
+		 * = packDao.save(pack1); Pack pack2 = createPack();
+		 * pack2.setCreatedAt(parseDate("2018-01-01")); pack2 = packDao.save(pack2);
+		 */
 
 		User client1 = createUser("cliente1€gmail.com");
 		userDao.save(client1);
@@ -202,25 +195,22 @@ public class SaleServiceTest {
 
 	@Test
 	public void testPaySale() throws InstanceNotFoundException, PermissionException, ParseException {
-
-		Pack pack1 = createPack();
-		pack1.setCreatedAt(parseDate("2021-01-01"));
-		pack1 = packDao.save(pack1);
-		Pack pack2 = createPack();
-		pack2.setCreatedAt(parseDate("2018-01-01"));
-		pack2 = packDao.save(pack2);
-
-		User client1 = createUser("cliente1€gmail.com");
+		/*
+		 * Pack pack1 = createPack(); pack1.setCreatedAt(parseDate("2021-01-01")); pack1
+		 * = packDao.save(pack1); Pack pack2 = createPack();
+		 * pack2.setCreatedAt(parseDate("2018-01-01")); pack2 = packDao.save(pack2);
+		 */
+		User client1 = createUser("cliente1@gmail.com");
 		userDao.save(client1);
 
-		User client2 = createUser("cliente2€gmail.com");
+		User client2 = createUser("cliente2@gmail.com");
 		userDao.save(client2);
 
-		User agent1 = createAgent("agente1€gmail.com");
+		User agent1 = createAgent("agente1@gmail.com");
 		userDao.save(agent1);
 
 		Sale sale1 = new Sale();
-		sale1.setState(SaleState.NORMAL);
+		sale1.setState(SaleState.FREEZE);
 		sale1.setPrice((new BigDecimal(100)));
 		sale1.setCreatedAt(parseDate("2022-01-01"));
 		sale1.setAgent(agent1);
@@ -237,21 +227,18 @@ public class SaleServiceTest {
 
 	@Test
 	public void deleteSale() throws InstanceNotFoundException, PermissionException, ParseException {
-
-		Pack pack1 = createPack();
-		pack1.setCreatedAt(parseDate("2021-01-01"));
-		pack1 = packDao.save(pack1);
-		Pack pack2 = createPack();
-		pack2.setCreatedAt(parseDate("2018-01-01"));
-		pack2 = packDao.save(pack2);
-
-		User client1 = createUser("cliente1€gmail.com");
+		/*
+		 * Pack pack1 = createPack(); pack1.setCreatedAt(parseDate("2021-01-01")); pack1
+		 * = packDao.save(pack1); Pack pack2 = createPack();
+		 * pack2.setCreatedAt(parseDate("2018-01-01")); pack2 = packDao.save(pack2);
+		 */
+		User client1 = createUser("cliente1@gmail.com");
 		userDao.save(client1);
 
-		User client2 = createUser("cliente2€gmail.com");
+		User client2 = createUser("cliente2@gmail.com");
 		userDao.save(client2);
 
-		User agent1 = createAgent("agente1€gmail.com");
+		User agent1 = createAgent("agente1@gmail.com");
 		userDao.save(agent1);
 
 		Sale sale1 = new Sale();
@@ -269,5 +256,74 @@ public class SaleServiceTest {
 		});
 
 	}
+
+//	@Test
+//	public void testCreateSale() throws InstanceNotFoundException, InvalidOperationException {
+//		Sale inputSale = createSale();
+//		Sale outputSale = saleService.createSale(inputSale);
+//
+//		assertAll(() -> {
+//			assertEquals(inputSale.getState(), outputSale.getState());
+//			assertEquals(inputSale.getAgent(), outputSale.getAgent());
+//			assertEquals(inputSale.getClient(), outputSale.getClient());
+//			assertEquals(inputSale.getPrice(), outputSale.getPrice());
+//			assertEquals(inputSale.getCreatedAt(), outputSale.getCreatedAt());
+//			assertEquals(inputSale.getAccommodations(), outputSale.getAccommodations());
+//			assertEquals(inputSale.getActivities(), outputSale.getActivities());
+//			assertEquals(inputSale.getTransports(), outputSale.getTransports());
+//			assertEquals(inputSale.getTravels(), outputSale.getTravels());
+//		});
+//	}
+
+//	@SuppressWarnings("serial")
+//	@Test
+//	public void testUpdateSale() throws InstanceNotFoundException, InvalidOperationException {
+//		Sale inputSale = saleService.createSale(createSale());
+//		inputSale.setPrice(new BigDecimal(3.21));
+//		inputSale.setState(Sale.SaleState.NORMAL);
+//		inputSale.setAgent(createAgent("manolo1@gmail.com"));
+//		inputSale.setClient(createUser("cliente1@gmail.com"));
+//		inputSale.setCreatedAt(new Date());
+//		inputSale.setAccommodations(new HashSet<Accommodation>() {
+//			{
+//				add(seedAccommodationDatabase());
+//			}
+//		});
+//		inputSale.setActivities(new HashSet<Activity>() {
+//			{
+//				add(seedActivityDatabase());
+//				add(seedActivityDatabase());
+//			}
+//		});
+//		inputSale.setTransports(new HashSet<Transport>() {
+//			{
+//				add(seedTransportDatabase());
+//				add(seedTransportDatabase());
+//				add(seedTransportDatabase());
+//			}
+//		});
+//		inputSale.setTravels(new HashSet<Travel>() {
+//			{
+//				add(seedTravelDatabase());
+//				add(seedTravelDatabase());
+//				add(seedTravelDatabase());
+//				add(seedTravelDatabase());
+//			}
+//		});
+//
+//		Sale outputSale = saleService.updateSale(inputSale);
+//
+//		assertAll(() -> {
+//			assertEquals(inputSale.getState(), outputSale.getState());
+//			assertEquals(inputSale.getAgent(), outputSale.getAgent());
+//			assertEquals(inputSale.getClient(), outputSale.getClient());
+//			assertEquals(inputSale.getPrice(), outputSale.getPrice());
+//			assertEquals(inputSale.getCreatedAt(), outputSale.getCreatedAt());
+//			assertEquals(inputSale.getAccommodations(), outputSale.getAccommodations());
+//			assertEquals(inputSale.getActivities(), outputSale.getActivities());
+//			assertEquals(inputSale.getTransports(), outputSale.getTransports());
+//			assertEquals(inputSale.getTravels(), outputSale.getTravels());
+//		});
+//	}
 
 }
