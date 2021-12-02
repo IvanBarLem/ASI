@@ -135,7 +135,7 @@ public class StatisticsServiceTest {
 		SalesCompany sales = statisticsService.findSalesCompany(parseDate("2020-01-01"), parseDate("2024-01-01"));
 
 		assertAll(() -> {
-			assertEquals(25, sales.getCurrentSales());
+			assertEquals(2100, sales.getCurrentSales());
 			assertEquals(new BigDecimal(2000).stripTrailingZeros(), sales.getCurrentBilling().stripTrailingZeros());
 			assertEquals(5, sales.getPreviousSales());
 			assertEquals(new BigDecimal(400).stripTrailingZeros(), sales.getPreviousBilling().stripTrailingZeros());
