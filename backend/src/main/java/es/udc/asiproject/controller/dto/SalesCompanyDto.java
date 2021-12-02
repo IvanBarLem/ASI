@@ -8,6 +8,7 @@ public class SalesCompanyDto {
 	private BigDecimal currentBilling;
 	private Long previousSales;
 	private BigDecimal previousBilling;
+	private Long numberOfProductsSold;
 
 	public SalesCompanyDto() {
 	}
@@ -44,9 +45,17 @@ public class SalesCompanyDto {
 		this.previousBilling = previousBilling;
 	}
 
+	public Long getNumberOfProductsSold() {
+		return numberOfProductsSold;
+	}
+
+	public void setNumberOfProductsSold(Long numberOfProductsSold) {
+		this.numberOfProductsSold = numberOfProductsSold;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(currentBilling, currentSales, previousBilling, previousSales);
+		return Objects.hash(currentBilling, currentSales, numberOfProductsSold, previousBilling, previousSales);
 	}
 
 	@Override
@@ -59,6 +68,7 @@ public class SalesCompanyDto {
 			return false;
 		SalesCompanyDto other = (SalesCompanyDto) obj;
 		return Objects.equals(currentBilling, other.currentBilling) && Objects.equals(currentSales, other.currentSales)
+				&& Objects.equals(numberOfProductsSold, other.numberOfProductsSold)
 				&& Objects.equals(previousBilling, other.previousBilling)
 				&& Objects.equals(previousSales, other.previousSales);
 	}
@@ -66,6 +76,9 @@ public class SalesCompanyDto {
 	@Override
 	public String toString() {
 		return "SalesCompanyDto [currentSales=" + currentSales + ", currentBilling=" + currentBilling
-				+ ", previousSales=" + previousSales + ", previousBilling=" + previousBilling + "]";
+				+ ", previousSales=" + previousSales + ", previousBilling=" + previousBilling
+				+ ", numberOfProductsSold=" + numberOfProductsSold + "]";
 	}
+	
+	
 }
