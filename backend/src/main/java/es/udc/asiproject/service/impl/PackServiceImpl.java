@@ -110,7 +110,7 @@ public class PackServiceImpl implements PackService {
 	}
 
 	@Override
-	public void toggleHighlightPack(Long packId) throws InstanceNotFoundException {
+	public void toggleOutstandingPack(Long packId) throws InstanceNotFoundException {
 		Pack pack = packDao.findById(packId)
 				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), packId));
 		pack.setOutstanding(!pack.getOutstanding());
@@ -118,19 +118,10 @@ public class PackServiceImpl implements PackService {
 	}
 
 	@Override
-	public void toggleHidePack(Long packId) throws InstanceNotFoundException {
+	public void toggleHiddenPack(Long packId) throws InstanceNotFoundException {
 		Pack pack = packDao.findById(packId)
 				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), packId));
 		pack.setHidden(!pack.getHidden());
 		packDao.save(pack);
-	}
-
-	@Override
-	@Transactional
-	public void removePack(Long id) throws InstanceNotFoundException {
-		Pack pack = packDao.findById(id)
-				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), id));
-
-		packDao.delete(pack);
 	}
 }

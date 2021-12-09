@@ -61,7 +61,7 @@ public class ProductTest {
 	}
 
 	/*
-	 * Resuelve CU 4. Prueba para obtener la lista de alojamientos que no están
+	 * Resuelve CU 3.3. Prueba para obtener la lista de alojamientos que no están
 	 * ocultos.
 	 * 
 	 * Nivel de prueba: unidad.
@@ -83,7 +83,7 @@ public class ProductTest {
 	}
 
 	/*
-	 * Resuelve CU 4. Prueba para obtener la lista completa de alojamientos.
+	 * Resuelve CU 3.3. Prueba para obtener la lista completa de alojamientos.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
@@ -205,7 +205,7 @@ public class ProductTest {
 	}
 
 	/*
-	 * Resuelve CU 4. Prueba para obtener la lista de actividades que no están
+	 * Resuelve CU 3.5. Prueba para obtener la lista de actividades que no están
 	 * ocultos.
 	 * 
 	 * Nivel de prueba: unidad.
@@ -227,7 +227,7 @@ public class ProductTest {
 	}
 
 	/*
-	 * Resuelve CU 4. Prueba para obtener la lista completa de actividades.
+	 * Resuelve CU 3.5. Prueba para obtener la lista completa de actividades.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
@@ -349,7 +349,7 @@ public class ProductTest {
 	}
 
 	/*
-	 * Resuelve CU 4. Prueba para obtener la lista de transportes que no están
+	 * Resuelve CU 3.4. Prueba para obtener la lista de transportes que no están
 	 * ocultos.
 	 * 
 	 * Nivel de prueba: unidad.
@@ -371,7 +371,7 @@ public class ProductTest {
 	}
 
 	/*
-	 * Resuelve CU 4. Prueba para obtener la lista completa de transportes.
+	 * Resuelve CU 3.4. Prueba para obtener la lista completa de transportes.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
@@ -495,7 +495,7 @@ public class ProductTest {
 	}
 
 	/*
-	 * Resuelve CU 4. Prueba para obtener la lista de viajes que no están ocultos.
+	 * Resuelve CU 3.2. Prueba para obtener la lista de viajes que no están ocultos.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
@@ -516,7 +516,7 @@ public class ProductTest {
 	}
 
 	/*
-	 * Resuelve CU 4. Prueba para obtener la lista completa de viajes.
+	 * Resuelve CU 3.2. Prueba para obtener la lista completa de viajes.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 

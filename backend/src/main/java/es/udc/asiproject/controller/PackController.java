@@ -3,7 +3,6 @@ package es.udc.asiproject.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +67,7 @@ public class PackController {
 	public void toggleHighlightPack(Long userId, @PathVariable("id") Long packId)
 			throws InstanceNotFoundException, InvalidOperationException {
 
-		packService.toggleHighlightPack(packId);
+		packService.toggleOutstandingPack(packId);
 	}
 
 	@PutMapping("/toggleHide/{id}")
@@ -76,12 +75,6 @@ public class PackController {
 	public void toggleHidePack(Long userId, @PathVariable("id") Long packId)
 			throws InstanceNotFoundException, InvalidOperationException {
 
-		packService.toggleHidePack(packId);
-	}
-
-	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void removeAccommodation(@PathVariable("id") Long id) throws InstanceNotFoundException {
-		packService.removePack(id);
+		packService.toggleHiddenPack(packId);
 	}
 }
