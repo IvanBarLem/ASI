@@ -1,7 +1,5 @@
 package es.udc.asiproject.service;
 
-import org.springframework.data.domain.Page;
-
 import es.udc.asiproject.persistence.model.User;
 import es.udc.asiproject.service.exceptions.DuplicateInstanceException;
 import es.udc.asiproject.service.exceptions.IncorrectLoginException;
@@ -19,7 +17,4 @@ public interface UserService {
 
 	void changePassword(Long id, String oldPassword, String newPassword)
 			throws InstanceNotFoundException, IncorrectPasswordException;
-
-	Page<User> findAllUsers(Integer pageNumber, Integer pageSize);
-
 }
