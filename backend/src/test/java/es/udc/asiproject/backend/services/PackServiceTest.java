@@ -413,7 +413,12 @@ public class PackServiceTest {
 		Pack outputPack = packDao.findById(inputPack.getId())
 				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
 
-		assertEquals(inputPack.getOutstanding(), !outputPack.getOutstanding());
+		assertTrue(outputPack.getOutstanding());
+
+		packService.toggleOutstandingPack(inputPack.getId());
+		outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
+		assertFalse(outputPack.getOutstanding());
 	}
 
 	/*
@@ -435,6 +440,11 @@ public class PackServiceTest {
 		Pack outputPack = packDao.findById(inputPack.getId())
 				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
 
-		assertEquals(inputPack.getHidden(), !outputPack.getHidden());
+		assertTrue(outputPack.getHidden());
+
+		packService.toggleHiddenPack(inputPack.getId());
+		outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
+		assertFalse(outputPack.getHidden());
 	}
 }
