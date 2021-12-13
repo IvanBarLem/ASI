@@ -17,13 +17,13 @@ public class CreateSaleParamsDto {
 	@NotNull(groups = { InsertValidation.class })
 	private Long clientId;
 	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
-	private Set<AccommodationDto> accommodations;
+	private Set<AccommodationSaleDto> accommodations;
 	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
-	private Set<ActivityDto> activities;
+	private Set<ActivitySaleDto> activities;
 	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
-	private Set<TransportDto> transports;
+	private Set<TransportSaleDto> transports;
 	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
-	private Set<TravelDto> travels;
+	private Set<TravelSaleDto> travels;
 
 	public CreateSaleParamsDto() {
 	}
@@ -44,35 +44,35 @@ public class CreateSaleParamsDto {
 		this.clientId = clientId;
 	}
 
-	public Set<AccommodationDto> getAccommodations() {
+	public Set<AccommodationSaleDto> getAccommodations() {
 		return accommodations;
 	}
 
-	public void setAccommodations(Set<AccommodationDto> accommodations) {
+	public void setAccommodations(Set<AccommodationSaleDto> accommodations) {
 		this.accommodations = accommodations;
 	}
 
-	public Set<ActivityDto> getActivities() {
+	public Set<ActivitySaleDto> getActivities() {
 		return activities;
 	}
 
-	public void setActivities(Set<ActivityDto> activities) {
+	public void setActivities(Set<ActivitySaleDto> activities) {
 		this.activities = activities;
 	}
 
-	public Set<TransportDto> getTransports() {
+	public Set<TransportSaleDto> getTransports() {
 		return transports;
 	}
 
-	public void setTransports(Set<TransportDto> transports) {
+	public void setTransports(Set<TransportSaleDto> transports) {
 		this.transports = transports;
 	}
 
-	public Set<TravelDto> getTravels() {
+	public Set<TravelSaleDto> getTravels() {
 		return travels;
 	}
 
-	public void setTravels(Set<TravelDto> travels) {
+	public void setTravels(Set<TravelSaleDto> travels) {
 		this.travels = travels;
 	}
 

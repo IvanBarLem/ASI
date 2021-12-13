@@ -14,7 +14,8 @@ public interface SaleService {
 	Sale createSale(CreateSaleParamsDto createSaleParamsDto, Long userId)
 			throws InstanceNotFoundException, InvalidOperationException;
 
-	Sale updateSale(Sale sale) throws InstanceNotFoundException, InvalidOperationException;
+	// Sale updateSale(Sale sale) throws InstanceNotFoundException,
+	// InvalidOperationException;
 
 	Page<Sale> findSales(Long userId, Long clientFilterId, Long agentFilterId, Integer pageNumber, Integer pageSize);
 

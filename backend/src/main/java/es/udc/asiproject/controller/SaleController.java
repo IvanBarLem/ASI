@@ -19,10 +19,8 @@ import es.udc.asiproject.controller.dto.IdDto;
 import es.udc.asiproject.controller.dto.PageDto;
 import es.udc.asiproject.controller.dto.SaleDto;
 import es.udc.asiproject.controller.dto.validation.InsertValidation;
-import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 import es.udc.asiproject.controller.mapper.PageMapper;
 import es.udc.asiproject.controller.mapper.SaleMapper;
-import es.udc.asiproject.persistence.model.Sale;
 import es.udc.asiproject.service.SaleService;
 import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 import es.udc.asiproject.service.exceptions.InvalidOperationException;
@@ -46,14 +44,14 @@ public class SaleController {
 		return idDto;
 	}
 
-	@PutMapping("/update")
-	@ResponseStatus(HttpStatus.OK)
-	public SaleDto updateSale(@Validated({ UpdateValidation.class }) @RequestBody SaleDto saleDto)
-			throws InstanceNotFoundException, InvalidOperationException {
-		Sale sale = SaleMapper.convertToEntity(saleDto);
-
-		return SaleMapper.convertToDto(saleService.updateSale(sale));
-	}
+//	@PutMapping("/update")
+//	@ResponseStatus(HttpStatus.OK)
+//	public SaleDto updateSale(@Validated({ UpdateValidation.class }) @RequestBody SaleDto saleDto)
+//			throws InstanceNotFoundException, InvalidOperationException {
+//		Sale sale = SaleMapper.convertToEntity(saleDto);
+//
+//		return SaleMapper.convertToDto(saleService.updateSale(sale));
+//	}
 
 	@GetMapping("/findSales")
 	@ResponseStatus(HttpStatus.OK)

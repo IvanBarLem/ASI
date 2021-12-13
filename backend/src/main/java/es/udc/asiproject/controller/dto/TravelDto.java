@@ -9,6 +9,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import es.udc.asiproject.controller.dto.validation.InsertValidation;
+import es.udc.asiproject.controller.dto.validation.SaleValidation;
 import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 
 public class TravelDto {
@@ -17,11 +18,16 @@ public class TravelDto {
 	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
 	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
 	private String name;
+	@NotBlank(groups = { InsertValidation.class, UpdateValidation.class })
+	@Size(min = 1, max = 60, groups = { InsertValidation.class, UpdateValidation.class })
+	private String location;
 	@NotNull(groups = { InsertValidation.class, UpdateValidation.class })
 	@Positive(groups = { InsertValidation.class, UpdateValidation.class })
 	private BigDecimal price;
 	@NotNull(groups = { UpdateValidation.class })
 	private Boolean hidden;
+	@NotNull(groups = { InsertValidation.class, SaleValidation.class })
+	private Integer quantity;
 
 	public TravelDto() {
 	}
@@ -42,6 +48,14 @@ public class TravelDto {
 		this.name = name;
 	}
 
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -56,6 +70,14 @@ public class TravelDto {
 
 	public void setHidden(Boolean hidden) {
 		this.hidden = hidden;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	@Override
@@ -74,5 +96,11 @@ public class TravelDto {
 		TravelDto other = (TravelDto) obj;
 		return Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
 				&& Objects.equals(price, other.price);
+	}
+
+	@Override
+	public String toString() {
+		return "TravelDto [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price + ", hidden="
+				+ hidden + "]";
 	}
 }

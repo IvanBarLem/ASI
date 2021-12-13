@@ -11,25 +11,28 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.udc.asiproject.controller.dto.AccommodationSaleDto;
+import es.udc.asiproject.controller.dto.ActivitySaleDto;
 import es.udc.asiproject.controller.dto.CreateSaleParamsDto;
-import es.udc.asiproject.controller.mapper.AccommodationMapper;
-import es.udc.asiproject.controller.mapper.ActivityMapper;
-import es.udc.asiproject.controller.mapper.TransportMapper;
-import es.udc.asiproject.controller.mapper.TravelMapper;
+import es.udc.asiproject.controller.dto.TransportSaleDto;
+import es.udc.asiproject.controller.dto.TravelSaleDto;
 import es.udc.asiproject.persistence.dao.AccommodationDao;
 import es.udc.asiproject.persistence.dao.ActivityDao;
+import es.udc.asiproject.persistence.dao.ProductDao;
 import es.udc.asiproject.persistence.dao.SaleDao;
 import es.udc.asiproject.persistence.dao.TransportDao;
 import es.udc.asiproject.persistence.dao.TravelDao;
 import es.udc.asiproject.persistence.dao.UserDao;
 import es.udc.asiproject.persistence.model.Accommodation;
 import es.udc.asiproject.persistence.model.Activity;
+import es.udc.asiproject.persistence.model.Product;
 import es.udc.asiproject.persistence.model.Sale;
-import es.udc.asiproject.persistence.model.Sale.SaleState;
+import es.udc.asiproject.persistence.model.SaleProduct;
 import es.udc.asiproject.persistence.model.Transport;
 import es.udc.asiproject.persistence.model.Travel;
 import es.udc.asiproject.persistence.model.User;
-import es.udc.asiproject.persistence.model.User.RoleType;
+import es.udc.asiproject.persistence.model.enums.RoleType;
+import es.udc.asiproject.persistence.model.enums.SaleState;
 import es.udc.asiproject.service.SaleService;
 import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 import es.udc.asiproject.service.exceptions.InvalidOperationException;
@@ -50,60 +53,26 @@ public class SaleServiceImpl implements SaleService {
 	UserDao userDao;
 	@Autowired
 	SaleDao saleDao;
+	@Autowired
+	ProductDao productDao;
 
 	private void validateSale(Sale sale) throws InvalidOperationException, InstanceNotFoundException {
-		if (sale.getAccommodations().isEmpty() && sale.getActivities().isEmpty() && sale.getTransports().isEmpty()
-				&& sale.getTravels().isEmpty()) {
+		if (sale.getProducts().isEmpty()) {
 			throw new InvalidOperationException("Empty Sale Error");
 		}
 
-		Set<Accommodation> accommodations = new HashSet<Accommodation>();
-		for (Accommodation accommodation : sale.getAccommodations()) {
-			Optional<Accommodation> optional = accommodationDao.findById(accommodation.getId());
+		Set<SaleProduct> saleProducts = new HashSet<>();
+		saleProducts = sale.getProducts();
 
-			if (optional.isPresent()) {
-				accommodations.add(optional.get());
-			} else {
-				throw new InstanceNotFoundException(Accommodation.class.getSimpleName(), accommodation.getId());
+		for (SaleProduct saleProduct : saleProducts) {
+
+			if (!productDao.existsById(saleProduct.getProduct().getId())) {
+
+				throw new InstanceNotFoundException(Product.class.getSimpleName(), saleProduct.getProduct().getId());
 			}
+
 		}
-		sale.setAccommodations(accommodations);
 
-		Set<Activity> activities = new HashSet<Activity>();
-		for (Activity activity : sale.getActivities()) {
-			Optional<Activity> optional = activityDao.findById(activity.getId());
-
-			if (optional.isPresent()) {
-				activities.add(optional.get());
-			} else {
-				throw new InstanceNotFoundException(Activity.class.getSimpleName(), activity.getId());
-			}
-		}
-		sale.setActivities(activities);
-
-		Set<Transport> transports = new HashSet<Transport>();
-		for (Transport transport : sale.getTransports()) {
-			Optional<Transport> optional = transportDao.findById(transport.getId());
-
-			if (optional.isPresent()) {
-				transports.add(optional.get());
-			} else {
-				throw new InstanceNotFoundException(Transport.class.getSimpleName(), transport.getId());
-			}
-		}
-		sale.setTransports(transports);
-
-		Set<Travel> travels = new HashSet<Travel>();
-		for (Travel travel : sale.getTravels()) {
-			Optional<Travel> optional = travelDao.findById(travel.getId());
-
-			if (optional.isPresent()) {
-				travels.add(optional.get());
-			} else {
-				throw new InstanceNotFoundException(Travel.class.getSimpleName(), travel.getId());
-			}
-		}
-		sale.setTravels(travels);
 	}
 
 	@Override
@@ -111,45 +80,81 @@ public class SaleServiceImpl implements SaleService {
 	public Sale createSale(CreateSaleParamsDto createSaleParamsDto, Long userId)
 			throws InstanceNotFoundException, InvalidOperationException {
 
+		System.out.println(createSaleParamsDto);
+		System.out.println(createSaleParamsDto.getActivities());
+
 		Optional<User> agent = userDao.findById(userId);
 		Optional<User> client = userDao.findById(createSaleParamsDto.getClientId());
 
-		Sale sale = new Sale();
-		sale.setPrice(createSaleParamsDto.getPrice());
-		sale.setAgent(agent.get());
-		sale.setClient(client.get());
-		sale.setAccommodations(AccommodationMapper.convertToEntity(createSaleParamsDto.getAccommodations()));
-		sale.setActivities(ActivityMapper.convertToEntity(createSaleParamsDto.getActivities()));
-		sale.setTransports(TransportMapper.convertToEntity(createSaleParamsDto.getTransports()));
-		sale.setTravels(TravelMapper.convertToEntity(createSaleParamsDto.getTravels()));
+		if (agent.isPresent() && client.isPresent()) {
 
-		validateSale(sale);
+			Sale sale = new Sale();
+			sale.setPrice(createSaleParamsDto.getPrice());
+			sale.setAgent(agent.get());
+			sale.setClient(client.get());
+			sale.setCreatedAt(new Date());
+			sale.setState(SaleState.NORMAL);
+			saleDao.save(sale);
 
-		sale.setCreatedAt(new Date());
-		sale.setState(SaleState.NORMAL);
+			Set<SaleProduct> saleProducts = new HashSet<SaleProduct>();
 
-		return saleDao.save(sale);
+			for (AccommodationSaleDto accommodationSaleDto : createSaleParamsDto.getAccommodations()) {
+				Optional<Accommodation> accommodation = accommodationDao.findById(accommodationSaleDto.getId());
+				if (accommodation.isPresent()) {
+					saleProducts.add(new SaleProduct(sale, accommodation.get(), accommodationSaleDto.getQuantity()));
+				} else
+					throw new InstanceNotFoundException(Accommodation.class.getSimpleName(),
+							accommodationSaleDto.getId());
+
+			}
+			for (ActivitySaleDto activitySaleDto : createSaleParamsDto.getActivities()) {
+				Optional<Activity> activity = activityDao.findById(activitySaleDto.getId());
+				if (activity.isPresent()) {
+					saleProducts.add(new SaleProduct(sale, activity.get(), activitySaleDto.getQuantity()));
+				} else
+					throw new InstanceNotFoundException(Activity.class.getSimpleName(), activitySaleDto.getId());
+
+			}
+			for (TransportSaleDto transportSaleDto : createSaleParamsDto.getTransports()) {
+				Optional<Transport> transport = transportDao.findById(transportSaleDto.getId());
+				if (transport.isPresent()) {
+					saleProducts.add(new SaleProduct(sale, transport.get(), transportSaleDto.getQuantity()));
+				} else
+					throw new InstanceNotFoundException(Transport.class.getSimpleName(), transportSaleDto.getId());
+			}
+			for (TravelSaleDto travelSaleDto : createSaleParamsDto.getTravels()) {
+				Optional<Travel> travel = travelDao.findById(travelSaleDto.getId());
+				if (travel.isPresent()) {
+					saleProducts.add(new SaleProduct(sale, travel.get(), travelSaleDto.getQuantity()));
+				} else
+					throw new InstanceNotFoundException(Travel.class.getSimpleName(), travelSaleDto.getId());
+			}
+			sale.setProducts(saleProducts);
+
+			validateSale(sale);
+
+			return saleDao.save(sale);
+
+		} else
+			throw new InstanceNotFoundException(User.class.getSimpleName(), createSaleParamsDto.getClientId());
+
 	}
 
-	@Override
-	@Transactional
-	public Sale updateSale(Sale sale) throws InstanceNotFoundException, InvalidOperationException {
-		Sale oldSale = saleDao.findById(sale.getId())
-				.orElseThrow(() -> new InstanceNotFoundException(Sale.class.getSimpleName(), sale.getId()));
-
-		validateSale(sale);
-
-		oldSale.setState(sale.getState());
-		oldSale.setPrice(sale.getPrice());
-		oldSale.setAgent(sale.getAgent());
-		oldSale.setClient(sale.getClient());
-		oldSale.setAccommodations(sale.getAccommodations());
-		oldSale.setActivities(sale.getActivities());
-		oldSale.setTransports(sale.getTransports());
-		oldSale.setTravels(sale.getTravels());
-
-		return oldSale;
-	}
+//	@Override
+//	@Transactional
+//	public Sale updateSale(Sale sale) throws InstanceNotFoundException, InvalidOperationException {
+//		Sale oldSale = saleDao.findById(sale.getId())
+//				.orElseThrow(() -> new InstanceNotFoundException(Sale.class.getSimpleName(), sale.getId()));
+//
+//		validateSale(sale);
+//
+//		oldSale.setState(sale.getState());
+//		oldSale.setPrice(sale.getPrice());
+//		oldSale.setAgent(sale.getAgent());
+//		oldSale.setClient(sale.getClient());
+//
+//		return oldSale;
+//	}
 
 	@Override
 	public Page<Sale> findSales(Long userId, Long clientFilterId, Long agentFilterId, Integer pageNumber,

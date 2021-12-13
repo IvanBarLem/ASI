@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import es.udc.asiproject.persistence.model.User;
-import es.udc.asiproject.persistence.model.User.RoleType;
+import es.udc.asiproject.persistence.model.enums.RoleType;
 import es.udc.asiproject.service.UserService;
 import es.udc.asiproject.service.exceptions.DuplicateInstanceException;
 import es.udc.asiproject.service.exceptions.IncorrectLoginException;
@@ -28,7 +28,7 @@ public class UserServiceTest {
 	private UserService userService;
 
 	private User createUser(String email) {
-		return new User("password", "firstName", "lastName", email);
+		return User.builder().email(email).password("password").firstName("firstName").lastName("lastName").build();
 	}
 
 	@Test
