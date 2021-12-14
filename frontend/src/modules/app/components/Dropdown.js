@@ -8,6 +8,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import SurfingIcon from "@mui/icons-material/Surfing";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import PermMediaIcon from "@mui/icons-material/PermMedia";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 //import {FormattedMessage} from 'react-intl';
 import {
   Collapse,
