@@ -64,7 +64,7 @@ const Dropdown = (props) => {
             </ListItem>
           </React.Fragment>
         )}
-        {isGerente && (
+        {(isGerente || isAgente) && (
           <React.Fragment>
             <ListItem button component={Link} to="/sales">
               <ListItemIcon>

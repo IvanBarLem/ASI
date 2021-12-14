@@ -48,6 +48,7 @@ export default {
   "project.global.fields.client": "Cliente",
   "project.global.fields.agent": "Axente",
   "project.global.fields.travels": "Viaxes",
+  "project.global.fields.productos": "Produtos",
   "project.global.fields.acommodations": "Aloxamentos",
   "project.global.fields.transports": "Transportes",
   "project.global.fields.activities": "Atividades",

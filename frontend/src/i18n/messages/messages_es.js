@@ -48,6 +48,7 @@ export default {
   "project.global.validator.required": "Campo obligatorio",
   "project.global.fields.client": "Cliente",
   "project.global.fields.agent": "Agente",
+  "project.global.fields.products": "Productos",
   "project.global.fields.travels": "Viajes",
   "project.global.fields.acommodations": "Alojamientos",
   "project.global.fields.transports": "Transportes",

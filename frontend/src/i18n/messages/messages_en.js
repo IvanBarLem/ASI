@@ -44,6 +44,7 @@ export default {
   "project.global.validator.passwordsDoNotMatch": "Passwords do not match",
   "project.global.validator.required": "Required field",
   "project.global.fields.client": "Client",
+  "project.global.fields.products": "Products",
   "project.global.fields.agent": "Agent",
   "project.global.fields.travels": "Travels",
   "project.global.fields.acommodations": "Acommodations",

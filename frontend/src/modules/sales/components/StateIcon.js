@@ -6,7 +6,7 @@ import React from 'react';
 import { FormattedMessage } from "react-intl";
 
 const StateIcon = ({ state }) => {
-    if (state === "CREATED") {
+    if (state === "NORMAL") {
         return (
             <Grid container spacing={1} justifyContent="center">
                 <Grid item>
@@ -19,7 +19,7 @@ const StateIcon = ({ state }) => {
                 </Grid>
             </Grid>
         );
-    } else if (state === "BLOCKED") {
+    } else if (state === "FREEZE") {
         return (
 
             <Grid container spacing={1} justifyContent="center">
