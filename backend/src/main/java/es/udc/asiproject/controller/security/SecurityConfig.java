@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
 				.antMatchers(HttpMethod.GET, "/products/**")
 				.hasAnyRole(RoleType.AGENTE.name(), RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
-				.antMatchers("/products/**").hasRole(RoleType.INFORMATICO.name())
+				.antMatchers("/products/**").hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
 				.antMatchers(HttpMethod.PUT, "/sales/paySale/*")
 				.hasAnyRole(RoleType.USER.name(), RoleType.GERENTE.name())
 				.antMatchers(HttpMethod.PUT, "/sales/freezeSale/*")
