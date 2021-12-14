@@ -28,8 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
 				.antMatchers("/users/signUp", "/users/login", "/users/loginFromServiceToken").permitAll()
 
-				.antMatchers(HttpMethod.GET, "/packs").hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name())
-				.antMatchers("/products/**/hidden").hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
+				.antMatchers(HttpMethod.GET, "/users/clients")
+				.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name()).antMatchers(HttpMethod.GET, "/packs")
+				.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name()).antMatchers("/products/**/hidden")
+				.hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
 				.antMatchers(HttpMethod.GET, "/products/**")
 				.hasAnyRole(RoleType.AGENTE.name(), RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
 				.antMatchers("/products/**").hasRole(RoleType.INFORMATICO.name())

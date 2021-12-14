@@ -29,7 +29,9 @@ const Body = (props) => {
   return (
     <Box sx={{ margin: 4 }}>
       <Box sx={props.dropDownMarginClasses} m={2}>
-        <AppGlobalComponents dropDownMarginClasses={props.dropDownMarginClasses} />
+        <AppGlobalComponents
+          dropDownMarginClasses={props.dropDownMarginClasses}
+        />
         <Switch>
           <Route exact path="/" component={Home} />
           {props.loggedIn && (
@@ -52,7 +54,9 @@ const Body = (props) => {
           {isGerente && (
             <Route exact path="/create-pack" component={CreatePack} />
           )}
-          {(isInformatico || isGerente) && <Route exact path="/travels" component={Travels} />}
+          {(isInformatico || isGerente) && (
+            <Route exact path="/travels" component={Travels} />
+          )}
           {(isInformatico || isGerente) && (
             <Route exact path="/accommodations" component={Accommodations} />
           )}
@@ -75,7 +79,7 @@ const Body = (props) => {
           {props.loggedIn && (
             <Route exact path="/sales" component={FindSales} />
           )}
-          {(isAgente || isGerente) && (
+          {(isGerente || isAgente) && (
             <Route exact path="/create-sale" component={CreateSale} />
           )}
           {!props.loggedIn && (

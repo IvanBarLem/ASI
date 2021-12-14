@@ -4,12 +4,10 @@ import BusinessIcon from "@mui/icons-material/Business";
 import CommuteIcon from "@mui/icons-material/Commute";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import HotelIcon from "@mui/icons-material/Hotel";
-import PermMediaIcon from "@mui/icons-material/PermMedia";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import SurfingIcon from "@mui/icons-material/Surfing";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 //import {FormattedMessage} from 'react-intl';
 import {
   Collapse,
@@ -29,6 +27,7 @@ const Dropdown = (props) => {
   const isGerente = useSelector(users.selectors.isGerente);
   const isAgente = useSelector(users.selectors.isAgente);
   const isInformatico = useSelector(users.selectors.isInformatico);
+  const isCliente = useSelector(users.selectors.isCliente);
   const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {
@@ -48,7 +47,7 @@ const Dropdown = (props) => {
       <div className="offset" />
       <Divider />
       <List component="nav">
-        {isGerente && (
+        {(isGerente || isAgente || isCliente) && (
           <React.Fragment>
             <ListItem button component={Link} to="/sales">
               <ListItemIcon>
