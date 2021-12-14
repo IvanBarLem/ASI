@@ -9,7 +9,7 @@ public class Activity extends Product {
 	public Activity() {
 	}
 
-    public Activity(Builder builder) {
+	public Activity(Builder builder) {
 		this.id = builder.id;
 		this.name = builder.name;
 		this.location = builder.location;
@@ -24,7 +24,7 @@ public class Activity extends Product {
 	@Override
 	public String toString() {
 		return "Activity [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price + ", hidden="
-				+ hidden + ", packs=" + packs + ", sales=" + sales + "]";
+				+ hidden + "]";
 	}
 
 	public static class Builder {
@@ -65,5 +65,10 @@ public class Activity extends Product {
 		public Activity build() {
 			return new Activity(this);
 		}
+	}
+
+	@Override
+	public String getType() {
+		return "Activity";
 	}
 }

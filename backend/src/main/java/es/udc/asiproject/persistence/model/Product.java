@@ -88,6 +88,8 @@ public abstract class Product {
 		return sales;
 	}
 
+	public abstract String getType();
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -108,6 +110,6 @@ public abstract class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price + ", hidden="
-				+ hidden + ", packs=" + packs + ", sales=" + sales + "]";
+				+ hidden + "]";
 	}
 }

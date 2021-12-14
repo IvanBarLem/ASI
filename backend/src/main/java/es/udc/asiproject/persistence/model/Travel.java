@@ -24,7 +24,7 @@ public class Travel extends Product {
 	@Override
 	public String toString() {
 		return "Travel [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price + ", hidden="
-				+ hidden + ", packs=" + packs + ", sales=" + sales + "]";
+				+ hidden + "]";
 	}
 
 	public static class Builder {
@@ -65,5 +65,11 @@ public class Travel extends Product {
 		public Travel build() {
 			return new Travel(this);
 		}
+	}
+
+	@Override
+	public String getType() {
+
+		return "Travel";
 	}
 }

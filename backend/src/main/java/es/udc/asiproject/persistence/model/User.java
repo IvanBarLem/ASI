@@ -52,6 +52,7 @@ public class User {
 
 	public static Builder builder() {
 		return new Builder();
+
 	}
 
 	public Long getId() {
@@ -130,8 +131,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", role=" + role + ", agentSales=" + agentSales + ", clientSales="
-				+ clientSales + "]";
+				+ ", lastName=" + lastName + ", role=" + role + "]";
 	}
 
 	public static class Builder {

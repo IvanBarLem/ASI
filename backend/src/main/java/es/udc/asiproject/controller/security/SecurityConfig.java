@@ -27,12 +27,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
 				.antMatchers("/users/signUp", "/users/login", "/users/loginFromServiceToken").permitAll()
-				.antMatchers(HttpMethod.GET, "/packs").hasRole(RoleType.AGENTE.name())
+
+				.antMatchers(HttpMethod.GET, "/packs").hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name())
 				.antMatchers("/products/**/hidden").hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
 				.antMatchers(HttpMethod.GET, "/products/**")
 				.hasAnyRole(RoleType.AGENTE.name(), RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
-				.antMatchers("/products/**").hasRole(RoleType.INFORMATICO.name()).antMatchers("/statistics/**")
+				.antMatchers("/products/**").hasRole(RoleType.INFORMATICO.name())
+				.antMatchers(HttpMethod.PUT, "/sales/paySale/*")
+				.hasAnyRole(RoleType.USER.name(), RoleType.GERENTE.name())
+				.antMatchers(HttpMethod.PUT, "/sales/freezeSale/*")
+				.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name())
+				.antMatchers(HttpMethod.POST, "/sales/create")
+				.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name()).antMatchers("/statistics/**")
 				.hasRole(RoleType.GERENTE.name()).antMatchers("/**").hasRole(RoleType.GERENTE.name());
+
 	}
 
 	@Bean

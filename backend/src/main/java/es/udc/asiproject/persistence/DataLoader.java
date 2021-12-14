@@ -111,8 +111,8 @@ public class DataLoader implements ApplicationRunner {
 		}
 
 		if (saleDao.count() == 0) {
-			User client = User.builder().email("user@gmail.com").password("pass").firstName("User").lastName("Pita")
-					.role(RoleType.USER).build();
+			User client = User.builder().email("user@gmail.com").password(passwordEncoder.encode("pass"))
+					.firstName("User").lastName("Pita").role(RoleType.USER).build();
 			userDao.save(client);
 
 			List<Accommodation> accommodations = new ArrayList<Accommodation>();
@@ -151,15 +151,17 @@ public class DataLoader implements ApplicationRunner {
 			}
 
 			for (Long agentId = 0L; agentId < 5; agentId++) {
-				User agent = User.builder().email("agente" + agentId + "@gmail.com").password("pass")
-						.firstName("Agente" + agentId).lastName("Pita").role(RoleType.AGENTE).build();
+				User agent = User.builder().email("agente" + agentId + "@gmail.com")
+						.password(passwordEncoder.encode("pass")).firstName("Agente" + agentId).lastName("Pita")
+						.role(RoleType.AGENTE).build();
 				userDao.save(agent);
 
 				for (Long saleId = 0L; saleId < 50; saleId++) {
 					Sale sale = Sale.builder().state(SaleState.PAID).price(new BigDecimal(getRandomNumber(1, 1000)))
 							.agent(agent).client(client)
-							.createdAt(saleId < 25 ? parseDate("2021-"+ getRandomNumber(10, 11) + "-" + getRandomNumber(1, 15))
-									: parseDate("2021-"+ getRandomNumber(11, 12) +"-" + getRandomNumber(15, 30)))
+							.createdAt(saleId < 25
+									? parseDate("2021-" + getRandomNumber(10, 11) + "-" + getRandomNumber(1, 15))
+									: parseDate("2021-" + getRandomNumber(11, 12) + "-" + getRandomNumber(15, 30)))
 							.build();
 					saleDao.save(sale);
 
