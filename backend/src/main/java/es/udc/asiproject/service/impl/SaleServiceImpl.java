@@ -80,9 +80,6 @@ public class SaleServiceImpl implements SaleService {
 	public Sale createSale(CreateSaleParamsDto createSaleParamsDto, Long userId)
 			throws InstanceNotFoundException, InvalidOperationException {
 
-		System.out.println(createSaleParamsDto);
-		System.out.println(createSaleParamsDto.getActivities());
-
 		Optional<User> agent = userDao.findById(userId);
 		Optional<User> client = userDao.findById(createSaleParamsDto.getClientId());
 

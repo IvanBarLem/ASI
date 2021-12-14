@@ -19,6 +19,8 @@ public interface UserService {
 
 	void changePassword(Long id, String oldPassword, String newPassword)
 			throws InstanceNotFoundException, IncorrectPasswordException;
+	
+	Page<User> findClients(Long id, String keywords, Integer pageNumber, Integer pageSize) throws InstanceNotFoundException;
 
 	Page<User> findAllUsers(Integer pageNumber, Integer pageSize);
 

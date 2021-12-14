@@ -77,3 +77,9 @@ export const changePassword = (
     onSuccess,
     onErrors
   );
+
+export const findClients = (keywords, page, size, onSuccess, onErrors) => {
+  let path = `/users/clients?keywords=${keywords}&page=${page}&size=${size}`;
+
+  appFetch(path, config("GET"), onSuccess, onErrors);
+};

@@ -22,4 +22,8 @@ public interface UserDao extends JpaRepository<User, Long>, JpaSpecificationExec
 	@Query("SELECT u FROM User u WHERE u.role = es.udc.asiproject.persistence.model.enums.RoleType.AGENTE AND "
 			+ "(u.firstName LIKE %:name% OR u.lastName LIKE %:name%)")
 	Page<User> findAgentsByName(@Param("name") String name, Pageable pageable);
+
+	@Query("SELECT u FROM User u WHERE u.role = es.udc.asiproject.persistence.model.enums.RoleType.USER AND "
+			+ "(u.firstName LIKE %:name% OR u.lastName LIKE %:name%)")
+	Page<User> findClientsByName(@Param("name") String name, Pageable pageable);
 }

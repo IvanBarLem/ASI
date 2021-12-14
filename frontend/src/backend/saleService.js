@@ -17,3 +17,5 @@ export const paySale = (saleId, onSuccess) => {
 
     appFetch(path, config("POST"), onSuccess);
 };
+export const createSale = (sale, onSuccess, onErrors) =>
+    appFetch(`/sales/create`, config("POST", sale), onSuccess, onErrors);

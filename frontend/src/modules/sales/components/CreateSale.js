@@ -15,6 +15,9 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { SelectComplement } from "./SelectComponent";
 import * as actionsProducts from "../../products/actions";
+import * as actionsUsers from "../../users/actions";
+import * as actions from "../actions";
+
 import SendIcon from "@mui/icons-material/Send";
 
 import Table from "@mui/material/Table";
@@ -26,14 +29,6 @@ import Paper from "@mui/material/Paper";
 import TableRows from "./TableRows";
 
 import { Errors } from "../../common/index";
-
-const clients = [
-  { id: 1, name: "Pepito" },
-  { id: 2, name: "Juanito" },
-  { id: 3, name: "Rodolfo" },
-  { id: 4, name: "Alba" },
-  { id: 5, name: "Maria" },
-];
 
 const CreateSale = () => {
   const dispatch = useDispatch();
@@ -60,13 +55,16 @@ const CreateSale = () => {
     return 1;
   };
 
-  const [persons, setPersons] = useState(howManyPeople());
+  const [error, setError] = useState(null);
+  const persons = howManyPeople();
+  const [clients, setClients] = useState([]);
   const [client, setClient] = useState(null);
+  const [keywords, setKeywords] = useState("");
   const [price, setPrice] = useState(
     history.location.state ? history.location.state.item.price : 0
   );
   const [open, setOpen] = useState(false);
-  const loading = false;
+  const [loading, setLoading] = useState(false);
   const [activities, setActivities] = useState([]);
   const [accommodations, setAccommodations] = useState([]);
   const [transports, setTransports] = useState([]);
@@ -98,25 +96,25 @@ const CreateSale = () => {
           .concat(
             history.location.state.item.transports.map((transport) => ({
               item: transport,
-              value: persons,
+              quantity: persons,
             }))
           )
           .concat(
             history.location.state.item.accommodations.map((accommodation) => ({
               item: accommodation,
-              value: persons,
+              quantity: persons,
             }))
           )
           .concat(
             history.location.state.item.activities.map((activity) => ({
               item: activity,
-              value: persons,
+              quantity: persons,
             }))
           )
           .concat(
             history.location.state.item.travels.map((travel) => ({
               item: travel,
-              value: persons,
+              quantity: persons,
             }))
           )
       : []
@@ -147,10 +145,46 @@ const CreateSale = () => {
         (errors) => setBackendErrorsTravels(errors)
       )
     );
+    setLoading(true);
+    dispatch(
+      actionsUsers.findClients(
+        keywords,
+        0,
+        15,
+        (clients) => {
+          setClients(clients.content);
+          setLoading(false);
+        },
+        (errors) => {
+          setBackendErrors(errors);
+          setLoading(false);
+        }
+      )
+    );
   }, []);
 
   const handleChangeClient = (value) => {
     setClient(value);
+  };
+
+  const handleChangeKeywords = (value) => {
+    setKeywords(value);
+    setLoading(true);
+    dispatch(
+      actionsUsers.findClients(
+        value,
+        0,
+        15,
+        (clients) => {
+          setClients(clients.content);
+          setLoading(false);
+        },
+        (errors) => {
+          setBackendErrors(errors);
+          setLoading(false);
+        }
+      )
+    );
   };
 
   const handleChangePrice = (value) => {
@@ -232,13 +266,13 @@ const CreateSale = () => {
         const newState = prevState;
         newState.push({
           item: item,
-          value: persons,
+          quantity: persons,
         });
         return newState;
       } else if (value > 0) {
         const newState = [...prevState];
-        const newItem = { ...newState[idx], value: parseInt(value, 10) };
-        newItem.value = parseInt(value, 10);
+        const newItem = { ...newState[idx], quantity: parseInt(value, 10) };
+        newItem.quantity = parseInt(value, 10);
         newState[idx] = newItem;
         return newState;
       } else {
@@ -264,6 +298,61 @@ const CreateSale = () => {
     });
   };
 
+  const handleCreateSale = () => {
+    let errorTmp = false;
+    if (price <= 0) {
+      setError("price");
+      errorTmp = true;
+    }
+    if (!client) {
+      setError("client");
+      errorTmp = true;
+    }
+    if (!errorTmp) {
+      let acco = accommodationsSelected.map((elem) => {
+        return {
+          id: elem.id,
+          quantity:
+            units[units.map((unit) => unit.item.id).indexOf(elem.id)].quantity,
+        };
+      });
+      let tran = transportsSelected.map((elem) => {
+        return {
+          id: elem.id,
+          quantity:
+            units[units.map((unit) => unit.item.id).indexOf(elem.id)].quantity,
+        };
+      });
+      let trav = travelsSelected.map((elem) => {
+        return {
+          id: elem.id,
+          quantity:
+            units[units.map((unit) => unit.item.id).indexOf(elem.id)].quantity,
+        };
+      });
+      let acti = activitiesSelected.map((elem) => {
+        return {
+          id: elem.id,
+          quantity:
+            units[units.map((unit) => unit.item.id).indexOf(elem.id)].quantity,
+        };
+      });
+      dispatch(
+        actions.createSale(
+          {
+            price: price,
+            clientId: client.id,
+            accommodations: acco,
+            transports: tran,
+            travels: trav,
+            activities: acti,
+          },
+          (sale) => history.push("/sales"),
+          (errors) => setBackendErrors(errors)
+        )
+      );
+    }
+  };
   return (
     <Box>
       <Grid container>
@@ -295,16 +384,25 @@ const CreateSale = () => {
               setOpen(false);
             }}
             isOptionEqualToValue={(option, value) => option.name === value.name}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) =>
+              option.firstName + " " + option.lastName
+            }
             autoHighlight
             options={clients}
+            required
             loading={loading}
+            inputValue={keywords}
+            onInputChange={(event, newInputValue) => {
+              handleChangeKeywords(newInputValue);
+            }}
             value={client}
             onChange={(event, newValue) => handleChangeClient(newValue)}
             renderInput={(params) => (
               <TextField
                 {...params}
+                error={error === "client"}
                 label="Cliente"
+                required
                 InputProps={{
                   ...params.InputProps,
                   endAdornment: (
@@ -435,7 +533,7 @@ const CreateSale = () => {
                   units.map((unit) => (
                     <TableRows
                       key={JSON.stringify(unit)}
-                      value={unit.value}
+                      value={unit.quantity}
                       item={unit.item}
                       handleProducts={handleUnits}
                     />
@@ -445,7 +543,7 @@ const CreateSale = () => {
                   <TableCell>Precio productos</TableCell>
                   <TableCell align="right">
                     {units
-                      .map((unit) => unit.item.price * unit.value)
+                      .map((unit) => unit.item.price * unit.quantity)
                       .reduce((acc, v) => acc + v, 0)
                       .toFixed(2) + " €"}
                   </TableCell>
@@ -457,6 +555,7 @@ const CreateSale = () => {
                     <TextField
                       label={null}
                       variant="standard"
+                      error={error === "price"}
                       size="small"
                       type="number"
                       value={price}
@@ -483,9 +582,23 @@ const CreateSale = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Button variant="contained" endIcon={<SendIcon />}>
+        <Button
+          variant="contained"
+          endIcon={<SendIcon />}
+          onClick={() => handleCreateSale()}
+        >
           Guardar venta
         </Button>
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        sx={{ marginTop: 5 }}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Errors error={backendErrors} onClose={() => setBackendErrors(null)} />
       </Grid>
     </Box>
   );

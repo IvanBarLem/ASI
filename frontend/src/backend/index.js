@@ -13,5 +13,5 @@ export default {
   packService,
   productService,
   statisticsService,
-  saleService
+  saleService,
 };
