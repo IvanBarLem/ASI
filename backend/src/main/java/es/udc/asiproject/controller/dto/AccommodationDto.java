@@ -9,6 +9,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import es.udc.asiproject.controller.dto.validation.InsertValidation;
+import es.udc.asiproject.controller.dto.validation.SaleValidation;
 import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 
 public class AccommodationDto {
@@ -25,6 +26,8 @@ public class AccommodationDto {
 	private BigDecimal price;
 	@NotNull(groups = { UpdateValidation.class })
 	private Boolean hidden;
+	@NotNull(groups = { InsertValidation.class, SaleValidation.class })
+	private Integer quantity;
 
 	public AccommodationDto() {
 	}
@@ -55,6 +58,14 @@ public class AccommodationDto {
 
 	public BigDecimal getPrice() {
 		return price;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public void setPrice(BigDecimal price) {

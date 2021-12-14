@@ -8,7 +8,7 @@ import PermMediaIcon from "@mui/icons-material/PermMedia";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import SurfingIcon from "@mui/icons-material/Surfing";
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 //import {FormattedMessage} from 'react-intl';
 import {
@@ -48,22 +48,6 @@ const Dropdown = (props) => {
       <div className="offset" />
       <Divider />
       <List component="nav">
-        {(isAgente || isGerente) && (
-          <React.Fragment>
-            <ListItem button component={Link} to="/packs">
-              <ListItemIcon>
-                <PermMediaIcon />
-              </ListItemIcon>
-              <ListItemText>Packs</ListItemText>
-            </ListItem>
-            <ListItem button component={Link} to="/create-sale">
-              <ListItemIcon>
-                <AttachMoneyIcon />
-              </ListItemIcon>
-              <ListItemText>Crear venta</ListItemText>
-            </ListItem>
-          </React.Fragment>
-        )}
         {isGerente && (
           <React.Fragment>
             <ListItem button component={Link} to="/sales">

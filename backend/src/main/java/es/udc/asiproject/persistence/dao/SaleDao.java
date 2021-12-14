@@ -3,6 +3,8 @@ package es.udc.asiproject.persistence.dao;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +13,14 @@ import org.springframework.data.repository.query.Param;
 import es.udc.asiproject.persistence.model.Sale;
 
 public interface SaleDao extends JpaRepository<Sale, Long>, JpaSpecificationExecutor<Sale> {
+
+	Page<Sale> findByAgentId(Long userId, Pageable pageable);
+
+	Page<Sale> findByClientId(Long userId, Pageable pageable);
+
+	@Override
+	Page<Sale> findAll(Pageable pageable);
+
 	@Query("SELECT COUNT(s.id) FROM Sale s WHERE s.state = es.udc.asiproject.persistence.model.enums.SaleState.PAID "
 			+ "AND s.createdAt BETWEEN :startDate AND :endDate")
 	Long countSalesByCreatedAt(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
@@ -19,7 +29,7 @@ public interface SaleDao extends JpaRepository<Sale, Long>, JpaSpecificationExec
 			+ "WHERE s.state = es.udc.asiproject.persistence.model.enums.SaleState.PAID AND "
 			+ "s.createdAt BETWEEN :startDate AND :endDate")
 	BigDecimal findBillingByCreatedAt(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
-	
+
 	@Query("SELECT COALESCE(SUM(p.quantity), 0) FROM Sale s JOIN s.products p "
 			+ "WHERE s.state = es.udc.asiproject.persistence.model.enums.SaleState.PAID AND "
 			+ "s.createdAt BETWEEN :startDate AND :endDate")
@@ -47,4 +57,5 @@ public interface SaleDao extends JpaRepository<Sale, Long>, JpaSpecificationExec
 			+ "p.product.id = :id AND s.createdAt BETWEEN :startDate AND :endDate")
 	BigDecimal findBillingByProductAndCreatedAt(@Param("id") Long id, @Param("startDate") Date startDate,
 			@Param("endDate") Date endDate);
+
 }
