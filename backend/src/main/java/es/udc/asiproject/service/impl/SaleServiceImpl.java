@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -156,35 +157,36 @@ public class SaleServiceImpl implements SaleService {
 	    Integer pageSize) {
 
 	User user = userDao.getById(userId);
+	PageRequest pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "createdAt");
 
 	Page<Sale> sales = null;
 
 	switch (user.getRole()) {
 	case AGENTE:
-	    sales = saleDao.findByAgentId(userId, PageRequest.of(pageNumber, pageSize));
+	    sales = saleDao.findByAgentId(userId, pageable);
 	    break;
 
 	case INFORMATICO:
-	    sales = saleDao.findByAgentId(userId, PageRequest.of(pageNumber, pageSize));
+	    sales = saleDao.findByAgentId(userId, pageable);
 	    break;
 
 	case USER:
-	    sales = saleDao.findByClientId(userId, PageRequest.of(pageNumber, pageSize));
+	    sales = saleDao.findByClientId(userId, pageable);
 	    break;
 
 	case GERENTE:
 	    if (clientFilterId == null && agentFilterId == null) {
 
-		sales = saleDao.findAll(PageRequest.of(pageNumber, pageSize));
+		sales = saleDao.findAll(pageable);
 	    }
 
 	    else if (clientFilterId != null && agentFilterId == null) {
 
-		sales = saleDao.findByClientId(clientFilterId, PageRequest.of(pageNumber, pageSize));
+		sales = saleDao.findByClientId(clientFilterId, pageable);
 	    }
 
 	    else if (clientFilterId == null && agentFilterId != null) {
-		sales = saleDao.findByAgentId(agentFilterId, PageRequest.of(pageNumber, pageSize));
+		sales = saleDao.findByAgentId(agentFilterId, pageable);
 	    }
 
 	}
