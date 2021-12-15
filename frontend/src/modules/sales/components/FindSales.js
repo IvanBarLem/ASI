@@ -18,7 +18,8 @@ import {
     TableRow,
     Typography,
     Grid,
-    Pagination
+    Pagination,
+    TextField
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
@@ -30,6 +31,10 @@ import users from "../../users";
 
 const FindSales = () => {
     const dispatch = useDispatch();
+    const [clientTextField, setClientTextField] = React.useState("");
+    const [agentTextField, setAgentTextField] = React.useState("");
+    const [client, setClient] = React.useState("");
+    const [agent, setAgent] = React.useState("")
     const [open, setOpen] = React.useState("");
     const [page, setPage] = React.useState(1);
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -38,11 +43,17 @@ const FindSales = () => {
     const isCliente = useSelector(users.selectors.isCliente);
 
     useEffect(() => {
-        dispatch(actions.findSales(0))
+        dispatch(actions.findSales(0, client, agent))
         return () => {
             dispatch(actions.clearSaleSearch())
         }
     }, [])
+
+    const searchButtonClick = () => {
+        setClient(clientTextField);
+        setAgent(agentTextField);
+        dispatch(actions.findSales(page - 1, clientTextField, agentTextField));
+    }
 
     const handlePopoverOpen = (event, id) => {
         setOpen(id);
@@ -55,16 +66,16 @@ const FindSales = () => {
     };
 
     const handlePageChange = (event, value) => {
-        dispatch(actions.findSales(value - 1));
+        dispatch(actions.findSales(value - 1, client, agent));
         setPage(value);
     };
 
     const blockSale = (saleId) => {
-        dispatch(actions.blockSale(page, saleId));
+        dispatch(actions.blockSale(page, client, agent, saleId));
     }
 
     const paySale = (saleId) => {
-        dispatch(actions.paySale(page, saleId));
+        dispatch(actions.paySale(page, client, agent, saleId));
     }
 
     const saveBill = (sale) => {
@@ -120,7 +131,7 @@ const FindSales = () => {
                 />
                 <Typography sx={{ marginLeft: 1 }}>
                     -
-                            </Typography>
+                </Typography>
                 <Chip
                     label={
                         <Typography variant="h6">
@@ -171,102 +182,136 @@ const FindSales = () => {
 
     return (
         <React.Fragment>
-            <Paper>
-                {(saleSearch === null || saleSearch.result.content.length === 0) ?
-                    <React.Fragment>
-                        <Alert severity="info">
-                            <FormattedMessage id="project.sales.foundNoSales" />
-                        </Alert>
-                    </React.Fragment>
-                    :
-                    <React.Fragment>
-                        <TableContainer>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>
-                                            <FormattedMessage id="project.global.fields.id" />
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <FormattedMessage id="project.global.fields.client" />
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <FormattedMessage id="project.global.fields.agent" />
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <FormattedMessage id="project.global.fields.products" />
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <FormattedMessage id="project.global.fields.price" />
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <FormattedMessage id="project.global.fields.state" />
-                                        </TableCell>
-                                        <TableCell align="center">
-                                            <FormattedMessage id="project.global.fields.action" />
-                                        </TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {saleSearch.result.content.map((sale) =>
-                                        <TableRow key={sale.id}>
-                                            <TableCell>{sale.id}</TableCell>
-                                            <TableCell align="center">{sale.client.firstName + " " + sale.client.lastName}</TableCell>
-                                            <TableCell align="center">{sale.agent.firstName + " " + sale.agent.lastName}</TableCell>
-                                            <TableCell align="center">
-                                                <Box
-                                                    onMouseEnter={event => handlePopoverOpen(event, sale.id)}
-                                                    onMouseLeave={handlePopoverClose}
-                                                >
-                                                    <Badge badgeContent={sale.products.length} color="primary">
-                                                        <ExtensionIcon />
-                                                    </Badge>
-                                                </Box>
-                                                <MyPopover id={sale.id} items={sale.products} />
+            {(saleSearch === null || saleSearch.result.content.length === 0) ?
+                <React.Fragment>
+                    <Alert severity="info">
+                        <FormattedMessage id="project.sales.foundNoSales" />
+                    </Alert>
+                </React.Fragment>
+                :
+                <React.Fragment>
+                    {isGerente &&
+                        <Paper sx={{ paddingTop: 1, paddingLeft: 1, paddingRight: 1 }}>
+                            <Grid container spacing={1} sx={{ justifyContent: "space-between", alignItems: "center" }}>
+                                <Grid item >
+                                    <TextField
+                                        label={<FormattedMessage id="project.global.fields.client" />}
+                                        value={clientTextField}
+                                        onChange={event => setClientTextField(event.target.value)}
+                                        sx={{ marginBottom: 1, marginRight: 2 }}
+                                    />
+                                    <TextField
+                                        label={<FormattedMessage id="project.global.fields.agent" />}
+                                        value={agentTextField}
+                                        onChange={event => setAgentTextField(event.target.value)}
+                                        sx={{ marginBottom: 1 }}
+                                    />
+                                </Grid>
+                                <Grid item>
+                                    <Box>
+                                        <Button
+                                            variant="outlined"
+                                            size="large"
+                                            sx={{ marginBottom: 1 }}
+                                            onClick={() => searchButtonClick()}
+                                        >
+                                            <FormattedMessage id="project.global.buttons.search" />
+                                        </Button>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    }
+                    <Paper sx={{ marginTop: 2 }}>
+                        <React.Fragment>
+                            <TableContainer>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>
+                                                <FormattedMessage id="project.global.fields.id" />
                                             </TableCell>
                                             <TableCell align="center">
-                                                <Typography variant="h6">
-                                                    {sale.price}€
-                                        </Typography>
+                                                <FormattedMessage id="project.global.fields.client" />
                                             </TableCell>
                                             <TableCell align="center">
-                                                <StateIcon state={sale.state} />
+                                                <FormattedMessage id="project.global.fields.agent" />
                                             </TableCell>
                                             <TableCell align="center">
-                                                {sale.state === "NORMAL" &&
-                                                    <Button onClick={() => blockSale(sale.id)}>
-                                                        <FormattedMessage id="project.sales.salesTable.blockSale" />
-                                                    </Button>
-                                                }
-                                                {sale.state === "FREEZE" &&
-                                                    <Button
-                                                        onClick={() => paySale(sale.id)}
-                                                        disabled={!isGerente && !isCliente}
-                                                    >
-                                                        <FormattedMessage id="project.sales.salesTable.paySale" />
-                                                    </Button>
-                                                }
-                                                {sale.state === "PAID" &&
-                                                    <Button onClick={() => saveBill(sale)}>
-                                                        <FormattedMessage id="project.sales.salesTable.watchBill" />
-                                                    </Button>
-                                                }
+                                                <FormattedMessage id="project.global.fields.products" />
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <FormattedMessage id="project.global.fields.price" />
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <FormattedMessage id="project.global.fields.state" />
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <FormattedMessage id="project.global.fields.action" />
                                             </TableCell>
                                         </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                        <Grid container display="flex" justifyContent="center">
-                            <Pagination
-                                count={saleSearch.result.totalPages}
-                                page={page}
-                                onChange={handlePageChange}
-                            />
-                        </Grid>
-                    </React.Fragment>
-                }
-            </Paper>
+                                    </TableHead>
+                                    <TableBody>
+                                        {saleSearch.result.content.map((sale) =>
+                                            <TableRow key={sale.id}>
+                                                <TableCell>{sale.id}</TableCell>
+                                                <TableCell align="center">{sale.client.firstName + " " + sale.client.lastName}</TableCell>
+                                                <TableCell align="center">{sale.agent.firstName + " " + sale.agent.lastName}</TableCell>
+                                                <TableCell align="center">
+                                                    <Box
+                                                        onMouseEnter={event => handlePopoverOpen(event, sale.id)}
+                                                        onMouseLeave={handlePopoverClose}
+                                                    >
+                                                        <Badge badgeContent={sale.products.length} color="primary">
+                                                            <ExtensionIcon />
+                                                        </Badge>
+                                                    </Box>
+                                                    <MyPopover id={sale.id} items={sale.products} />
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    <Typography variant="h6">
+                                                        {sale.price}€
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    <StateIcon state={sale.state} />
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    {sale.state === "NORMAL" &&
+                                                        <Button onClick={() => blockSale(sale.id)}>
+                                                            <FormattedMessage id="project.sales.salesTable.blockSale" />
+                                                        </Button>
+                                                    }
+                                                    {sale.state === "FREEZE" &&
+                                                        <Button
+                                                            onClick={() => paySale(sale.id)}
+                                                            disabled={!isGerente && !isCliente}
+                                                        >
+                                                            <FormattedMessage id="project.sales.salesTable.paySale" />
+                                                        </Button>
+                                                    }
+                                                    {sale.state === "PAID" &&
+                                                        <Button onClick={() => saveBill(sale)}>
+                                                            <FormattedMessage id="project.sales.salesTable.watchBill" />
+                                                        </Button>
+                                                    }
+                                                </TableCell>
+                                            </TableRow>
+                                        )}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            <Grid container display="flex" justifyContent="center">
+                                <Pagination
+                                    count={saleSearch.result.totalPages}
+                                    page={page}
+                                    onChange={handlePageChange}
+                                />
+                            </Grid>
+                        </React.Fragment>
+                    </Paper>
+                </React.Fragment>
+            }
         </React.Fragment>
     );
 }

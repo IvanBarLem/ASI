@@ -1,7 +1,7 @@
 import { config, appFetch } from "./appFetch";
 
-export const findSales = (page, onSuccess) => {
-    let path = `/sales/findSales?pageNumber=${page}`;
+export const findSales = (page, client, agent, onSuccess) => {
+    let path = `/sales/findSales?pageNumber=${page}&clientName=${client}&agentName=${agent}`;
 
     appFetch(path, config("GET"), onSuccess);
 };

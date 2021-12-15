@@ -6,29 +6,29 @@ const findSalesCompleted = (saleSearch) => ({
     saleSearch,
 });
 
-export const findSales = (page) => (dispatch) => {
-    backend.saleService.findSales(page, (result) =>
+export const findSales = (page, client, agent) => (dispatch) => {
+    backend.saleService.findSales(page, client, agent, (result) =>
         dispatch(findSalesCompleted({ page, result }))
     );
 };
 
-export const previousFindSalesPage = (page) => findSales(page - 1);
+export const previousFindSalesPage = (page, client, agent) => findSales(page - 1, client, agent);
 
-export const nextFindSalesPage = (page) => findSales(page + 1);
+export const nextFindSalesPage = (page, client, agent) => findSales(page + 1, client, agent);
 
 export const clearSaleSearch = () => ({
     type: actionTypes.CLEAR_SALE_SEARCH,
 });
 
-export const blockSale = (page, saleId) => (dispatch) => {
+export const blockSale = (page, client, agent, saleId) => (dispatch) => {
     backend.saleService.blockSale(saleId,
-        () => dispatch(findSales(page - 1))
+        () => dispatch(findSales(page - 1, client, agent))
     );
 }
 
-export const paySale = (page, saleId) => (dispatch) => {
+export const paySale = (page, client, agent, saleId) => (dispatch) => {
     backend.saleService.paySale(saleId,
-        () => dispatch(findSales(page - 1))
+        () => dispatch(findSales(page - 1, client, agent))
     );
 }
 const createSaleCompleted = (sale) => ({
