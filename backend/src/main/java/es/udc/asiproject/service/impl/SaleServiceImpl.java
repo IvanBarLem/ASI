@@ -129,18 +129,17 @@ public class SaleServiceImpl implements SaleService {
 	@Transactional(readOnly = true)
 	public Page<Sale> findSales(Long userId, String agentName, String clientName, Integer pageNumber, Integer pageSize)
 			throws InstanceNotFoundException {
-		User user = userDao.findById(userId)
-				.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
-
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "createdAt");
 
+		User user = userDao.findById(userId)
+				.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
 		switch (user.getRole()) {
 		case USER:
-			return saleDao.findByClientName(clientName, pageable);
+			return saleDao.findByClientFirstNameContaining(clientName, pageable);
 		case GERENTE:
-			return saleDao.findByAgentNameAndClientName(agentName, clientName, pageable);
+			return saleDao.findByAgentFirstNameContainingAndClientFirstNameContaining(agentName, clientName, pageable);
 		default:
-			return saleDao.findByAgentName(agentName, pageable);
+			return saleDao.findByAgentFirstNameContaining(agentName, pageable);
 		}
 	}
 

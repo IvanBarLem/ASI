@@ -2,6 +2,8 @@ package es.udc.asiproject.backend.services;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -17,6 +19,7 @@ import javax.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 
 import es.udc.asiproject.controller.dto.CreateSaleParamsDto;
@@ -38,6 +41,7 @@ import es.udc.asiproject.persistence.model.enums.SaleState;
 import es.udc.asiproject.service.SaleService;
 import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 import es.udc.asiproject.service.exceptions.InvalidOperationException;
+import es.udc.asiproject.service.exceptions.PermissionException;
 
 @Transactional
 @SpringBootTest
@@ -70,17 +74,17 @@ public class SaleServiceTest {
 		return user;
 	}
 
-	private User seedAgentDatabase(String email) {
+	private User seedGerenteDatabase(String email) {
 		User user = User.builder().email(email).password("password").firstName("firstName").lastName("lastName")
-				.role(RoleType.AGENTE).build();
+				.role(RoleType.GERENTE).build();
 		userDao.save(user);
 
 		return user;
 	}
 
-	private User seedGerenteDatabase(String email) {
+	private User seedAgenteDatabase(String email) {
 		User user = User.builder().email(email).password("password").firstName("firstName").lastName("lastName")
-				.role(RoleType.GERENTE).build();
+				.role(RoleType.AGENTE).build();
 		userDao.save(user);
 
 		return user;
@@ -119,39 +123,30 @@ public class SaleServiceTest {
 	}
 
 	private void seedSaleDatabase() throws ParseException {
-		User client = User.builder().email("test_user@gmail.com").password("pass").firstName("User").lastName("Pita")
-				.role(RoleType.USER).build();
-		userDao.save(client);
+		User client = seedClientDatabase("test_user@gmail.com");
 
 		List<Accommodation> accommodations = new ArrayList<Accommodation>();
 		for (Long accommodationId = 0L; accommodationId < 4; accommodationId++) {
-			Accommodation accommodation = Accommodation.builder().name("accommodation" + accommodationId)
-					.location("A Coruna").price(new BigDecimal(1.25)).hidden(false).build();
-			accommodationDao.save(accommodation);
+			Accommodation accommodation = seedAccommodationDatabase();
 			accommodations.add(accommodation);
 		}
 
 		List<Activity> activities = new ArrayList<Activity>();
 		for (Long activityId = 0L; activityId < 5; activityId++) {
-			Activity activity = Activity.builder().name("activity" + activityId).location("Lugo")
-					.price(new BigDecimal(1)).hidden(false).build();
+			Activity activity = seedActivityDatabase();
 			activityDao.save(activity);
 			activities.add(activity);
 		}
 
 		List<Transport> transports = new ArrayList<Transport>();
 		for (Long transportId = 0L; transportId < 10; transportId++) {
-			Transport transport = Transport.builder().name("transport" + transportId).location("Ourense")
-					.price(new BigDecimal(0.5)).hidden(false).build();
-			transportDao.save(transport);
+			Transport transport = seedTransportDatabase();
 			transports.add(transport);
 		}
 
 		List<Travel> travels = new ArrayList<Travel>();
 		for (Long travelId = 0L; travelId < 2; travelId++) {
-			Travel travel = Travel.builder().name("travel" + travelId).location("Pontevedra").price(new BigDecimal(2.5))
-					.hidden(false).build();
-			travelDao.save(travel);
+			Travel travel = seedTravelDatabase();
 			travels.add(travel);
 		}
 
@@ -161,8 +156,17 @@ public class SaleServiceTest {
 			userDao.save(agent);
 
 			for (Long saleId = 0L; saleId < 5; saleId++) {
-				Sale sale = Sale.builder().state(SaleState.PAID).price(new BigDecimal(10)).agent(agent).client(client)
-						.createdAt(parseDate("202" + saleId + "-01-01")).build();
+				Sale sale;
+				if (saleId < 3) {
+					sale = Sale.builder().state(SaleState.NORMAL).price(new BigDecimal(10)).agent(agent).client(client)
+							.createdAt(parseDate("202" + saleId + "-01-01")).build();
+				} else if (saleId < 4) {
+					sale = Sale.builder().state(SaleState.FREEZE).price(new BigDecimal(10)).agent(agent).client(client)
+							.createdAt(parseDate("202" + saleId + "-01-01")).build();
+				} else {
+					sale = Sale.builder().state(SaleState.PAID).price(new BigDecimal(10)).agent(agent).client(client)
+							.createdAt(parseDate("202" + saleId + "-01-01")).build();
+				}
 				saleDao.save(sale);
 
 				Set<SaleProduct> saleProduct = new HashSet<SaleProduct>();
@@ -239,8 +243,8 @@ public class SaleServiceTest {
 	}
 
 	/*
-	 * Resuelve CU 2. Prueba para comprobar que una venta puede darse de alta en la
-	 * aplicación.
+	 * Resuelve CU 2.5. Prueba para comprobar que el listado de ventas puede ser
+	 * consultado por un cliente.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
@@ -250,81 +254,127 @@ public class SaleServiceTest {
 	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
 	 * estática.
 	 */
-//	@Test
-//	public void testFindAllSales() throws ParseException {
-//		User client1 = createUser("cliente1â‚¬gmail.com");
-//		userDao.save(client1);
-//
-//		User client2 = createUser("cliente2â‚¬gmail.com");
-//		userDao.save(client2);
-//
-//		User agent1 = createAgent("agente1â‚¬gmail.com");
-//		userDao.save(agent1);
-//
-//		User agent2 = createAgent("agente2â‚¬gmail.com");
-//		userDao.save(agent2);
-//
-//		User gerent = createGerent("gerenteâ‚¬gmail.com");
-//		userDao.save(gerent);
-//
-//		Sale sale1 = new Sale();
-//		sale1.setState(SaleState.NORMAL);
-//		sale1.setPrice((new BigDecimal(100)));
-//		sale1.setCreatedAt(parseDate("2022-01-01"));
-//		sale1.setAgent(agent1);
-//		sale1.setClient(client1);
-//		saleDao.save(sale1);
-//
-//		Sale sale2 = new Sale();
-//		sale2.setState(SaleState.NORMAL);
-//		sale2.setPrice((new BigDecimal(100)));
-//		sale2.setCreatedAt(parseDate("2022-01-10"));
-//		sale2.setAgent(agent1);
-//		sale2.setClient(client2);
-//		saleDao.save(sale2);
-//
-//		Sale sale3 = new Sale();
-//		sale3.setState(SaleState.NORMAL);
-//		sale3.setPrice((new BigDecimal(100)));
-//		sale3.setCreatedAt(parseDate("2022-01-10"));
-//		sale3.setAgent(agent2);
-//		sale3.setClient(client2);
-//		saleDao.save(sale3);
-//
-//		assertAll(() -> {
-//			assertEquals(3, saleService.findSales(gerent.getId(), null, null, 0, 3).getNumberOfElements());
-//			assertEquals(2, saleService.findSales(agent1.getId(), null, null, 0, 2).getNumberOfElements());
-//			assertEquals(1, saleService.findSales(agent2.getId(), null, null, 0, 1).getNumberOfElements());
-//			assertEquals(2, saleService.findSales(client2.getId(), null, null, 0, 2).getNumberOfElements());
-//			assertEquals(1, saleService.findSales(gerent.getId(), client1.getId(), null, 0, 1).getNumberOfElements());
-//			assertEquals(2, saleService.findSales(gerent.getId(), null, agent1.getId(), 0, 2).getNumberOfElements());
-//		});
-//	}
+	@Test
+	public void should_return_list_with_sales_for_client() throws ParseException, InstanceNotFoundException {
+		User client = seedClientDatabase("client@gmail.com");
+		seedSaleDatabase();
 
-//	@Test
-//	public void testPaySale() throws InstanceNotFoundException, PermissionException, ParseException {
-//		User client1 = createUser("cliente1@gmail.com");
-//		userDao.save(client1);
-//
-//		User client2 = createUser("cliente2@gmail.com");
-//		userDao.save(client2);
-//
-//		User agent1 = createAgent("agente1@gmail.com");
-//		userDao.save(agent1);
-//
-//		Sale sale1 = new Sale();
-//		sale1.setState(SaleState.FREEZE);
-//		sale1.setPrice((new BigDecimal(100)));
-//		sale1.setCreatedAt(parseDate("2022-01-01"));
-//		sale1.setAgent(agent1);
-//		sale1.setClient(client1);
-//		saleDao.save(sale1);
-//
-//		saleService.paySale(client1.getId(), sale1.getId());
-//
-//		assertAll(() -> {
-//			assertEquals(SaleState.PAID, sale1.getState());
-//		});
-//
-//	}
+		Page<Sale> page = saleService.findSales(client.getId(), "", "firstName", 1, 10);
+
+		assertAll(() -> {
+			assertEquals(3, page.getTotalPages());
+			assertEquals(10, page.getNumberOfElements());
+			assertEquals(25, page.getTotalElements());
+			assertTrue(page.hasNext());
+			assertTrue(page.hasPrevious());
+		});
+	}
+
+	/*
+	 * Resuelve CU 2.5. Prueba para comprobar que el listado de ventas puede ser
+	 * consultado por un gerente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_list_with_sales_for_gerente() throws ParseException, InstanceNotFoundException {
+		User gerente = seedGerenteDatabase("gerente@gmail.com");
+		seedSaleDatabase();
+
+		Page<Sale> page = saleService.findSales(gerente.getId(), "Agente1", "firstName", 0, 10);
+
+		assertAll(() -> {
+			assertEquals(1, page.getTotalPages());
+			assertEquals(5, page.getNumberOfElements());
+			assertEquals(5, page.getTotalElements());
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
+
+	/*
+	 * Resuelve CU 2.5. Prueba para comprobar que el listado de ventas puede ser
+	 * consultado por un agente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_list_with_sales_for_agent() throws ParseException, InstanceNotFoundException {
+		User agent = seedAgenteDatabase("agente@gmail.com");
+		seedSaleDatabase();
+
+		Page<Sale> page = saleService.findSales(agent.getId(), "Agente1", "", 0, 10);
+
+		assertAll(() -> {
+			assertEquals(1, page.getTotalPages());
+			assertEquals(5, page.getNumberOfElements());
+			assertEquals(5, page.getTotalElements());
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
+
+	/*
+	 * Resuelve CU 2.4. Prueba para comprobar que una venta puede marcarse como
+	 * congelada.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_change_sale_state_to_freeze()
+			throws InstanceNotFoundException, PermissionException, ParseException {
+		User agent = seedClientDatabase("agent@gmail.com");
+		User client = seedClientDatabase("client@gmail.com");
+		Sale sale = Sale.builder().state(SaleState.NORMAL).price(new BigDecimal(10)).createdAt(new Date()).agent(agent)
+				.client(client).build();
+		saleDao.save(sale);
+
+		saleService.freezeSale(agent.getId(), sale.getId());
+
+		assertEquals(SaleState.FREEZE, sale.getState());
+	}
+
+	/*
+	 * Resuelve CU 2.4. Prueba para comprobar que una venta puede marcarse como
+	 * pagada.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_change_sale_state_to_paid()
+			throws InstanceNotFoundException, PermissionException, ParseException {
+		User agent = seedClientDatabase("agent@gmail.com");
+		User client = seedClientDatabase("client@gmail.com");
+		Sale sale = Sale.builder().state(SaleState.NORMAL).price(new BigDecimal(10)).createdAt(new Date()).agent(agent)
+				.client(client).build();
+		saleDao.save(sale);
+
+		saleService.paySale(agent.getId(), sale.getId());
+
+		assertEquals(SaleState.PAID, sale.getState());
+	}
 }
