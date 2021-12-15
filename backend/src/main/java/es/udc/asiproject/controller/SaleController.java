@@ -47,7 +47,7 @@ public class SaleController {
 	@ResponseStatus(HttpStatus.OK)
 	public PageDto<SaleDto> findSales(@RequestAttribute Long userId, @RequestParam(defaultValue = "") String agentName,
 			@RequestParam(defaultValue = "") String clientName, @RequestParam(defaultValue = "0") int pageNumber,
-			@RequestParam(defaultValue = "10") int pageSize) {
+			@RequestParam(defaultValue = "10") int pageSize) throws InstanceNotFoundException {
 		return PageMapper.convertToDto(saleService.findSales(userId, agentName, clientName, pageNumber, pageSize),
 				SaleMapper::convertToDto);
 	}
