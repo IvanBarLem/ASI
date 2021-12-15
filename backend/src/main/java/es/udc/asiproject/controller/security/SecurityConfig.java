@@ -29,19 +29,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/users/signUp", "/users/login", "/users/loginFromServiceToken").permitAll()
 
 		.antMatchers(HttpMethod.GET, "/users/clients")
-		.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name()).antMatchers(HttpMethod.GET, "/packs")
-		.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name()).antMatchers("/products/**/hidden")
-		.hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
+		.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name()).antMatchers(HttpMethod.PUT, "/users/*")
+		.authenticated().antMatchers(HttpMethod.POST, "/users/**/changePassword").authenticated()
+		.antMatchers(HttpMethod.GET, "/packs").hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name())
+		.antMatchers("/products/**/hidden").hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
 		.antMatchers(HttpMethod.GET, "/products/**")
 		.hasAnyRole(RoleType.AGENTE.name(), RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
 		.antMatchers("/products/**").hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
-		.antMatchers("/sales/findSales").authenticated().antMatchers("/sales/paySale/*")
-		.hasAnyRole(RoleType.USER.name(), RoleType.GERENTE.name())
-		.antMatchers(HttpMethod.POST, "/sales/freezeSale/*")
+		.antMatchers("/sales/findSales").authenticated().antMatchers(HttpMethod.POST, "/sales/freezeSale/*")
 		.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name())
 		.antMatchers(HttpMethod.POST, "/sales/create")
 		.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name()).antMatchers("/statistics/**")
-		.hasRole(RoleType.GERENTE.name()).antMatchers("/**").hasRole(RoleType.GERENTE.name());
+		.hasRole(RoleType.GERENTE.name()).antMatchers("/sales/paySale/*")
+		.hasAnyRole(RoleType.USER.name(), RoleType.GERENTE.name()).antMatchers("/**")
+		.hasRole(RoleType.GERENTE.name());
 
     }
 

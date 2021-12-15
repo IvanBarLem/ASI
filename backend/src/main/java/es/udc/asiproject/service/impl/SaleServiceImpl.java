@@ -42,134 +42,134 @@ import es.udc.asiproject.service.exceptions.PermissionException;
 
 @Service
 public class SaleServiceImpl implements SaleService {
-	@Autowired
-	AccommodationDao accommodationDao;
-	@Autowired
-	ActivityDao activityDao;
-	@Autowired
-	TransportDao transportDao;
-	@Autowired
-	TravelDao travelDao;
-	@Autowired
-	UserDao userDao;
-	@Autowired
-	SaleDao saleDao;
-	@Autowired
-	ProductDao productDao;
+    @Autowired
+    AccommodationDao accommodationDao;
+    @Autowired
+    ActivityDao activityDao;
+    @Autowired
+    TransportDao transportDao;
+    @Autowired
+    TravelDao travelDao;
+    @Autowired
+    UserDao userDao;
+    @Autowired
+    SaleDao saleDao;
+    @Autowired
+    ProductDao productDao;
 
-	private void validateSale(Sale sale) throws InvalidOperationException, InstanceNotFoundException {
-		if (sale.getProducts().isEmpty()) {
-			throw new InvalidOperationException("EmptySale");
-		}
-
-		Set<SaleProduct> saleProducts = new HashSet<>();
-		saleProducts = sale.getProducts();
-
-		for (SaleProduct saleProduct : saleProducts) {
-			if (!productDao.existsById(saleProduct.getProduct().getId())) {
-				throw new InstanceNotFoundException(Product.class.getSimpleName(), saleProduct.getProduct().getId());
-			}
-		}
+    private void validateSale(Sale sale) throws InvalidOperationException, InstanceNotFoundException {
+	if (sale.getProducts().isEmpty()) {
+	    throw new InvalidOperationException("EmptySale");
 	}
 
-	@Override
-	@Transactional
-	public Sale createSale(CreateSaleParamsDto saleParams, Long userId)
-			throws InstanceNotFoundException, InvalidOperationException {
-		User agent = userDao.findById(userId)
-				.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
-		User client = userDao.findById(saleParams.getClientId())
-				.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), saleParams.getClientId()));
+	Set<SaleProduct> saleProducts = new HashSet<>();
+	saleProducts = sale.getProducts();
 
-		Sale sale = Sale.builder().state(SaleState.NORMAL).price(saleParams.getPrice()).createdAt(new Date())
-				.agent(agent).client(client).build();
-		saleDao.save(sale);
-
-		Set<SaleProduct> saleProducts = new HashSet<SaleProduct>();
-
-		for (AccommodationSaleDto accommodationSaleDto : saleParams.getAccommodations()) {
-			Optional<Accommodation> accommodation = accommodationDao.findById(accommodationSaleDto.getId());
-			if (accommodation.isPresent()) {
-				saleProducts.add(new SaleProduct(sale, accommodation.get(), accommodationSaleDto.getQuantity()));
-			} else {
-				throw new InstanceNotFoundException(Accommodation.class.getSimpleName(), accommodationSaleDto.getId());
-			}
-		}
-		for (ActivitySaleDto activitySaleDto : saleParams.getActivities()) {
-			Optional<Activity> activity = activityDao.findById(activitySaleDto.getId());
-			if (activity.isPresent()) {
-				saleProducts.add(new SaleProduct(sale, activity.get(), activitySaleDto.getQuantity()));
-			} else {
-				throw new InstanceNotFoundException(Activity.class.getSimpleName(), activitySaleDto.getId());
-			}
-		}
-		for (TransportSaleDto transportSaleDto : saleParams.getTransports()) {
-			Optional<Transport> transport = transportDao.findById(transportSaleDto.getId());
-			if (transport.isPresent()) {
-				saleProducts.add(new SaleProduct(sale, transport.get(), transportSaleDto.getQuantity()));
-			} else {
-				throw new InstanceNotFoundException(Transport.class.getSimpleName(), transportSaleDto.getId());
-			}
-		}
-		for (TravelSaleDto travelSaleDto : saleParams.getTravels()) {
-			Optional<Travel> travel = travelDao.findById(travelSaleDto.getId());
-			if (travel.isPresent()) {
-				saleProducts.add(new SaleProduct(sale, travel.get(), travelSaleDto.getQuantity()));
-			} else {
-				throw new InstanceNotFoundException(Travel.class.getSimpleName(), travelSaleDto.getId());
-			}
-		}
-		sale.setProducts(saleProducts);
-		validateSale(sale);
-
-		return saleDao.save(sale);
+	for (SaleProduct saleProduct : saleProducts) {
+	    if (!productDao.existsById(saleProduct.getProduct().getId())) {
+		throw new InstanceNotFoundException(Product.class.getSimpleName(), saleProduct.getProduct().getId());
+	    }
 	}
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public Page<Sale> findSales(Long userId, String agentName, String clientName, Integer pageNumber, Integer pageSize)
-			throws InstanceNotFoundException {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "createdAt");
+    @Override
+    @Transactional
+    public Sale createSale(CreateSaleParamsDto saleParams, Long userId)
+	    throws InstanceNotFoundException, InvalidOperationException {
+	User agent = userDao.findById(userId)
+		.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
+	User client = userDao.findById(saleParams.getClientId())
+		.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), saleParams.getClientId()));
 
-		User user = userDao.findById(userId)
-				.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
-		switch (user.getRole()) {
-		case USER:
-			return saleDao.findByClientId(userId, pageable);
-		case GERENTE:
-			return saleDao.findByAgentNameAndClientName(agentName, clientName, pageable);
-		default:
-			return saleDao.findByAgentId(userId, pageable);
-		}
+	Sale sale = Sale.builder().state(SaleState.NORMAL).price(saleParams.getPrice()).createdAt(new Date())
+		.agent(agent).client(client).build();
+	saleDao.save(sale);
+
+	Set<SaleProduct> saleProducts = new HashSet<SaleProduct>();
+
+	for (AccommodationSaleDto accommodationSaleDto : saleParams.getAccommodations()) {
+	    Optional<Accommodation> accommodation = accommodationDao.findById(accommodationSaleDto.getId());
+	    if (accommodation.isPresent()) {
+		saleProducts.add(new SaleProduct(sale, accommodation.get(), accommodationSaleDto.getQuantity()));
+	    } else {
+		throw new InstanceNotFoundException(Accommodation.class.getSimpleName(), accommodationSaleDto.getId());
+	    }
 	}
-
-	@Override
-	@Transactional
-	public void freezeSale(Long userId, Long saleId) throws InstanceNotFoundException, PermissionException {
-		Sale sale = saleDao.findById(saleId)
-				.orElseThrow(() -> new InstanceNotFoundException(Sale.class.getSimpleName(), saleId));
-		User agent = userDao.findById(userId)
-				.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
-
-		if (sale.getAgent().getId() == userId || agent.getRole() == RoleType.GERENTE) {
-			sale.setState(SaleState.FREEZE);
-		} else {
-			throw new PermissionException();
-		}
+	for (ActivitySaleDto activitySaleDto : saleParams.getActivities()) {
+	    Optional<Activity> activity = activityDao.findById(activitySaleDto.getId());
+	    if (activity.isPresent()) {
+		saleProducts.add(new SaleProduct(sale, activity.get(), activitySaleDto.getQuantity()));
+	    } else {
+		throw new InstanceNotFoundException(Activity.class.getSimpleName(), activitySaleDto.getId());
+	    }
 	}
-
-	@Override
-	@Transactional
-	public void paySale(Long userId, Long saleId) throws InstanceNotFoundException, PermissionException {
-		Sale sale = saleDao.findById(saleId)
-				.orElseThrow(() -> new InstanceNotFoundException(Sale.class.getSimpleName(), saleId));
-		User agent = userDao.findById(userId)
-				.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
-
-		if (sale.getAgent().getId() == userId || agent.getRole() == RoleType.GERENTE) {
-			sale.setState(SaleState.PAID);
-		} else {
-			throw new PermissionException();
-		}
+	for (TransportSaleDto transportSaleDto : saleParams.getTransports()) {
+	    Optional<Transport> transport = transportDao.findById(transportSaleDto.getId());
+	    if (transport.isPresent()) {
+		saleProducts.add(new SaleProduct(sale, transport.get(), transportSaleDto.getQuantity()));
+	    } else {
+		throw new InstanceNotFoundException(Transport.class.getSimpleName(), transportSaleDto.getId());
+	    }
 	}
+	for (TravelSaleDto travelSaleDto : saleParams.getTravels()) {
+	    Optional<Travel> travel = travelDao.findById(travelSaleDto.getId());
+	    if (travel.isPresent()) {
+		saleProducts.add(new SaleProduct(sale, travel.get(), travelSaleDto.getQuantity()));
+	    } else {
+		throw new InstanceNotFoundException(Travel.class.getSimpleName(), travelSaleDto.getId());
+	    }
+	}
+	sale.setProducts(saleProducts);
+	validateSale(sale);
+
+	return saleDao.save(sale);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<Sale> findSales(Long userId, String agentName, String clientName, Integer pageNumber, Integer pageSize)
+	    throws InstanceNotFoundException {
+	Pageable pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "createdAt");
+
+	User user = userDao.findById(userId)
+		.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
+	switch (user.getRole()) {
+	case USER:
+	    return saleDao.findByClientId(userId, pageable);
+	case GERENTE:
+	    return saleDao.findByAgentNameAndClientName(agentName, clientName, pageable);
+	default:
+	    return saleDao.findByAgentId(userId, pageable);
+	}
+    }
+
+    @Override
+    @Transactional
+    public void freezeSale(Long userId, Long saleId) throws InstanceNotFoundException, PermissionException {
+	Sale sale = saleDao.findById(saleId)
+		.orElseThrow(() -> new InstanceNotFoundException(Sale.class.getSimpleName(), saleId));
+	User agent = userDao.findById(userId)
+		.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
+
+	if (sale.getAgent().getId() == userId || agent.getRole() == RoleType.GERENTE) {
+	    sale.setState(SaleState.FREEZE);
+	} else {
+	    throw new PermissionException();
+	}
+    }
+
+    @Override
+    @Transactional
+    public void paySale(Long userId, Long saleId) throws InstanceNotFoundException, PermissionException {
+	Sale sale = saleDao.findById(saleId)
+		.orElseThrow(() -> new InstanceNotFoundException(Sale.class.getSimpleName(), saleId));
+	User agent = userDao.findById(userId)
+		.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
+
+	if (sale.getClient().getId() == userId || agent.getRole() == RoleType.GERENTE) {
+	    sale.setState(SaleState.PAID);
+	} else {
+	    throw new PermissionException();
+	}
+    }
 }

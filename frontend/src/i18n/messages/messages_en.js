@@ -52,6 +52,7 @@ export default {
   "project.global.fields.activities": "Activities",
   "project.global.fields.action": "Action",
   "project.global.fields.id": "ID",
+  "project.global.fields.quantity": "Quantity",
 
   "project.users.ChangePassword.fields.confirmNewPassword":
     "Confirm new password",
