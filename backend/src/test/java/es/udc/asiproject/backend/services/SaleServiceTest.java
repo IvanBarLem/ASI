@@ -3,7 +3,6 @@ package es.udc.asiproject.backend.services;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -82,7 +81,7 @@ public class SaleServiceTest {
 		return user;
 	}
 
-	private User seedAgenteDatabase(String email) {
+	private User seedAgentDatabase(String email) {
 		User user = User.builder().email(email).password("password").firstName("firstName").lastName("lastName")
 				.role(RoleType.AGENTE).build();
 		userDao.save(user);
@@ -256,17 +255,23 @@ public class SaleServiceTest {
 	 */
 	@Test
 	public void should_return_list_with_sales_for_client() throws ParseException, InstanceNotFoundException {
-		User client = seedClientDatabase("client@gmail.com");
 		seedSaleDatabase();
+		User agent = seedAgentDatabase("agent@gmail.com");
+		User client = seedClientDatabase("client@gmail.com");
+		saleDao.save(Sale.builder().state(SaleState.NORMAL).price(new BigDecimal(10)).agent(agent).client(client)
+				.createdAt(parseDate("2021-01-01")).build());
+		saleDao.save(Sale.builder().state(SaleState.FREEZE).price(new BigDecimal(10)).agent(agent).client(client)
+				.createdAt(parseDate("2021-01-01")).build());
+		saleDao.save(Sale.builder().state(SaleState.PAID).price(new BigDecimal(10)).agent(agent).client(client)
+				.createdAt(parseDate("2021-01-01")).build());
 
-		Page<Sale> page = saleService.findSales(client.getId(), "", "firstName", 1, 10);
+		Page<Sale> page = saleService.findSales(client.getId(), "", "firstName", 0, 10);
 
 		assertAll(() -> {
-			assertEquals(3, page.getTotalPages());
-			assertEquals(10, page.getNumberOfElements());
-			assertEquals(25, page.getTotalElements());
-			assertTrue(page.hasNext());
-			assertTrue(page.hasPrevious());
+			assertEquals(1, page.getTotalPages());
+			assertEquals(1, page.getNumberOfElements());
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
 		});
 	}
 
@@ -312,15 +317,21 @@ public class SaleServiceTest {
 	 */
 	@Test
 	public void should_return_list_with_sales_for_agent() throws ParseException, InstanceNotFoundException {
-		User agent = seedAgenteDatabase("agente@gmail.com");
 		seedSaleDatabase();
+		User agent = seedAgentDatabase("agent@gmail.com");
+		User client = seedClientDatabase("client@gmail.com");
+		saleDao.save(Sale.builder().state(SaleState.NORMAL).price(new BigDecimal(10)).agent(agent).client(client)
+				.createdAt(parseDate("2021-01-01")).build());
+		saleDao.save(Sale.builder().state(SaleState.FREEZE).price(new BigDecimal(10)).agent(agent).client(client)
+				.createdAt(parseDate("2021-01-01")).build());
+		saleDao.save(Sale.builder().state(SaleState.PAID).price(new BigDecimal(10)).agent(agent).client(client)
+				.createdAt(parseDate("2021-01-01")).build());
 
 		Page<Sale> page = saleService.findSales(agent.getId(), "Agente1", "", 0, 10);
 
 		assertAll(() -> {
 			assertEquals(1, page.getTotalPages());
-			assertEquals(5, page.getNumberOfElements());
-			assertEquals(5, page.getTotalElements());
+			assertEquals(3, page.getNumberOfElements());
 			assertFalse(page.hasNext());
 			assertFalse(page.hasPrevious());
 		});
@@ -341,7 +352,7 @@ public class SaleServiceTest {
 	@Test
 	public void should_change_sale_state_to_freeze()
 			throws InstanceNotFoundException, PermissionException, ParseException {
-		User agent = seedClientDatabase("agent@gmail.com");
+		User agent = seedAgentDatabase("agent@gmail.com");
 		User client = seedClientDatabase("client@gmail.com");
 		Sale sale = Sale.builder().state(SaleState.NORMAL).price(new BigDecimal(10)).createdAt(new Date()).agent(agent)
 				.client(client).build();
@@ -367,7 +378,7 @@ public class SaleServiceTest {
 	@Test
 	public void should_change_sale_state_to_paid()
 			throws InstanceNotFoundException, PermissionException, ParseException {
-		User agent = seedClientDatabase("agent@gmail.com");
+		User agent = seedAgentDatabase("agent@gmail.com");
 		User client = seedClientDatabase("client@gmail.com");
 		Sale sale = Sale.builder().state(SaleState.NORMAL).price(new BigDecimal(10)).createdAt(new Date()).agent(agent)
 				.client(client).build();

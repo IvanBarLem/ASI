@@ -11,13 +11,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import es.udc.asiproject.persistence.model.Sale;
+import es.udc.asiproject.persistence.model.enums.SaleState;
 
 public interface SaleDao extends JpaRepository<Sale, Long>, JpaSpecificationExecutor<Sale> {
-	@Query("SELECT s FROM Sale s WHERE s.agent.firstName LIKE %:name% OR s.agent.lastName LIKE %:name%")
-	Page<Sale> findByAgentName(@Param("name") String name, Pageable pageable);
+	Page<Sale> findByClientIdAndState(Long id, SaleState state, Pageable pageable);
 
-	@Query("SELECT s FROM Sale s WHERE s.client.firstName LIKE %:name% OR s.client.lastName LIKE %:name%")
-	Page<Sale> findByClientName(@Param("name") String name, Pageable pageable);
+	Page<Sale> findByAgentId(Long id, Pageable pageable);
 
 	@Query("SELECT s FROM Sale s WHERE (s.agent.firstName LIKE %:agentName% OR s.agent.lastName LIKE %:agentName%) AND "
 			+ "(s.client.firstName LIKE %:clientName% OR s.client.lastName LIKE %:clientName%)")
