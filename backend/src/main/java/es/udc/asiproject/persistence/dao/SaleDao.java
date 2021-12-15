@@ -13,12 +13,16 @@ import org.springframework.data.repository.query.Param;
 import es.udc.asiproject.persistence.model.Sale;
 
 public interface SaleDao extends JpaRepository<Sale, Long>, JpaSpecificationExecutor<Sale> {
-	Page<Sale> findByAgentFirstNameContaining(String agentFirstName, Pageable pageable);
+	@Query("SELECT s FROM Sale s WHERE s.agent.firstName LIKE %:name% OR s.agent.lastName LIKE %:name%")
+	Page<Sale> findByAgentName(@Param("name") String name, Pageable pageable);
 
-	Page<Sale> findByClientFirstNameContaining(String clientFirstName, Pageable pageable);
+	@Query("SELECT s FROM Sale s WHERE s.client.firstName LIKE %:name% OR s.client.lastName LIKE %:name%")
+	Page<Sale> findByClientName(@Param("name") String name, Pageable pageable);
 
-	Page<Sale> findByAgentFirstNameContainingAndClientFirstNameContaining(String agentFirstName, String clientFirstName,
-			Pageable pageable);
+	@Query("SELECT s FROM Sale s WHERE (s.agent.firstName LIKE %:agentName% OR s.agent.lastName LIKE %:agentName%) AND "
+			+ "(s.client.firstName LIKE %:clientName% OR s.client.lastName LIKE %:clientName%)")
+	Page<Sale> findByAgentNameAndClientName(@Param("agentName") String agentName,
+			@Param("clientName") String clientName, Pageable pageable);
 
 	@Override
 	Page<Sale> findAll(Pageable pageable);
