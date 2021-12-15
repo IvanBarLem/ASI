@@ -22,6 +22,11 @@ public class Transport extends Product {
 	}
 
 	@Override
+	public String getType() {
+		return "Transport";
+	}
+
+	@Override
 	public String toString() {
 		return "Transport [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price + ", hidden="
 				+ hidden + "]";
@@ -65,11 +70,5 @@ public class Transport extends Product {
 		public Transport build() {
 			return new Transport(this);
 		}
-	}
-
-	@Override
-	public String getType() {
-
-		return "Transport";
 	}
 }

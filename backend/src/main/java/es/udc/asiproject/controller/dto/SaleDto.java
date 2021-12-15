@@ -11,7 +11,6 @@ import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 import es.udc.asiproject.persistence.model.enums.SaleState;
 
 public class SaleDto {
-
 	private Long id;
 	@NotNull(groups = { UpdateValidation.class })
 	private SaleState state;
@@ -75,5 +74,4 @@ public class SaleDto {
 	public void setProducts(Set<ProductDto> products) {
 		this.products = products;
 	}
-
 }

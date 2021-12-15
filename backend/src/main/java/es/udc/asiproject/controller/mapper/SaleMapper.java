@@ -12,8 +12,6 @@ import es.udc.asiproject.persistence.model.SaleProduct;
 public class SaleMapper {
 
 	public static SaleDto convertToDto(Sale sale) {
-
-		// System.out.println(sale.getProducts());
 		SaleDto saleDto = new SaleDto();
 		saleDto.setId(sale.getId());
 		saleDto.setState(sale.getState());
@@ -22,7 +20,6 @@ public class SaleMapper {
 		saleDto.setClient(UserMapper.convertToDto(sale.getClient()));
 		Set<ProductDto> products = new HashSet<>();
 		for (SaleProduct saleProduct : sale.getProducts()) {
-
 			ProductDto productDto = new ProductDto();
 			productDto.setId(saleProduct.getProduct().getId());
 			productDto.setName(saleProduct.getProduct().getName());

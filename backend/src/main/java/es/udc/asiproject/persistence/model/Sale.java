@@ -29,11 +29,9 @@ public class Sale {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	@Enumerated(EnumType.ORDINAL)
 	@Column(nullable = false)
 	private SaleState state;
-
 	@Column(nullable = false, precision = 12, scale = 2)
 	private BigDecimal price;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -196,5 +194,4 @@ public class Sale {
 			return new Sale(this);
 		}
 	}
-
 }

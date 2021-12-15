@@ -4,11 +4,9 @@ import javax.validation.constraints.NotNull;
 
 import es.udc.asiproject.controller.dto.validation.InsertValidation;
 import es.udc.asiproject.controller.dto.validation.SaleValidation;
-import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 
 public class TransportSaleDto {
-
-	@NotNull(groups = { UpdateValidation.class })
+	@NotNull(groups = { InsertValidation.class })
 	private Long id;
 	@NotNull(groups = { InsertValidation.class, SaleValidation.class })
 	private Integer quantity;
@@ -31,5 +29,4 @@ public class TransportSaleDto {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
 }

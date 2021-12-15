@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.asiproject.persistence.dao.UserDao;
-import es.udc.asiproject.persistence.model.Accommodation;
 import es.udc.asiproject.persistence.model.User;
 import es.udc.asiproject.persistence.model.enums.RoleType;
 import es.udc.asiproject.service.PermissionCheckerService;
@@ -100,14 +99,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<User> findClients(Long id, String keywords, Integer pageNumber, Integer pageSize) throws InstanceNotFoundException {
+	public Page<User> findClients(Long id, String keywords, Integer pageNumber, Integer pageSize)
+			throws InstanceNotFoundException {
 		permissionCheckerService.checkUserExists(id);
-		
+
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		
+
 		Page<User> pageUsers = userDao.findClientsByName(keywords, pageable);
-		
+
 		return pageUsers;
 	}
-
 }

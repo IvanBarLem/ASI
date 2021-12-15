@@ -7,7 +7,6 @@ import es.udc.asiproject.controller.dto.validation.SaleValidation;
 import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 
 public class ActivitySaleDto {
-
 	@NotNull(groups = { UpdateValidation.class })
 	private Long id;
 	@NotNull(groups = { InsertValidation.class, SaleValidation.class })

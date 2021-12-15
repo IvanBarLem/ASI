@@ -22,6 +22,11 @@ public class Accommodation extends Product {
 	}
 
 	@Override
+	public String getType() {
+		return "Accommodation";
+	}
+
+	@Override
 	public String toString() {
 		return "Accommodation [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price
 				+ ", hidden=" + hidden + "]";
@@ -65,11 +70,5 @@ public class Accommodation extends Product {
 		public Accommodation build() {
 			return new Accommodation(this);
 		}
-	}
-
-	@Override
-	public String getType() {
-
-		return "Accommodation";
 	}
 }

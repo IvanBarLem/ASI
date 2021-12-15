@@ -14,18 +14,10 @@ public interface SaleService {
 	Sale createSale(CreateSaleParamsDto createSaleParamsDto, Long userId)
 			throws InstanceNotFoundException, InvalidOperationException;
 
-	// Sale updateSale(Sale sale) throws InstanceNotFoundException,
-	// InvalidOperationException;
-
-	Page<Sale> findSales(Long userId, Long clientFilterId, Long agentFilterId, Integer pageNumber, Integer pageSize);
-
-	void deleteSale(Long userId, Sale sale) throws InstanceNotFoundException, PermissionException;
+	Page<Sale> findSales(Long userId, String agentName, String clientName, Integer pageNumber, Integer pageSize)
+			throws InstanceNotFoundException;
 
 	void freezeSale(Long userId, Long saleId) throws InstanceNotFoundException, PermissionException;
 
 	void paySale(Long userId, Long saleId) throws InstanceNotFoundException, PermissionException;
-
-//	ByteArrayResource generateBill(Long userId, Long saleId)
-//			throws InstanceNotFoundException, PermissionException, FileNotFoundException, IOException;
-
 }

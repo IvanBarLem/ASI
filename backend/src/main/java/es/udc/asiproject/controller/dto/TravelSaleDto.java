@@ -7,14 +7,12 @@ import es.udc.asiproject.controller.dto.validation.SaleValidation;
 import es.udc.asiproject.controller.dto.validation.UpdateValidation;
 
 public class TravelSaleDto {
-
 	@NotNull(groups = { UpdateValidation.class })
 	private Long id;
 	@NotNull(groups = { InsertValidation.class, SaleValidation.class })
 	private Integer quantity;
 
 	public TravelSaleDto() {
-
 	}
 
 	public Long getId() {
@@ -32,5 +30,4 @@ public class TravelSaleDto {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
 }

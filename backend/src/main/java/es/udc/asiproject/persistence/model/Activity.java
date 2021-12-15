@@ -22,6 +22,11 @@ public class Activity extends Product {
 	}
 
 	@Override
+	public String getType() {
+		return "Activity";
+	}
+
+	@Override
 	public String toString() {
 		return "Activity [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price + ", hidden="
 				+ hidden + "]";
@@ -65,10 +70,5 @@ public class Activity extends Product {
 		public Activity build() {
 			return new Activity(this);
 		}
-	}
-
-	@Override
-	public String getType() {
-		return "Activity";
 	}
 }

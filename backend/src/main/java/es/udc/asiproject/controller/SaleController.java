@@ -28,68 +28,43 @@ import es.udc.asiproject.service.exceptions.PermissionException;
 @RestController
 @RequestMapping("/sales")
 public class SaleController {
+	@Autowired
+	private SaleService saleService;
 
-    @Autowired
-    private SaleService saleService;
+	@PostMapping("/create")
+	@ResponseStatus(HttpStatus.CREATED)
+	public IdDto createSale(@RequestAttribute Long userId,
+			@Validated({ InsertValidation.class }) @RequestBody CreateSaleParamsDto createSaleParamsDto)
+			throws InstanceNotFoundException, InvalidOperationException {
+		IdDto idDto = new IdDto();
 
-    @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    public IdDto createSale(@RequestAttribute Long userId,
-	    @Validated({ InsertValidation.class }) @RequestBody CreateSaleParamsDto createSaleParamsDto)
-	    throws InstanceNotFoundException, InvalidOperationException {
-	IdDto idDto = new IdDto();
+		idDto.setId(saleService.createSale(createSaleParamsDto, userId).getId());
 
-	idDto.setId(saleService.createSale(createSaleParamsDto, userId).getId());
-	return idDto;
-    }
+		return idDto;
+	}
 
-//	@PutMapping("/update")
-//	@ResponseStatus(HttpStatus.OK)
-//	public SaleDto updateSale(@Validated({ UpdateValidation.class }) @RequestBody SaleDto saleDto)
-//			throws InstanceNotFoundException, InvalidOperationException {
-//		Sale sale = SaleMapper.convertToEntity(saleDto);
-//
-//		return SaleMapper.convertToDto(saleService.updateSale(sale));
-//	}
+	@GetMapping("/findSales")
+	@ResponseStatus(HttpStatus.OK)
+	public PageDto<SaleDto> findSales(@RequestAttribute Long userId, @RequestParam(defaultValue = "") String agentName,
+			@RequestParam(defaultValue = "") String clientName, @RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "10") int pageSize) {
+		return PageMapper.convertToDto(saleService.findSales(userId, agentName, clientName, pageNumber, pageSize),
+				SaleMapper::convertToDto);
+	}
 
-    @GetMapping("/findSales")
-    @ResponseStatus(HttpStatus.OK)
-    public PageDto<SaleDto> findSales(@RequestAttribute Long userId,
-	    @RequestParam(required = false) Long clientFilterId, @RequestParam(required = false) Long agentFilterId,
-	    @RequestParam(defaultValue = "0") int pageNumber, @RequestParam(defaultValue = "10") int pageSize) {
+	@PostMapping("/freezeSale/{saleId}")
+	@ResponseStatus(HttpStatus.OK)
+	public Long freezeSale(@RequestAttribute Long userId, @PathVariable Long saleId)
+			throws InstanceNotFoundException, PermissionException {
+		saleService.freezeSale(userId, saleId);
+		return saleId;
+	}
 
-	return PageMapper.convertToDto(
-		saleService.findSales(userId, clientFilterId, agentFilterId, pageNumber, pageSize),
-		SaleMapper::convertToDto);
-
-    }
-
-    @PostMapping("/paySale/{saleId}")
-    @ResponseStatus(HttpStatus.OK)
-    public Long paySale(@RequestAttribute Long userId, @PathVariable Long saleId)
-	    throws InstanceNotFoundException, PermissionException {
-
-	saleService.paySale(userId, saleId);
-	return saleId;
-    }
-
-    /*
-     * @GetMapping("/generateBill/{saleId}")
-     * 
-     * @ResponseStatus(HttpStatus.OK) public void generateBill(@RequestAttribute
-     * Long userId, @PathVariable Long saleId) throws InstanceNotFoundException,
-     * PermissionException, FileNotFoundException, IOException {
-     * 
-     * ByteArrayResource resource = saleService.generateBill(userId, saleId); }
-     */
-
-    @PostMapping("/freezeSale/{saleId}")
-    @ResponseStatus(HttpStatus.OK)
-    public Long freezeSale(@RequestAttribute Long userId, @PathVariable Long saleId)
-	    throws InstanceNotFoundException, PermissionException {
-
-	saleService.freezeSale(userId, saleId);
-	return saleId;
-    }
-
+	@PostMapping("/paySale/{saleId}")
+	@ResponseStatus(HttpStatus.OK)
+	public Long paySale(@RequestAttribute Long userId, @PathVariable Long saleId)
+			throws InstanceNotFoundException, PermissionException {
+		saleService.paySale(userId, saleId);
+		return saleId;
+	}
 }

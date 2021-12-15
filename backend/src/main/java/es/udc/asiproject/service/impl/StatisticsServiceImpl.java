@@ -105,8 +105,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
-						previousBilling));
+				sales.add(new SalesProduct(product, product.getPrice(), category(product), currentSales, currentBilling,
+						previousSales, previousBilling));
 			}
 
 			return new PageImpl<SalesProduct>(sales, pageable, pageAccommodations.getTotalElements());
@@ -121,8 +121,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
-						previousBilling));
+				sales.add(new SalesProduct(product, product.getPrice(), category(product), currentSales, currentBilling,
+						previousSales, previousBilling));
 			}
 
 			return new PageImpl<SalesProduct>(sales, pageable, pageActivities.getTotalElements());
@@ -137,8 +137,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
-						previousBilling));
+				sales.add(new SalesProduct(product, product.getPrice(), category(product), currentSales, currentBilling,
+						previousSales, previousBilling));
 			}
 
 			return new PageImpl<SalesProduct>(sales, pageable, pageTransports.getTotalElements());
@@ -153,8 +153,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
-						previousBilling));
+				sales.add(new SalesProduct(product, product.getPrice(), category(product), currentSales, currentBilling,
+						previousSales, previousBilling));
 			}
 
 			return new PageImpl<SalesProduct>(sales, pageable, pageTravels.getTotalElements());
@@ -169,8 +169,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 				BigDecimal previousBilling = saleDao.findBillingByProductAndCreatedAt(product.getId(), previousDate,
 						startDate);
 
-				sales.add(new SalesProduct(product, product.getPrice() ,category(product), currentSales, currentBilling, previousSales,
-						previousBilling));
+				sales.add(new SalesProduct(product, product.getPrice(), category(product), currentSales, currentBilling,
+						previousSales, previousBilling));
 			}
 
 			return new PageImpl<SalesProduct>(sales, pageable, pageProducts.getTotalElements());
