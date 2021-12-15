@@ -31,17 +31,17 @@ public class UserServiceTest {
 	@Autowired
 	private UserDao userDao;
 
-	/*
+	/**
 	 * Resuelve CU 1. Prueba para comprobar que un usuario puede darse de alta en la
-	 * aplicaciï¿½n.
+	 * aplicación.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_return_new_user() throws DuplicateInstanceException, InstanceNotFoundException {
@@ -56,17 +56,17 @@ public class UserServiceTest {
 		assertEquals(RoleType.USER, user.getRole());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 1. Prueba para comprobar que un usuario no puede darse de alta en
-	 * la aplicaciï¿½n si ya existe un usuario con el mismo correo electrï¿½nico.
+	 * la aplicación si ya existe un usuario con el mismo correo electrónico.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_fail_when_create_new_user() {
@@ -79,17 +79,17 @@ public class UserServiceTest {
 		});
 	}
 
-	/*
-	 * Resuelve CU 1.2. Prueba para comprobar que un usuario puede iniciar sesiï¿½n en
-	 * la aplicaciï¿½n.
+	/**
+	 * Resuelve CU 1.2. Prueba para comprobar que un usuario puede iniciar sesión en
+	 * la aplicación.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * prositiva.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_return_same_user() throws DuplicateInstanceException, IncorrectLoginException {
@@ -102,17 +102,17 @@ public class UserServiceTest {
 		assertEquals(user, loggedInUser);
 	}
 
-	/*
-	 * Resuelve CU 1.2. Prueba para comprobar que un usuario no puede iniciar sesiï¿½n
-	 * en la aplicaciï¿½n si no se ha dado de alta previamente.
+	/**
+	 * Resuelve CU 1.2. Prueba para comprobar que un usuario no puede iniciar sesión
+	 * en la aplicación si no se ha dado de alta previamente.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_fail_when_login_with_invalid_id() throws InstanceNotFoundException {
@@ -121,17 +121,17 @@ public class UserServiceTest {
 		});
 	}
 
-	/*
-	 * Resuelve CU 1.2. Prueba para comprobar que un usuario no puede iniciar sesiï¿½n
-	 * en la aplicaciï¿½n si introduce mal el correo electrï¿½nico.
+	/**
+	 * Resuelve CU 1.2. Prueba para comprobar que un usuario no puede iniciar sesión
+	 * en la aplicación si introduce mal el correo electrónico.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_fail_when_login_with_wrong_email() {
@@ -143,17 +143,17 @@ public class UserServiceTest {
 		});
 	}
 
-	/*
-	 * Resuelve CU 1.2. Prueba para comprobar que un usuario no puede iniciar sesiï¿½n
-	 * en la aplicaciï¿½n si introduce mal la contraseï¿½a.
+	/**
+	 * Resuelve CU 1.2. Prueba para comprobar que un usuario no puede iniciar sesión
+	 * en la aplicación si introduce mal la contraseña.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_fail_when_login_with_wrong_password() {
@@ -165,17 +165,17 @@ public class UserServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 1.1. Prueba para comprobar que un usuario puede modificar sus
 	 * datos.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_return_updated_user() throws InstanceNotFoundException, DuplicateInstanceException {
@@ -192,17 +192,17 @@ public class UserServiceTest {
 		assertEquals(user, updatedUser);
 	}
 
-	/*
+	/**
 	 * Resuelve CU 1.1. Prueba para comprobar que un usuario no puede modificar sus
 	 * datos si no se ha dado de alta previamente.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_fail_when_update_invalid_id() {
@@ -211,17 +211,17 @@ public class UserServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 1.1. Prueba para comprobar que un usuario puede modificar su
 	 * clave de acceso.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_change_user_password() throws DuplicateInstanceException, InstanceNotFoundException,
@@ -236,17 +236,17 @@ public class UserServiceTest {
 		userService.login(user.getEmail(), newPassword);
 	}
 
-	/*
+	/**
 	 * Resuelve CU 1.1. Prueba para comprobar que un usuario no puede modificar su
 	 * clave de acceso si no se ha dado de alta previamente.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_fail_when_update_password_with_invaled_id() {
@@ -255,17 +255,17 @@ public class UserServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 1.1. Prueba para comprobar que un usuario no puede modificar su
-	 * clave de acceso si no provee la que tenï¿½a previamente.
+	 * clave de acceso si no provee la que tenía previamente.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_fail_when_update_password_with_incorrect_password() {
@@ -280,17 +280,17 @@ public class UserServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 2. Prueba para comprobar que se puede obtener la lista de
-	 * clientes registrados en la aplicaciï¿½n.
+	 * clientes registrados en la aplicación.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
-	 * estï¿½tica.
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
 	 */
 	@Test
 	public void should_return_list_with_clients() throws InstanceNotFoundException {

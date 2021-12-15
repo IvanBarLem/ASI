@@ -21,78 +21,78 @@ import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private PermissionCheckerService permissionCheckerService;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private UserDao userDao;
+	@Autowired
+	private PermissionCheckerService permissionCheckerService;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private UserDao userDao;
 
-    @Override
-    @Transactional
-    public void signUp(User user) throws DuplicateInstanceException {
-	if (userDao.existsByEmail(user.getEmail())) {
-	    throw new DuplicateInstanceException(User.class.getSimpleName(), user.getEmail());
+	@Override
+	@Transactional
+	public void signUp(User user) throws DuplicateInstanceException {
+		if (userDao.existsByEmail(user.getEmail())) {
+			throw new DuplicateInstanceException(User.class.getSimpleName(), user.getEmail());
+		}
+
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setRole(RoleType.USER);
+
+		userDao.save(user);
 	}
 
-	user.setPassword(passwordEncoder.encode(user.getPassword()));
-	user.setRole(RoleType.USER);
+	@Override
+	@Transactional(readOnly = true)
+	public User login(String email, String password) throws IncorrectLoginException {
+		Optional<User> user = userDao.findByEmail(email);
 
-	userDao.save(user);
-    }
+		if (!user.isPresent()) {
+			throw new IncorrectLoginException(email, password);
+		}
 
-    @Override
-    @Transactional(readOnly = true)
-    public User login(String email, String password) throws IncorrectLoginException {
-	Optional<User> user = userDao.findByEmail(email);
+		if (!passwordEncoder.matches(password, user.get().getPassword())) {
+			throw new IncorrectLoginException(email, password);
+		}
 
-	if (!user.isPresent()) {
-	    throw new IncorrectLoginException(email, password);
+		return user.get();
 	}
 
-	if (!passwordEncoder.matches(password, user.get().getPassword())) {
-	    throw new IncorrectLoginException(email, password);
+	@Override
+	@Transactional(readOnly = true)
+	public User loginFromId(Long id) throws InstanceNotFoundException {
+		return permissionCheckerService.checkUser(id);
 	}
 
-	return user.get();
-    }
+	@Override
+	@Transactional
+	public User updateProfile(Long id, String firstName, String lastName) throws InstanceNotFoundException {
+		User user = permissionCheckerService.checkUser(id);
 
-    @Override
-    @Transactional(readOnly = true)
-    public User loginFromId(Long id) throws InstanceNotFoundException {
-	return permissionCheckerService.checkUser(id);
-    }
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
 
-    @Override
-    @Transactional
-    public User updateProfile(Long id, String firstName, String lastName) throws InstanceNotFoundException {
-	User user = permissionCheckerService.checkUser(id);
-
-	user.setFirstName(firstName);
-	user.setLastName(lastName);
-
-	return user;
-    }
-
-    @Override
-    @Transactional
-    public void changePassword(Long id, String oldPassword, String newPassword)
-	    throws InstanceNotFoundException, IncorrectPasswordException {
-	User user = permissionCheckerService.checkUser(id);
-
-	if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
-	    throw new IncorrectPasswordException();
-	} else {
-	    user.setPassword(passwordEncoder.encode(newPassword));
+		return user;
 	}
-    }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<User> findClients(Long id, String keywords, Integer pageNumber, Integer pageSize)
-	    throws InstanceNotFoundException {
-	permissionCheckerService.checkUserExists(id);
+	@Override
+	@Transactional
+	public void changePassword(Long id, String oldPassword, String newPassword)
+			throws InstanceNotFoundException, IncorrectPasswordException {
+		User user = permissionCheckerService.checkUser(id);
 
-	return userDao.findClientsByName(keywords, PageRequest.of(pageNumber, pageSize));
-    }
+		if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+			throw new IncorrectPasswordException();
+		} else {
+			user.setPassword(passwordEncoder.encode(newPassword));
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<User> findClients(Long id, String keywords, Integer pageNumber, Integer pageSize)
+			throws InstanceNotFoundException {
+		permissionCheckerService.checkUserExists(id);
+
+		return userDao.findClientsByName(keywords, PageRequest.of(pageNumber, pageSize));
+	}
 }

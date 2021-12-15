@@ -104,7 +104,7 @@ public class PackServiceTest {
 		return pack;
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3. Prueba para comprobar la correcta creación de un paquete.
 	 * 
 	 * Nivel de prueba: unidad.
@@ -134,7 +134,7 @@ public class PackServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.1. Prueba para comprobar que los paquetes no ocultos se
 	 * devuelven correctamente.
 	 * 
@@ -172,7 +172,7 @@ public class PackServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.1. Prueba para comprobar que los paquetes no ocultos se
 	 * devuelven correctamente, siendo los primeros los que hayan sido destacados.
 	 * 
@@ -211,7 +211,7 @@ public class PackServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.1. Prueba para comprobar que si no hay paquetes no ocultos no
 	 * se devuelve nada.
 	 * 
@@ -239,7 +239,7 @@ public class PackServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.1. Prueba para comprobar que todos los paquetes se devuelven
 	 * correctamente.
 	 * 
@@ -275,7 +275,7 @@ public class PackServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.1. Prueba para comprobar que todos los paquetes se devuelven
 	 * correctamente, siendo los primeros los que hayan sido destacados.
 	 * 
@@ -315,7 +315,7 @@ public class PackServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.1. Prueba para comprobar que si no hay paquetes no se devuelve
 	 * nada.
 	 * 
@@ -339,7 +339,7 @@ public class PackServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.6. Prueba para comprobar que un paquete se actualiza
 	 * correctamente.
 	 * 
@@ -394,7 +394,7 @@ public class PackServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.1. Prueba para comprobar que un paquete se destaca
 	 * correctamente correctamente.
 	 * 
@@ -421,7 +421,7 @@ public class PackServiceTest {
 		assertFalse(outputPack.getOutstanding());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.7. Prueba para comprobar que un paquete se oculta correctamente
 	 * correctamente.
 	 * 

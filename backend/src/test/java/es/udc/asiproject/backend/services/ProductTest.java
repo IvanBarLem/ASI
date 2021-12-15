@@ -39,7 +39,7 @@ public class ProductTest {
 	@Autowired
 	TravelDao travelDao;
 
-	/*
+	/**
 	 * Resuelve CU 4. Prueba para comprobar la correcta creación de un producto de
 	 * tipo alojamiento.
 	 * 
@@ -60,7 +60,7 @@ public class ProductTest {
 		assertEquals(accommodation, accommodations.get(0));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.3. Prueba para obtener la lista de alojamientos que no están
 	 * ocultos.
 	 * 
@@ -82,7 +82,7 @@ public class ProductTest {
 		assertEquals(0, productService.findAccommodations().size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.3. Prueba para obtener la lista completa de alojamientos.
 	 * 
 	 * Nivel de prueba: unidad.
@@ -102,7 +102,7 @@ public class ProductTest {
 		assertEquals(1, productService.findAllAccommodations().size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificación de
 	 * un producto de tipo alojamiento.
 	 * 
@@ -126,7 +126,7 @@ public class ProductTest {
 		assertEquals(accommodation, accommodations.get(0));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar que no se puede modificar un
 	 * producto de tipo alojamiento que no se haya creado previamente.
 	 * 
@@ -144,7 +144,7 @@ public class ProductTest {
 				.id(-1L).name("Hesperia marineda").price(new BigDecimal(1.23)).hidden(false).build()));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminación de un producto
 	 * de tipo alojamiento.
 	 * 
@@ -166,7 +166,7 @@ public class ProductTest {
 		assertEquals(0, accommodations.size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.2. Prueba para comprobar que no se puede eliminar un producto
 	 * de tipo alojamiento que no se haya creado previamente.
 	 * 
@@ -183,7 +183,7 @@ public class ProductTest {
 		assertThrows(InstanceNotFoundException.class, () -> productService.removeAccommodation(-1L));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4. Prueba para comprobar la correcta creación de un producto de
 	 * tipo actividad.
 	 * 
@@ -204,7 +204,7 @@ public class ProductTest {
 		assertEquals(activity, activities.get(0));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.5. Prueba para obtener la lista de actividades que no están
 	 * ocultos.
 	 * 
@@ -226,7 +226,7 @@ public class ProductTest {
 		assertEquals(0, productService.findActivities().size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.5. Prueba para obtener la lista completa de actividades.
 	 * 
 	 * Nivel de prueba: unidad.
@@ -246,7 +246,7 @@ public class ProductTest {
 		assertEquals(1, productService.findAllActivities().size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificación de
 	 * un producto de tipo actividad.
 	 * 
@@ -270,7 +270,7 @@ public class ProductTest {
 		assertEquals(activity, activities.get(0));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar que no se puede modificar un
 	 * producto de tipo actividad que no se haya creado previamente.
 	 * 
@@ -288,7 +288,7 @@ public class ProductTest {
 				.name("Motos de Agua").location("Madrid").price(new BigDecimal(1.23)).hidden(false).build()));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminación de un producto
 	 * de tipo actividad.
 	 * 
@@ -310,7 +310,7 @@ public class ProductTest {
 		assertEquals(0, activities.size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.2. Prueba para comprobar que no se puede eliminar un producto
 	 * de tipo actividad que no se haya creado previamente.
 	 * 
@@ -327,7 +327,7 @@ public class ProductTest {
 		assertThrows(InstanceNotFoundException.class, () -> productService.removeActivity(-1L));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4. Prueba para comprobar la correcta creación de un producto de
 	 * tipo transporte.
 	 * 
@@ -348,7 +348,7 @@ public class ProductTest {
 		assertEquals(transport, transports.get(0));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.4. Prueba para obtener la lista de transportes que no están
 	 * ocultos.
 	 * 
@@ -370,7 +370,7 @@ public class ProductTest {
 		assertEquals(0, productService.findTransports().size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.4. Prueba para obtener la lista completa de transportes.
 	 * 
 	 * Nivel de prueba: unidad.
@@ -392,7 +392,7 @@ public class ProductTest {
 		assertEquals(2, productService.findAllTransports().size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificación de
 	 * un producto de tipo transporte.
 	 * 
@@ -416,7 +416,7 @@ public class ProductTest {
 		assertEquals(transport, transports.get(0));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar que no se puede modificar un
 	 * producto de tipo transporte que no se haya creado previamente.
 	 * 
@@ -434,7 +434,7 @@ public class ProductTest {
 				.name("Patineta").location("Madrid").price(new BigDecimal(1.23)).hidden(false).build()));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminación de un producto
 	 * de tipo transporte.
 	 * 
@@ -456,7 +456,7 @@ public class ProductTest {
 		assertEquals(0, transports.size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.2. Prueba para comprobar que no se puede eliminar un producto
 	 * de tipo transporte que no se haya creado previamente.
 	 * 
@@ -473,7 +473,7 @@ public class ProductTest {
 		assertThrows(InstanceNotFoundException.class, () -> productService.removeTransport(-1L));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4. Prueba para comprobar la correcta creación de un producto de
 	 * tipo viaje.
 	 * 
@@ -494,7 +494,7 @@ public class ProductTest {
 		assertEquals(travel, travels.get(0));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.2. Prueba para obtener la lista de viajes que no están ocultos.
 	 * 
 	 * Nivel de prueba: unidad.
@@ -515,7 +515,7 @@ public class ProductTest {
 		assertEquals(0, productService.findTravels().size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 3.2. Prueba para obtener la lista completa de viajes.
 	 * 
 	 * Nivel de prueba: unidad.
@@ -535,7 +535,7 @@ public class ProductTest {
 		assertEquals(1, productService.findAllTravels().size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificación de
 	 * un producto de tipo viaje.
 	 * 
@@ -559,7 +559,7 @@ public class ProductTest {
 		assertEquals(travel, travels.get(0));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar que no se puede modificar un
 	 * producto de tipo viaje que no se haya creado previamente.
 	 * 
@@ -577,7 +577,7 @@ public class ProductTest {
 				.name("Egipto Antiguo").location("Madrid").price(new BigDecimal(1.23)).hidden(false).build()));
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminación de un producto
 	 * de tipo viaje.
 	 * 
@@ -599,7 +599,7 @@ public class ProductTest {
 		assertEquals(0, travels.size());
 	}
 
-	/*
+	/**
 	 * Resuelve CU 4.2. Prueba para comprobar que no se puede eliminar un producto
 	 * de tipo viaje que no se haya creado previamente.
 	 * 

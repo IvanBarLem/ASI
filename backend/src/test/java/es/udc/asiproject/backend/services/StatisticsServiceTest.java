@@ -128,7 +128,7 @@ public class StatisticsServiceTest {
 		}
 	}
 
-	/*
+	/**
 	 * Resuelve CU 5. Prueba para comprobar el cálculo de las ventas totales de la
 	 * compañía y su facturación.
 	 * 
@@ -155,7 +155,7 @@ public class StatisticsServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 5. Prueba para comprobar el cálculo de las ventas de la compañía
 	 * por cada agente y su facturación.
 	 * 
@@ -186,7 +186,7 @@ public class StatisticsServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 5. Prueba para comprobar el cálculo de las ventas de la compañía
 	 * por cada agente cuyo nombre contenga una cadena de caracteres dada y su
 	 * facturación.
@@ -218,7 +218,7 @@ public class StatisticsServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 5.1. Prueba para comprobar el cálculo de las ventas de la
 	 * compañía por cada producto y su facturación.
 	 * 
@@ -248,7 +248,7 @@ public class StatisticsServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 5.1. Prueba para comprobar el cálculo de las ventas de la
 	 * compañía por cada producto perteneciente a una categoría y su facturación.
 	 * 
@@ -280,7 +280,7 @@ public class StatisticsServiceTest {
 		});
 	}
 
-	/*
+	/**
 	 * Resuelve CU 5.1. Prueba para comprobar el cálculo de las ventas de la
 	 * compañía por cada producto que se encuentre en una localización concreta y su
 	 * facturación.

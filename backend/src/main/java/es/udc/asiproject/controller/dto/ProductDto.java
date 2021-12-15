@@ -1,7 +1,6 @@
 package es.udc.asiproject.controller.dto;
 
 public class ProductDto {
-
 	private Long id;
 	private String name;
 	private Integer number;
