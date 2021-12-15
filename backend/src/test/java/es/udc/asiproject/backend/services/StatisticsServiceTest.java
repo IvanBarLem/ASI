@@ -128,8 +128,20 @@ public class StatisticsServiceTest {
 		}
 	}
 
+	/*
+	 * Resuelve CU 5. Prueba para comprobar el cálculo de las ventas totales de la
+	 * compañía y su facturación.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindSalesCompany() throws ParseException {
+	public void should_return_sales_company() throws ParseException {
 		seedDatabase();
 
 		SalesCompany sales = statisticsService.findSalesCompany(parseDate("2020-01-01"), parseDate("2024-01-01"));
@@ -143,8 +155,20 @@ public class StatisticsServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 5. Prueba para comprobar el cálculo de las ventas de la compañía
+	 * por cada agente y su facturación.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindSalesAgents() throws ParseException {
+	public void should_return_sales_agents() throws ParseException {
 		seedDatabase();
 
 		Page<SalesAgent> sales = statisticsService.findSalesAgents("", parseDate("2020-01-01"), parseDate("2024-01-01"),
@@ -162,8 +186,21 @@ public class StatisticsServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 5. Prueba para comprobar el cálculo de las ventas de la compañía
+	 * por cada agente cuyo nombre contenga una cadena de caracteres dada y su
+	 * facturación.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindSalesAgentsByName() throws ParseException {
+	public void should_return_sales_agents_by_name() throws ParseException {
 		seedDatabase();
 
 		Page<SalesAgent> sales = statisticsService.findSalesAgents("1", parseDate("2020-01-01"),
@@ -181,8 +218,20 @@ public class StatisticsServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 5.1. Prueba para comprobar el cálculo de las ventas de la
+	 * compañía por cada producto y su facturación.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindSalesProducts() throws ParseException {
+	public void should_return_sales_products() throws ParseException {
 		seedDatabase();
 
 		Page<SalesProduct> sales = statisticsService.findSalesProducts("", "", parseDate("2020-01-01"),
@@ -199,6 +248,18 @@ public class StatisticsServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 5.1. Prueba para comprobar el cálculo de las ventas de la
+	 * compañía por cada producto perteneciente a una categoría y su facturación.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
 	public void testFindSalesProductsByCategory() throws ParseException {
 		seedDatabase();
@@ -219,6 +280,19 @@ public class StatisticsServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 5.1. Prueba para comprobar el cálculo de las ventas de la
+	 * compañía por cada producto que se encuentre en una localización concreta y su
+	 * facturación.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
 	public void testFindSalesProductsByLocation() throws ParseException {
 		seedDatabase();

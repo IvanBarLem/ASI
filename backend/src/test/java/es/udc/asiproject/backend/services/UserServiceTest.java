@@ -31,13 +31,22 @@ public class UserServiceTest {
 	@Autowired
 	private UserDao userDao;
 
-	private User createUser(String email) {
-		return User.builder().email(email).password("password").firstName("firstName").lastName("lastName").build();
-	}
-
+	/*
+	 * Resuelve CU 1. Prueba para comprobar que un usuario puede darse de alta en la
+	 * aplicaciï¿½n.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testSignUpAndLoginFromId() throws DuplicateInstanceException, InstanceNotFoundException {
-		User user = createUser("user@email.com");
+	public void should_return_new_user() throws DuplicateInstanceException, InstanceNotFoundException {
+		User user = User.builder().email("user@email.com").password("password").firstName("firstName")
+				.lastName("lastName").build();
 
 		userService.signUp(user);
 
@@ -47,57 +56,131 @@ public class UserServiceTest {
 		assertEquals(RoleType.USER, user.getRole());
 	}
 
+	/*
+	 * Resuelve CU 1. Prueba para comprobar que un usuario no puede darse de alta en
+	 * la aplicaciï¿½n si ya existe un usuario con el mismo correo electrï¿½nico.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * negativa.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testSignUpDuplicatedUserName() {
+	public void should_fail_when_create_new_user() {
 		Assertions.assertThrows(DuplicateInstanceException.class, () -> {
-			User user = createUser("user@email.com");
+			User user = User.builder().email("user@email.com").password("password").firstName("firstName")
+					.lastName("lastName").build();
 
 			userService.signUp(user);
 			userService.signUp(user);
 		});
 	}
 
+	/*
+	 * Resuelve CU 1.2. Prueba para comprobar que un usuario puede iniciar sesiï¿½n en
+	 * la aplicaciï¿½n.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * prositiva.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testloginFromNonExistentId() throws InstanceNotFoundException {
+	public void should_return_same_user() throws DuplicateInstanceException, IncorrectLoginException {
+		User user = User.builder().email("user@email.com").password("password").firstName("firstName")
+				.lastName("lastName").build();
+		userService.signUp(user);
+
+		User loggedInUser = userService.login(user.getEmail(), "password");
+
+		assertEquals(user, loggedInUser);
+	}
+
+	/*
+	 * Resuelve CU 1.2. Prueba para comprobar que un usuario no puede iniciar sesiï¿½n
+	 * en la aplicaciï¿½n si no se ha dado de alta previamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * negativa.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
+	@Test
+	public void should_fail_when_login_with_invalid_id() throws InstanceNotFoundException {
 		Assertions.assertThrows(InstanceNotFoundException.class, () -> {
 			userService.loginFromId(-1L);
 		});
 	}
 
+	/*
+	 * Resuelve CU 1.2. Prueba para comprobar que un usuario no puede iniciar sesiï¿½n
+	 * en la aplicaciï¿½n si introduce mal el correo electrï¿½nico.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * negativa.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testLogin() throws DuplicateInstanceException, IncorrectLoginException {
-		User user = createUser("user@email.com");
-		String clearPassword = user.getPassword();
-
-		userService.signUp(user);
-
-		User loggedInUser = userService.login(user.getEmail(), clearPassword);
-
-		assertEquals(user, loggedInUser);
-	}
-
-	@Test
-	public void testLoginWithIncorrectPassword() {
+	public void should_fail_when_login_with_wrong_email() {
 		Assertions.assertThrows(IncorrectLoginException.class, () -> {
-			User user = createUser("user@email.com");
-			String clearPassword = user.getPassword();
-
+			User user = User.builder().email("user@email.com").password("password").firstName("firstName")
+					.lastName("lastName").build();
 			userService.signUp(user);
-			userService.login(user.getEmail(), 'X' + clearPassword);
+			userService.login("X" + user.getEmail(), "password");
 		});
 	}
 
+	/*
+	 * Resuelve CU 1.2. Prueba para comprobar que un usuario no puede iniciar sesiï¿½n
+	 * en la aplicaciï¿½n si introduce mal la contraseï¿½a.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * negativa.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testLoginWithNonExistentUserName() {
+	public void should_fail_when_login_with_wrong_password() {
 		Assertions.assertThrows(IncorrectLoginException.class, () -> {
-			userService.login("X", "Y");
+			User user = User.builder().email("user@email.com").password("password").firstName("firstName")
+					.lastName("lastName").build();
+			userService.signUp(user);
+			userService.login(user.getEmail(), "X");
 		});
 	}
 
+	/*
+	 * Resuelve CU 1.1. Prueba para comprobar que un usuario puede modificar sus
+	 * datos.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testUpdateProfile() throws InstanceNotFoundException, DuplicateInstanceException {
-		User user = createUser("user@email.com");
-
+	public void should_return_updated_user() throws InstanceNotFoundException, DuplicateInstanceException {
+		User user = User.builder().email("user@email.com").password("password").firstName("firstName")
+				.lastName("lastName").build();
 		userService.signUp(user);
 		userService.updateProfile(user.getId(), 'X' + user.getFirstName(), 'X' + user.getLastName());
 
@@ -109,17 +192,42 @@ public class UserServiceTest {
 		assertEquals(user, updatedUser);
 	}
 
+	/*
+	 * Resuelve CU 1.1. Prueba para comprobar que un usuario no puede modificar sus
+	 * datos si no se ha dado de alta previamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * negativa.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testUpdateProfileWithNonExistentId() {
+	public void should_fail_when_update_invalid_id() {
 		Assertions.assertThrows(InstanceNotFoundException.class, () -> {
 			userService.updateProfile(-1L, "X", "X");
 		});
 	}
 
+	/*
+	 * Resuelve CU 1.1. Prueba para comprobar que un usuario puede modificar su
+	 * clave de acceso.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * negativa.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testChangePassword() throws DuplicateInstanceException, InstanceNotFoundException,
+	public void should_change_user_password() throws DuplicateInstanceException, InstanceNotFoundException,
 			IncorrectPasswordException, IncorrectLoginException {
-		User user = createUser("user@email.com");
+		User user = User.builder().email("user@email.com").password("password").firstName("firstName")
+				.lastName("lastName").build();
 		String oldPassword = user.getPassword();
 		String newPassword = 'X' + oldPassword;
 
@@ -128,17 +236,42 @@ public class UserServiceTest {
 		userService.login(user.getEmail(), newPassword);
 	}
 
+	/*
+	 * Resuelve CU 1.1. Prueba para comprobar que un usuario no puede modificar su
+	 * clave de acceso si no se ha dado de alta previamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * negativa.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testChangePasswordWithNonExistentId() {
+	public void should_fail_when_update_password_with_invaled_id() {
 		Assertions.assertThrows(InstanceNotFoundException.class, () -> {
 			userService.changePassword(-1L, "X", "Y");
 		});
 	}
 
+	/*
+	 * Resuelve CU 1.1. Prueba para comprobar que un usuario no puede modificar su
+	 * clave de acceso si no provee la que tenï¿½a previamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
+	 * negativa.
+	 * 
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
+	 */
 	@Test
-	public void testChangePasswordWithIncorrectPassword() {
+	public void should_fail_when_update_password_with_incorrect_password() {
 		Assertions.assertThrows(IncorrectPasswordException.class, () -> {
-			User user = createUser("user@email.com");
+			User user = User.builder().email("user@email.com").password("password").firstName("firstName")
+					.lastName("lastName").build();
 			String oldPassword = user.getPassword();
 			String newPassword = 'X' + oldPassword;
 
@@ -149,15 +282,15 @@ public class UserServiceTest {
 
 	/*
 	 * Resuelve CU 2. Prueba para comprobar que se puede obtener la lista de
-	 * clientes registrados en la aplicación.
+	 * clientes registrados en la aplicaciï¿½n.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorï¿½as a las que pertenece: prueba funcional dinï¿½mica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de selecciï¿½n de datos: prueba con generaciï¿½n de datos de entrada
+	 * estï¿½tica.
 	 */
 	@Test
 	public void should_return_list_with_clients() throws InstanceNotFoundException {

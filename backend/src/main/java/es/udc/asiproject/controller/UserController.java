@@ -41,81 +41,81 @@ import es.udc.asiproject.service.exceptions.PermissionException;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-	@Autowired
-	private JwtGenerator jwtGenerator;
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private JwtGenerator jwtGenerator;
+    @Autowired
+    private UserService userService;
 
-	@PostMapping("/signUp")
-	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<AuthenticatedUserDto> signUp(
-			@Validated({ AllValidations.class }) @RequestBody UserDto userDto) throws DuplicateInstanceException {
-		User user = UserMapper.convertToEntity(userDto);
+    @PostMapping("/signUp")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<AuthenticatedUserDto> signUp(
+	    @Validated({ AllValidations.class }) @RequestBody UserDto userDto) throws DuplicateInstanceException {
+	User user = UserMapper.convertToEntity(userDto);
 
-		userService.signUp(user);
+	userService.signUp(user);
 
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId())
-				.toUri();
+	URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId())
+		.toUri();
 
-		return ResponseEntity.created(location)
-				.body(UserMapper.convertToAuthenticatedUserDto(generateServiceToken(user), user));
+	return ResponseEntity.created(location)
+		.body(UserMapper.convertToAuthenticatedUserDto(generateServiceToken(user), user));
+    }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public AuthenticatedUserDto login(@Validated @RequestBody LoginParamsDto params) throws IncorrectLoginException {
+	User user = userService.login(params.getEmail(), params.getPassword());
+
+	return UserMapper.convertToAuthenticatedUserDto(generateServiceToken(user), user);
+    }
+
+    @PostMapping("/loginFromServiceToken")
+    @ResponseStatus(HttpStatus.OK)
+    public AuthenticatedUserDto loginFromServiceToken(@RequestAttribute Long userId,
+	    @RequestAttribute String serviceToken) throws InstanceNotFoundException {
+	User user = userService.loginFromId(userId);
+
+	return UserMapper.convertToAuthenticatedUserDto(serviceToken, user);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public UserDto updateProfile(@RequestAttribute Long userId, @PathVariable("id") Long id,
+	    @Validated({ UpdateValidation.class }) @RequestBody UserDto userDto)
+	    throws InstanceNotFoundException, PermissionException {
+	if (!id.equals(userId)) {
+	    throw new PermissionException();
 	}
 
-	@PostMapping("/login")
-	@ResponseStatus(HttpStatus.OK)
-	public AuthenticatedUserDto login(@Validated @RequestBody LoginParamsDto params) throws IncorrectLoginException {
-		User user = userService.login(params.getEmail(), params.getPassword());
+	return UserMapper.convertToDto(userService.updateProfile(id, userDto.getFirstName(), userDto.getLastName()));
+    }
 
-		return UserMapper.convertToAuthenticatedUserDto(generateServiceToken(user), user);
+    @PostMapping("/{id}/changePassword")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changePassword(@RequestAttribute Long userId, @PathVariable("id") Long id,
+	    @Validated @RequestBody ChangePasswordParamsDto params)
+	    throws PermissionException, InstanceNotFoundException, IncorrectPasswordException {
+	if (!id.equals(userId)) {
+	    throw new PermissionException();
 	}
 
-	@PostMapping("/loginFromServiceToken")
-	@ResponseStatus(HttpStatus.OK)
-	public AuthenticatedUserDto loginFromServiceToken(@RequestAttribute Long userId,
-			@RequestAttribute String serviceToken) throws InstanceNotFoundException {
-		User user = userService.loginFromId(userId);
+	userService.changePassword(id, params.getOldPassword(), params.getNewPassword());
+    }
 
-		return UserMapper.convertToAuthenticatedUserDto(serviceToken, user);
-	}
+    @GetMapping("/clients")
+    @ResponseStatus(HttpStatus.OK)
+    public PageDto<ClientDto> findClients(@RequestAttribute Long userId,
+	    @RequestParam(defaultValue = "") String keywords, @RequestParam(defaultValue = "0") int pageNumber,
+	    @RequestParam(defaultValue = "10") int pageSize) throws InstanceNotFoundException {
 
-	@PutMapping("/{id}")
-	@ResponseStatus(HttpStatus.OK)
-	public UserDto updateProfile(@RequestAttribute Long userId, @PathVariable("id") Long id,
-			@Validated({ UpdateValidation.class }) @RequestBody UserDto userDto)
-			throws InstanceNotFoundException, PermissionException {
-		if (!id.equals(userId)) {
-			throw new PermissionException();
-		}
+	return PageMapper.convertToDto(userService.findClients(userId, keywords, pageNumber, pageSize),
+		UserMapper::convertToClientDto);
 
-		return UserMapper.convertToDto(userService.updateProfile(id, userDto.getFirstName(), userDto.getLastName()));
-	}
+    }
 
-	@PostMapping("/{id}/changePassword")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void changePassword(@RequestAttribute Long userId, @PathVariable("id") Long id,
-			@Validated @RequestBody ChangePasswordParamsDto params)
-			throws PermissionException, InstanceNotFoundException, IncorrectPasswordException {
-		if (!id.equals(userId)) {
-			throw new PermissionException();
-		}
+    private String generateServiceToken(User user) {
+	JwtInfo jwtInfo = new JwtInfo(user.getId(), user.getEmail(), user.getRole().toString());
 
-		userService.changePassword(id, params.getOldPassword(), params.getNewPassword());
-	}
-
-	@GetMapping("/clients")
-	@ResponseStatus(HttpStatus.OK)
-	public PageDto<ClientDto> findClients(@RequestAttribute Long userId,
-			@RequestParam(defaultValue = "") String keywords, @RequestParam(defaultValue = "0") int pageNumber,
-			@RequestParam(defaultValue = "10") int pageSize) throws InstanceNotFoundException {
-
-		return PageMapper.convertToDto(userService.findClients(userId, keywords, pageNumber, pageSize),
-				UserMapper::convertToClientDto);
-
-	}
-
-	private String generateServiceToken(User user) {
-		JwtInfo jwtInfo = new JwtInfo(user.getId(), user.getEmail(), user.getRole().toString());
-
-		return jwtGenerator.generate(jwtInfo);
-	}
+	return jwtGenerator.generate(jwtInfo);
+    }
 }

@@ -3,7 +3,6 @@ package es.udc.asiproject.backend.services;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
@@ -105,8 +104,19 @@ public class PackServiceTest {
 		return pack;
 	}
 
+	/*
+	 * Resuelve CU 3. Prueba para comprobar la correcta creación de un paquete.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testCreatePack() throws InstanceNotFoundException, InvalidOperationException {
+	public void should_return_new_pack() throws InstanceNotFoundException, InvalidOperationException {
 		Pack inputPack = createPack();
 		Pack outputPack = packService.createPack(inputPack);
 
@@ -124,8 +134,21 @@ public class PackServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 3.1. Prueba para comprobar que los paquetes no ocultos se
+	 * devuelven correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindPacks() throws InstanceNotFoundException, InvalidOperationException, ParseException {
+	public void should_return_not_hidden_packs()
+			throws InstanceNotFoundException, InvalidOperationException, ParseException {
 		Pack pack1 = createPack();
 		pack1.setCreatedAt(parseDate("2021-01-01"));
 		packDao.save(pack1);
@@ -149,8 +172,21 @@ public class PackServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 3.1. Prueba para comprobar que los paquetes no ocultos se
+	 * devuelven correctamente, siendo los primeros los que hayan sido destacados.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindOutstandingPacks() throws InstanceNotFoundException, InvalidOperationException, ParseException {
+	public void should_return_not_hidden_packs_order_by_outstanding()
+			throws InstanceNotFoundException, InvalidOperationException, ParseException {
 		Pack pack1 = createPack();
 		pack1.setCreatedAt(parseDate("2021-01-01"));
 		packDao.save(pack1);
@@ -175,8 +211,24 @@ public class PackServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 3.1. Prueba para comprobar que si no hay paquetes no ocultos no
+	 * se devuelve nada.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindPacksEmpty() {
+	public void should_return_empty_list_with_not_hidden_packs() {
+		Pack pack = createPack();
+		pack.setHidden(true);
+		packDao.save(pack);
+
 		Page<Pack> page = packService.findPacks(0, 1);
 
 		assertAll(() -> {
@@ -187,8 +239,20 @@ public class PackServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 3.1. Prueba para comprobar que todos los paquetes se devuelven
+	 * correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindAllPacks() throws InstanceNotFoundException, InvalidOperationException, ParseException {
+	public void should_return_all_packs() throws InstanceNotFoundException, InvalidOperationException, ParseException {
 		Pack pack1 = createPack();
 		pack1.setCreatedAt(parseDate("2021-01-01"));
 		packDao.save(pack1);
@@ -211,8 +275,20 @@ public class PackServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 3.1. Prueba para comprobar que todos los paquetes se devuelven
+	 * correctamente, siendo los primeros los que hayan sido destacados.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindAllOutstandingPacks()
+	public void should_return_all_packs_order_by_outstanding()
 			throws InstanceNotFoundException, InvalidOperationException, ParseException {
 		Pack pack1 = createPack();
 		pack1.setCreatedAt(parseDate("2021-01-01"));
@@ -239,8 +315,20 @@ public class PackServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 3.1. Prueba para comprobar que si no hay paquetes no se devuelve
+	 * nada.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testFindAllPacksEmpty() {
+	public void should_return_empty_list_with_packs() {
 		Page<Pack> page = packService.findAllPacks(0, 1);
 
 		assertAll(() -> {
@@ -251,9 +339,21 @@ public class PackServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 3.6. Prueba para comprobar que un paquete se actualiza
+	 * correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@SuppressWarnings("serial")
 	@Test
-	public void testUpdatePack() throws InstanceNotFoundException, InvalidOperationException {
+	public void should_update_pack() throws InstanceNotFoundException, InvalidOperationException {
 		Pack inputPack = packService.createPack(createPack());
 		inputPack.setTitle(inputPack.getTitle() + "X");
 		inputPack.setDescription(inputPack.getDescription() + "X");
@@ -294,17 +394,57 @@ public class PackServiceTest {
 		});
 	}
 
+	/*
+	 * Resuelve CU 3.1. Prueba para comprobar que un paquete se destaca
+	 * correctamente correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testRemovePackWithInstanceNotFoundException() {
-		assertThrows(InstanceNotFoundException.class, () -> packService.removePack(-1L));
+	public void should_change_outstanding_pack() throws InstanceNotFoundException, InvalidOperationException {
+		Pack inputPack = packService.createPack(createPack());
+		packService.toggleOutstandingPack(inputPack.getId());
+		Pack outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
+
+		assertTrue(outputPack.getOutstanding());
+
+		packService.toggleOutstandingPack(inputPack.getId());
+		outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
+		assertFalse(outputPack.getOutstanding());
 	}
 
+	/*
+	 * Resuelve CU 3.7. Prueba para comprobar que un paquete se oculta correctamente
+	 * correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
 	@Test
-	public void testRemovePack() throws InstanceNotFoundException, InvalidOperationException {
-		Pack pack = packService.createPack(createPack());
-		packService.removePack(pack.getId());
-		Page<Pack> packs = packService.findAllPacks(0, 1);
+	public void should_change_hidden_pack() throws InstanceNotFoundException, InvalidOperationException {
+		Pack inputPack = packService.createPack(createPack());
+		packService.toggleHiddenPack(inputPack.getId());
+		Pack outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
 
-		assertEquals(0, packs.getNumberOfElements());
+		assertTrue(outputPack.getHidden());
+
+		packService.toggleHiddenPack(inputPack.getId());
+		outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
+		assertFalse(outputPack.getHidden());
 	}
 }
