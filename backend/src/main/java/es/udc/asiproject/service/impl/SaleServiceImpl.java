@@ -135,7 +135,7 @@ public class SaleServiceImpl implements SaleService {
 				.orElseThrow(() -> new InstanceNotFoundException(User.class.getSimpleName(), userId));
 		switch (user.getRole()) {
 		case USER:
-			return saleDao.findByClientIdAndState(userId, SaleState.PAID, pageable);
+			return saleDao.findByClientId(userId, pageable);
 		case GERENTE:
 			return saleDao.findByAgentNameAndClientName(agentName, clientName, pageable);
 		default:

@@ -259,9 +259,9 @@ public class SaleServiceTest {
 		User agent = seedAgentDatabase("agent@gmail.com");
 		User client = seedClientDatabase("client@gmail.com");
 		saleDao.save(Sale.builder().state(SaleState.NORMAL).price(new BigDecimal(10)).agent(agent).client(client)
-				.createdAt(parseDate("2021-01-01")).build());
+				.createdAt(parseDate("2019-01-01")).build());
 		saleDao.save(Sale.builder().state(SaleState.FREEZE).price(new BigDecimal(10)).agent(agent).client(client)
-				.createdAt(parseDate("2021-01-01")).build());
+				.createdAt(parseDate("2020-01-01")).build());
 		saleDao.save(Sale.builder().state(SaleState.PAID).price(new BigDecimal(10)).agent(agent).client(client)
 				.createdAt(parseDate("2021-01-01")).build());
 
@@ -269,7 +269,7 @@ public class SaleServiceTest {
 
 		assertAll(() -> {
 			assertEquals(1, page.getTotalPages());
-			assertEquals(1, page.getNumberOfElements());
+			assertEquals(2, page.getNumberOfElements());
 			assertFalse(page.hasNext());
 			assertFalse(page.hasPrevious());
 		});

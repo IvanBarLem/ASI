@@ -11,10 +11,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import es.udc.asiproject.persistence.model.Sale;
-import es.udc.asiproject.persistence.model.enums.SaleState;
 
 public interface SaleDao extends JpaRepository<Sale, Long>, JpaSpecificationExecutor<Sale> {
-	Page<Sale> findByClientIdAndState(Long id, SaleState state, Pageable pageable);
+	@Query("SELECT s FROM Sale s WHERE s.client.id = :id AND (s.state = es.udc.asiproject.persistence.model.enums.SaleState.FREEZE OR "
+			+ "s.state = es.udc.asiproject.persistence.model.enums.SaleState.PAID)")
+	Page<Sale> findByClientId(@Param("id") Long id, Pageable pageable);
 
 	Page<Sale> findByAgentId(Long id, Pageable pageable);
 
