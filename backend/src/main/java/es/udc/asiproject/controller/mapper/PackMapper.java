@@ -1,5 +1,8 @@
 package es.udc.asiproject.controller.mapper;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -7,8 +10,17 @@ import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import es.udc.asiproject.controller.dto.AccommodationDto;
+import es.udc.asiproject.controller.dto.ActivityDto;
 import es.udc.asiproject.controller.dto.PackDto;
+import es.udc.asiproject.controller.dto.TransportDto;
+import es.udc.asiproject.controller.dto.TravelDto;
+import es.udc.asiproject.persistence.model.Accommodation;
+import es.udc.asiproject.persistence.model.Activity;
 import es.udc.asiproject.persistence.model.Pack;
+import es.udc.asiproject.persistence.model.Product;
+import es.udc.asiproject.persistence.model.Transport;
+import es.udc.asiproject.persistence.model.Travel;
 
 @Component
 public class PackMapper {
@@ -57,10 +69,47 @@ public class PackMapper {
 	}
 
 	public static PackDto convertToDto(Pack pack) {
-		return mapper.map(pack, PackDto.class);
+		Set<AccommodationDto> accommodations = new HashSet<AccommodationDto>();
+		Set<ActivityDto> activities = new HashSet<ActivityDto>();
+		Set<TransportDto> transports = new HashSet<TransportDto>();
+		Set<TravelDto> travels = new HashSet<TravelDto>();
+		for (Product product : pack.getProducts()) {
+			if (product instanceof Accommodation) {
+				accommodations.add(AccommodationMapper.convertToDto((Accommodation) product));
+			} else if (product instanceof Activity) {
+				activities.add(ActivityMapper.convertToDto((Activity) product));
+			} else if (product instanceof Transport) {
+				transports.add(TransportMapper.convertToDto((Transport) product));
+			} else if (product instanceof Travel) {
+				travels.add(TravelMapper.convertToDto((Travel) product));
+			}
+		}
+		PackDto packDto = mapper.map(pack, PackDto.class);
+		packDto.setAccommodations(accommodations);
+		packDto.setActivities(activities);
+		packDto.setTransports(transports);
+		packDto.setTravels(travels);
+
+		return packDto;
 	}
 
 	public static Pack convertToEntity(PackDto packDto) {
-		return mapper.map(packDto, Pack.class);
+		Set<Product> products = new HashSet<Product>();
+		for (AccommodationDto accommodationDto : packDto.getAccommodations()) {
+			products.add(AccommodationMapper.convertToEntity(accommodationDto));
+		}
+		for (ActivityDto activityDto : packDto.getActivities()) {
+			products.add(ActivityMapper.convertToEntity(activityDto));
+		}
+		for (TransportDto transportDto : packDto.getTransports()) {
+			products.add(TransportMapper.convertToEntity(transportDto));
+		}
+		for (TravelDto travelDto : packDto.getTravels()) {
+			products.add(TravelMapper.convertToEntity(travelDto));
+		}
+		Pack pack = mapper.map(packDto, Pack.class);
+		pack.setProducts(products);
+
+		return pack;
 	}
 }

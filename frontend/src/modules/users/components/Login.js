@@ -56,7 +56,7 @@ const Login = () => {
 				actions.login(
 					email.trim(),
 					password,
-					() => history.push("/packs"),
+					() => history.push("/loginRedirect"),
 					(errors) => setBackendErrors(errors),
 					() => {
 						history.push("/users/login");

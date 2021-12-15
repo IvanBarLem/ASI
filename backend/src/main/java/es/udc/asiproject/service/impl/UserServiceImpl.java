@@ -5,15 +5,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.udc.asiproject.persistence.dao.UserDao;
 import es.udc.asiproject.persistence.model.User;
-import es.udc.asiproject.persistence.model.User.RoleType;
+import es.udc.asiproject.persistence.model.enums.RoleType;
 import es.udc.asiproject.service.PermissionCheckerService;
 import es.udc.asiproject.service.UserService;
 import es.udc.asiproject.service.exceptions.DuplicateInstanceException;
@@ -91,10 +89,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Page<User> findAllUsers(Integer pageNumber, Integer pageSize) {
-		Pageable pageable = PageRequest.of(pageNumber, pageSize, Direction.DESC, "outstanding", "createdAt");
+	public Page<User> findClients(Long id, String keywords, Integer pageNumber, Integer pageSize)
+			throws InstanceNotFoundException {
+		permissionCheckerService.checkUserExists(id);
 
-		return userDao.findAll(pageable);
+		return userDao.findClientsByName(keywords, PageRequest.of(pageNumber, pageSize));
 	}
-
 }

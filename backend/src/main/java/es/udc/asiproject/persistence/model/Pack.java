@@ -3,6 +3,7 @@ package es.udc.asiproject.persistence.model;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,6 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import es.udc.asiproject.utils.Sets;
 
 @Entity
 public class Pack {
@@ -30,62 +35,38 @@ public class Pack {
 	@Column(nullable = false, precision = 12, scale = 2)
 	private BigDecimal price;
 	@Column(nullable = false)
-	private Short duration;
+	private Integer duration;
 	@Column(nullable = false, length = 60)
 	private String persons;
 	@Column(nullable = false)
 	private Boolean outstanding;
 	@Column(nullable = false)
 	private Boolean hidden;
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false, updatable = false)
 	private Date createdAt;
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<Accommodation> accommodations;
-	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<Activity> activities;
-	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<Transport> transports;
-	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<Travel> travels;
+	private Set<Product> products = new HashSet<Product>();
 
 	public Pack() {
 	}
 
-	public Pack(String title, String description, Byte[] image, BigDecimal price, Short duration, String persons,
-			Boolean outstanding, Boolean hidden, Date createdAt, Set<Accommodation> accommodations,
-			Set<Activity> activities, Set<Transport> transports, Set<Travel> travels) {
-		this.title = title;
-		this.description = description;
-		this.image = image;
-		this.price = price;
-		this.duration = duration;
-		this.persons = persons;
-		this.outstanding = outstanding;
-		this.hidden = hidden;
-		this.createdAt = createdAt;
-		this.accommodations = accommodations;
-		this.activities = activities;
-		this.transports = transports;
-		this.travels = travels;
+	public Pack(Builder builder) {
+		this.id = builder.id;
+		this.title = builder.title;
+		this.description = builder.description;
+		this.image = builder.image;
+		this.price = builder.price;
+		this.duration = builder.duration;
+		this.persons = builder.persons;
+		this.outstanding = builder.outstanding;
+		this.hidden = builder.hidden;
+		this.createdAt = builder.createdAt;
 	}
 
-	public Pack(Long id, String title, String description, Byte[] image, BigDecimal price, Short duration,
-			String persons, Boolean outstanding, Boolean hidden, Date createdAt, Set<Accommodation> accommodations,
-			Set<Activity> activities, Set<Transport> transports, Set<Travel> travels) {
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.image = image;
-		this.price = price;
-		this.duration = duration;
-		this.persons = persons;
-		this.outstanding = outstanding;
-		this.hidden = hidden;
-		this.createdAt = createdAt;
-		this.accommodations = accommodations;
-		this.activities = activities;
-		this.transports = transports;
-		this.travels = travels;
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	public Long getId() {
@@ -128,11 +109,11 @@ public class Pack {
 		this.price = price;
 	}
 
-	public Short getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public void setDuration(Short duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 
@@ -168,46 +149,24 @@ public class Pack {
 		this.createdAt = createdAt;
 	}
 
-	public Set<Accommodation> getAccommodations() {
-		return accommodations;
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	public void setAccommodations(Set<Accommodation> accommodations) {
-		this.accommodations = accommodations;
-	}
-
-	public Set<Activity> getActivities() {
-		return activities;
-	}
-
-	public void setActivities(Set<Activity> activities) {
-		this.activities = activities;
-	}
-
-	public Set<Transport> getTransports() {
-		return transports;
-	}
-
-	public void setTransports(Set<Transport> transports) {
-		this.transports = transports;
-	}
-
-	public Set<Travel> getTravels() {
-		return travels;
-	}
-
-	public void setTravels(Set<Travel> travels) {
-		this.travels = travels;
+	public void setProducts(Set<Product> products) {
+		for (Product product : Sets.difference(this.products, products)) {
+			this.products.remove(product);
+			product.getPacks().remove(this);
+		}
+		for (Product product : Sets.difference(products, this.products)) {
+			this.products.add(product);
+			product.getPacks().add(this);
+		}
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(image);
-		result = prime * result
-				+ Objects.hash(createdAt, description, duration, hidden, id, outstanding, persons, price, title);
-		return result;
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -219,17 +178,84 @@ public class Pack {
 		if (getClass() != obj.getClass())
 			return false;
 		Pack other = (Pack) obj;
-		return Objects.equals(createdAt, other.createdAt) && Objects.equals(description, other.description)
-				&& Objects.equals(duration, other.duration) && Objects.equals(hidden, other.hidden)
-				&& Objects.equals(id, other.id) && Arrays.equals(image, other.image)
-				&& Objects.equals(outstanding, other.outstanding) && Objects.equals(persons, other.persons)
-				&& Objects.equals(price, other.price) && Objects.equals(title, other.title);
+		return Objects.equals(id, other.id);
 	}
 
 	@Override
 	public String toString() {
 		return "Pack [id=" + id + ", title=" + title + ", description=" + description + ", image="
 				+ Arrays.toString(image) + ", price=" + price + ", duration=" + duration + ", persons=" + persons
-				+ ", outstanding=" + outstanding + ", hidden=" + hidden + ", createdAt=" + createdAt + "]";
+				+ ", outstanding=" + outstanding + ", hidden=" + hidden + ", createdAt=" + createdAt + ", products="
+				+ products + "]";
+	}
+
+	public static class Builder {
+		private Long id;
+		private String title;
+		private String description;
+		private Byte[] image;
+		private BigDecimal price;
+		private Integer duration;
+		private String persons;
+		private Boolean outstanding;
+		private Boolean hidden;
+		private Date createdAt;
+
+		public Builder() {
+		}
+
+		public Builder id(Long id) {
+			this.id = id;
+			return Builder.this;
+		}
+
+		public Builder title(String title) {
+			this.title = title;
+			return Builder.this;
+		}
+
+		public Builder description(String description) {
+			this.description = description;
+			return Builder.this;
+		}
+
+		public Builder image(Byte[] image) {
+			this.image = image;
+			return Builder.this;
+		}
+
+		public Builder price(BigDecimal price) {
+			this.price = price;
+			return Builder.this;
+		}
+
+		public Builder duration(Integer duration) {
+			this.duration = duration;
+			return Builder.this;
+		}
+
+		public Builder persons(String persons) {
+			this.persons = persons;
+			return Builder.this;
+		}
+
+		public Builder outstanding(Boolean outstanding) {
+			this.outstanding = outstanding;
+			return Builder.this;
+		}
+
+		public Builder hidden(Boolean hidden) {
+			this.hidden = hidden;
+			return Builder.this;
+		}
+
+		public Builder createdAt(Date createdAt) {
+			this.createdAt = createdAt;
+			return Builder.this;
+		}
+
+		public Pack build() {
+			return new Pack(this);
+		}
 	}
 }

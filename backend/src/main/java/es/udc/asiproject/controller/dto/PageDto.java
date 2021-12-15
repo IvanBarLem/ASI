@@ -90,4 +90,10 @@ public class PageDto<T> {
 				&& Objects.equals(hasPrevious, other.hasPrevious) && Objects.equals(pageNumber, other.pageNumber)
 				&& Objects.equals(pageSize, other.pageSize) && Objects.equals(totalPages, other.totalPages);
 	}
+
+	@Override
+	public String toString() {
+		return "PageDto [pageNumber=" + pageNumber + ", pageSize=" + pageSize + ", totalPages=" + totalPages
+				+ ", content=" + content + ", hasNext=" + hasNext + ", hasPrevious=" + hasPrevious + "]";
+	}
 }

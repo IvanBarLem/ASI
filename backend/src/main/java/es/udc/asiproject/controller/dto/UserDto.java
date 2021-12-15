@@ -1,5 +1,7 @@
 package es.udc.asiproject.controller.dto;
 
+import java.util.Objects;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -50,7 +52,7 @@ public class UserDto {
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName = firstName.trim();
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -58,7 +60,7 @@ public class UserDto {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName = lastName.trim();
+		this.lastName = lastName;
 	}
 
 	public String getEmail() {
@@ -66,7 +68,7 @@ public class UserDto {
 	}
 
 	public void setEmail(String email) {
-		this.email = email.trim();
+		this.email = email;
 	}
 
 	public String getRole() {
@@ -75,5 +77,30 @@ public class UserDto {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, firstName, id, lastName, password, role);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDto other = (UserDto) obj;
+		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(id, other.id) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(password, other.password) && Objects.equals(role, other.role);
+	}
+
+	@Override
+	public String toString() {
+		return "UserDto [id=" + id + ", password=" + password + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", email=" + email + ", role=" + role + "]";
 	}
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PieChart, Pie, Sector } from "recharts";
 
 export default function Chart(props) {
-  const { productName, kpi, otherKpi, otherName } = props;
+  const { productName, kpi, otherKpi, otherName, unid } = props;
 
   const data = [
     { id: 1, name: productName, value: kpi },
@@ -68,7 +68,8 @@ export default function Chart(props) {
           fill="#42A5F5"
         >
           {value}
-          {" €"}
+          {"  "}
+          {unid}
         </text>
         <text
           x={ex + (cos >= 0 ? 1 : -1) * 12}

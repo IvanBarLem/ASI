@@ -1,6 +1,8 @@
 package es.udc.asiproject.backend.services;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import javax.transaction.Transactional;
 
@@ -8,10 +10,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 
+import es.udc.asiproject.persistence.dao.UserDao;
 import es.udc.asiproject.persistence.model.User;
-import es.udc.asiproject.persistence.model.User.RoleType;
+import es.udc.asiproject.persistence.model.enums.RoleType;
 import es.udc.asiproject.service.UserService;
 import es.udc.asiproject.service.exceptions.DuplicateInstanceException;
 import es.udc.asiproject.service.exceptions.IncorrectLoginException;
@@ -22,13 +26,13 @@ import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 @SpringBootTest
 @ActiveProfiles("test")
 public class UserServiceTest {
-	private final Long NON_EXISTENT_ID = -1L;
-
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserDao userDao;
 
 	private User createUser(String email) {
-		return new User("password", "firstName", "lastName", email);
+		return User.builder().email(email).password("password").firstName("firstName").lastName("lastName").build();
 	}
 
 	@Test
@@ -56,7 +60,7 @@ public class UserServiceTest {
 	@Test
 	public void testloginFromNonExistentId() throws InstanceNotFoundException {
 		Assertions.assertThrows(InstanceNotFoundException.class, () -> {
-			userService.loginFromId(NON_EXISTENT_ID);
+			userService.loginFromId(-1L);
 		});
 	}
 
@@ -108,7 +112,7 @@ public class UserServiceTest {
 	@Test
 	public void testUpdateProfileWithNonExistentId() {
 		Assertions.assertThrows(InstanceNotFoundException.class, () -> {
-			userService.updateProfile(NON_EXISTENT_ID, "X", "X");
+			userService.updateProfile(-1L, "X", "X");
 		});
 	}
 
@@ -127,7 +131,7 @@ public class UserServiceTest {
 	@Test
 	public void testChangePasswordWithNonExistentId() {
 		Assertions.assertThrows(InstanceNotFoundException.class, () -> {
-			userService.changePassword(NON_EXISTENT_ID, "X", "Y");
+			userService.changePassword(-1L, "X", "Y");
 		});
 	}
 
@@ -140,6 +144,42 @@ public class UserServiceTest {
 
 			userService.signUp(user);
 			userService.changePassword(user.getId(), 'Y' + oldPassword, newPassword);
+		});
+	}
+
+	/*
+	 * Resuelve CU 2. Prueba para comprobar que se puede obtener la lista de
+	 * clientes registrados en la aplicación.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * negativa.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_list_with_clients() throws InstanceNotFoundException {
+		User user1 = User.builder().email("user1@gmail.com").password("password").firstName("firstName")
+				.lastName("lastName").role(RoleType.USER).build();
+		userDao.save(user1);
+		User user2 = User.builder().email("user2@gmail.com").password("password").firstName("firstName")
+				.lastName("lastName").role(RoleType.USER).build();
+		userDao.save(user2);
+		User user3 = User.builder().email("user3@gmail.com").password("password").firstName("firstName")
+				.lastName("lastName").role(RoleType.AGENTE).build();
+		userDao.save(user3);
+
+		Page<User> page = userService.findClients(user1.getId(), "firstName", 0, 10);
+
+		assertAll(() -> {
+			assertEquals(1, page.getTotalPages());
+			assertEquals(2, page.getNumberOfElements());
+			assertEquals(user1, page.getContent().get(0));
+			assertEquals(user2, page.getContent().get(1));
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
 		});
 	}
 }
