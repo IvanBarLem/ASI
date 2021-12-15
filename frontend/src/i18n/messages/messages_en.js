@@ -96,6 +96,7 @@ export default {
   "project.products.accommodations": "Accommodations",
   "project.products.activities": "Activities",
 
+  "project.agents.foundNoAgents": "There are no agents yet",
   "project.agents.velocimeter.Objective": "Objective",
   "project.agents.velocimeter.objectiveFulfilled": "Objective fulfilled",
   "project.agents.agentList.billing": "Total business billing",
@@ -114,6 +115,7 @@ export default {
   "project.products.kpi.respectingTotalProducts": "compared to total products",
   "project.products.kpi.respectingTotalBilling": "compared to total of billing",
 
+  "project.sales.foundNoSales": "There are no sales yet",
   "project.sales.state.created": "Created",
   "project.sales.state.blocked": "Blocked",
   "project.sales.state.paid": "Paid",

@@ -79,8 +79,11 @@ const AgentList = () => {
 
     return (
         <React.Fragment>
-            {agentSalesSearch === null ?
+            {(agentSalesSearch === null || agentSalesSearch.result.content.length === 0) ?
                 <React.Fragment>
+                    <Alert severity="info">
+                        <FormattedMessage id="project.agents.foundNoAgents" />
+                    </Alert>
                 </React.Fragment>
                 :
                 <React.Fragment>

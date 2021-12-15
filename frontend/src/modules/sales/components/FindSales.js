@@ -5,6 +5,7 @@ import SurfingIcon from "@mui/icons-material/Surfing";
 import ExtensionIcon from "@mui/icons-material/Extension";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {
+    Alert,
     Badge,
     Box,
     Button, Chip,
@@ -25,7 +26,7 @@ import StateIcon from './StateIcon';
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../actions";
 import * as selectors from "../selectors";
-
+import users from "../../users";
 
 const FindSales = () => {
     const dispatch = useDispatch();
@@ -33,6 +34,8 @@ const FindSales = () => {
     const [page, setPage] = React.useState(1);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const saleSearch = useSelector(selectors.getSaleSearch);
+    const isGerente = useSelector(users.selectors.isGerente);
+    const isCliente = useSelector(users.selectors.isCliente);
 
     useEffect(() => {
         dispatch(actions.findSales(0))
@@ -81,7 +84,7 @@ const FindSales = () => {
                         "Alojamiento"
                         :
                         "Actividad";
-            billText = billText + espType + " - " + product.name + " x" + product.number + "\n";
+            return billText = billText + espType + " - " + product.name + " x" + product.number + "\n";
         })
         billText = billText + "\n";
         billText = billText + "Precio total: " + sale.price + "€";
@@ -169,7 +172,13 @@ const FindSales = () => {
     return (
         <React.Fragment>
             <Paper>
-                {saleSearch !== null &&
+                {(saleSearch === null || saleSearch.result.content.length === 0) ?
+                    <React.Fragment>
+                        <Alert severity="info">
+                            <FormattedMessage id="project.sales.foundNoSales" />
+                        </Alert>
+                    </React.Fragment>
+                    :
                     <React.Fragment>
                         <TableContainer>
                             <Table>
@@ -230,7 +239,10 @@ const FindSales = () => {
                                                     </Button>
                                                 }
                                                 {sale.state === "FREEZE" &&
-                                                    <Button onClick={() => paySale(sale.id)}>
+                                                    <Button
+                                                        onClick={() => paySale(sale.id)}
+                                                        disabled={!isGerente && !isCliente}
+                                                    >
                                                         <FormattedMessage id="project.sales.salesTable.paySale" />
                                                     </Button>
                                                 }

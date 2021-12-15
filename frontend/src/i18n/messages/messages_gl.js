@@ -98,6 +98,7 @@ export default {
   "project.products.accommodations": "Aloxamentos",
   "project.products.activities": "Actividades",
 
+  "project.agents.foundNoAgents": "Non se encontraron axentes",
   "project.agents.velocimeter.Objective": "Obxectivo",
   "project.agents.velocimeter.objectiveFulfilled": "Obxectivo conseguido",
   "project.agents.agentList.billing": "Facturación total",
@@ -118,6 +119,7 @@ export default {
   "project.products.kpi.respectingTotalBilling":
     "respeto ao total de facturación",
 
+  "project.sales.foundNoSales": "Non se encontraron ventas",
   "project.sales.state.created": "Creada",
   "project.sales.state.blocked": "Bloqueada",
   "project.sales.state.paid": "Pagada",

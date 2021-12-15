@@ -21,6 +21,7 @@ import users, {
 import AppGlobalComponents from "./AppGlobalComponents";
 import Home from "./Home";
 import FindSales from "../../sales/components/FindSales";
+import LoginRedirect from "../../users/components/LoginRedirect";
 
 const Body = (props) => {
   const isGerente = useSelector(users.selectors.isGerente);
@@ -39,6 +40,13 @@ const Body = (props) => {
               exact
               path="/users/update-profile"
               component={UpdateProfile}
+            />
+          )}
+          {props.loggedIn && (
+            <Route
+              exact
+              path="/loginRedirect"
+              component={LoginRedirect}
             />
           )}
           {props.loggedIn && (
