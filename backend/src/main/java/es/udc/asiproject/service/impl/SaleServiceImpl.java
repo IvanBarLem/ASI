@@ -138,7 +138,7 @@ public class SaleServiceImpl implements SaleService {
 		case USER:
 			return saleDao.findByClientName(clientName, pageable);
 		case GERENTE:
-			return saleDao.findByAgentNameAndClientName(clientName, agentName, pageable);
+			return saleDao.findByAgentNameAndClientName(agentName, clientName, pageable);
 		default:
 			return saleDao.findByAgentName(agentName, pageable);
 		}
