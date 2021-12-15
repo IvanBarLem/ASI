@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public Accommodation createAccommodation(Accommodation accommodation) {
 		accommodation.setHidden(false);
-
+		accommodation.setLocation(accommodation.getName());
 		return accommodationDao.save(accommodation);
 	}
 
@@ -75,6 +75,7 @@ public class ProductServiceImpl implements ProductService {
 	public Activity createActivity(Activity activity) {
 		activity.setHidden(false);
 
+		activity.setLocation(activity.getName());
 		return activityDao.save(activity);
 	}
 
@@ -117,6 +118,7 @@ public class ProductServiceImpl implements ProductService {
 	public Transport createTransport(Transport transport) {
 		transport.setHidden(false);
 
+		transport.setLocation(transport.getName());
 		return transportDao.save(transport);
 	}
 
@@ -159,6 +161,7 @@ public class ProductServiceImpl implements ProductService {
 	public Travel createTravel(Travel travel) {
 		travel.setHidden(false);
 
+		travel.setLocation(travel.getName());
 		return travelDao.save(travel);
 	}
 

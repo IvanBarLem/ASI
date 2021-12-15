@@ -1,45 +1,43 @@
 package es.udc.asiproject.persistence.model;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 
-@MappedSuperclass
-public class Product {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 	@Column(nullable = false, length = 60)
-	private String name;
+	protected String name;
+	@Column(nullable = false, length = 60)
+	protected String location;
 	@Column(nullable = false, precision = 12, scale = 2)
-	private BigDecimal price;
+	protected BigDecimal price;
 	@Column(nullable = false)
-	private Boolean hidden;
-	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<Pack> packs;
+	protected Boolean hidden;
+
+	@ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
+	protected Set<Pack> packs = new HashSet<Pack>();
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	protected Set<SaleProduct> sales = new HashSet<SaleProduct>();
 
 	public Product() {
-	}
-
-	public Product(String name, BigDecimal price) {
-		this.name = name;
-		this.price = price;
-		this.hidden = false;
-	}
-
-	public Product(Long id, String name, BigDecimal price, Boolean hidden) {
-		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.hidden = hidden;
 	}
 
 	public Long getId() {
@@ -56,6 +54,14 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public BigDecimal getPrice() {
@@ -78,13 +84,15 @@ public class Product {
 		return packs;
 	}
 
-	public void setPacks(Set<Pack> packs) {
-		this.packs = packs;
+	public Set<SaleProduct> getSales() {
+		return sales;
 	}
+
+	public abstract String getType();
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(hidden, id, name, packs, price);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -96,7 +104,12 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(hidden, other.hidden) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(packs, other.packs) && Objects.equals(price, other.price);
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", location=" + location + ", price=" + price + ", hidden="
+				+ hidden + "]";
 	}
 }

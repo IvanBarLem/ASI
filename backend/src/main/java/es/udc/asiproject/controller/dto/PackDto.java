@@ -175,4 +175,12 @@ public class PackDto {
 				&& Objects.equals(title, other.title) && Objects.equals(transports, other.transports)
 				&& Objects.equals(travels, other.travels);
 	}
+
+	@Override
+	public String toString() {
+		return "PackDto [id=" + id + ", title=" + title + ", description=" + description + ", image=" + image
+				+ ", price=" + price + ", duration=" + duration + ", persons=" + persons + ", outstanding="
+				+ outstanding + ", hidden=" + hidden + ", accommodations=" + accommodations + ", activities="
+				+ activities + ", transports=" + transports + ", travels=" + travels + "]";
+	}
 }

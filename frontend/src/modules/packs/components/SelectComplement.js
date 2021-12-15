@@ -50,7 +50,7 @@ export const SelectComplement = ({
       >
         {options.map((option) => (
           <MenuItem key={option.id} value={option}>
-            <Grid container xs={12}>
+            <Grid container>
               <Grid item xs={9}>
                 {option.name}
               </Grid>

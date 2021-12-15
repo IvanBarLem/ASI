@@ -38,12 +38,23 @@ export default {
   "project.global.fields.location": "Localización",
   "project.global.fields.category": "Categoría",
   "project.global.fields.filters": "Filtros",
+  "project.global.fields.currentBilling": "Faturación",
   "project.global.fields.newPassword": "Novo contrasinal",
   "project.global.validator.email":
     "Introduza unha direción de correo electrónico correcta",
   "project.global.validator.passwordsDoNotMatch":
     "As contrasinais non coinciden",
   "project.global.validator.required": "Campo obrigatorio",
+  "project.global.fields.client": "Cliente",
+  "project.global.fields.agent": "Axente",
+  "project.global.fields.travels": "Viaxes",
+  "project.global.fields.productos": "Produtos",
+  "project.global.fields.acommodations": "Aloxamentos",
+  "project.global.fields.transports": "Transportes",
+  "project.global.fields.activities": "Atividades",
+  "project.global.fields.action": "Acción",
+  "project.global.fields.id": "ID",
+  "project.global.fields.quantity": "Cantidade",
 
   "project.users.ChangePassword.fields.confirmNewPassword":
     "Confirmar contrasinal nova",
@@ -88,6 +99,7 @@ export default {
   "project.products.accommodations": "Aloxamentos",
   "project.products.activities": "Actividades",
 
+  "project.agents.foundNoAgents": "Non se encontraron axentes",
   "project.agents.velocimeter.Objective": "Obxectivo",
   "project.agents.velocimeter.objectiveFulfilled": "Obxectivo conseguido",
   "project.agents.agentList.billing": "Facturación total",
@@ -96,7 +108,7 @@ export default {
   "project.agents.agentList.agentStats": "Estadísticas dos axentes",
   "project.agents.agentList.billingObjective": "Obxectivo de facturación",
   "project.agents.agentList.salesNumObjective": "Obxectivo de ventas",
-  "project.agents.kpi.respectingLastMonth": "respeto ao último mes",
+  "project.agents.kpi.respectingLastPeriod": "respeto ao último período",
   "project.agents.fields.billing": "Facturación",
   "project.agents.fields.salesNum": "Ventas",
   "project.agents.fields.month": "30 días",
@@ -107,4 +119,17 @@ export default {
     "respeto ao total de produtos",
   "project.products.kpi.respectingTotalBilling":
     "respeto ao total de facturación",
+
+  "project.sales.foundNoSales": "Non se encontraron ventas",
+  "project.sales.state.created": "Creada",
+  "project.sales.state.blocked": "Bloqueada",
+  "project.sales.state.paid": "Pagada",
+  "project.sales.salesTable.blockSale": "Bloquear venta",
+  "project.sales.salesTable.paySale": "Pagar venta",
+  "project.sales.salesTable.watchBill": "Ver factura",
+
+  "project.statistics.products.noProducts": "Non se atoparon productos",
+  "project.statistics.products": "Estadísticas dos produtos",
+  "project.statistics.products.select": "Seleciona un producto",
+  "project.statistics.products.all": "Todas",
 };

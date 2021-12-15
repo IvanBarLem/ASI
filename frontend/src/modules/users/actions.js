@@ -75,3 +75,21 @@ export const changePassword =
       onSuccess,
       onErrors
     );
+
+const findClientsCompleted = (clients) => ({
+  type: actionTypes.FIND_CLIENTS_COMPLETED,
+  clients,
+});
+
+export const findClients =
+  (keywords, page, size, onSuccess, onErrors) => (dispatch) =>
+    backend.userService.findClients(
+      keywords,
+      page,
+      size,
+      (clients) => {
+        dispatch(findClientsCompleted(clients));
+        onSuccess(clients);
+      },
+      onErrors
+    );

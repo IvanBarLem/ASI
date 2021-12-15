@@ -11,6 +11,7 @@ import {
   Travels,
 } from "../../products";
 import { ProductList } from "../../products-stats";
+import CreateSale from "../../sales/components/CreateSale";
 import users, {
   ChangePassword,
   Login,
@@ -19,6 +20,8 @@ import users, {
 } from "../../users";
 import AppGlobalComponents from "./AppGlobalComponents";
 import Home from "./Home";
+import FindSales from "../../sales/components/FindSales";
+import LoginRedirect from "../../users/components/LoginRedirect";
 
 const Body = (props) => {
   const isGerente = useSelector(users.selectors.isGerente);
@@ -27,7 +30,9 @@ const Body = (props) => {
   return (
     <Box sx={{ margin: 4 }}>
       <Box sx={props.dropDownMarginClasses} m={2}>
-        <AppGlobalComponents dropDownMarginClasses={props.dropDownMarginClasses} />
+        <AppGlobalComponents
+          dropDownMarginClasses={props.dropDownMarginClasses}
+        />
         <Switch>
           <Route exact path="/" component={Home} />
           {props.loggedIn && (
@@ -35,6 +40,13 @@ const Body = (props) => {
               exact
               path="/users/update-profile"
               component={UpdateProfile}
+            />
+          )}
+          {props.loggedIn && (
+            <Route
+              exact
+              path="/loginRedirect"
+              component={LoginRedirect}
             />
           )}
           {props.loggedIn && (
@@ -50,14 +62,16 @@ const Body = (props) => {
           {isGerente && (
             <Route exact path="/create-pack" component={CreatePack} />
           )}
-          {isInformatico && <Route exact path="/travels" component={Travels} />}
-          {isInformatico && (
+          {(isInformatico || isGerente) && (
+            <Route exact path="/travels" component={Travels} />
+          )}
+          {(isInformatico || isGerente) && (
             <Route exact path="/accommodations" component={Accommodations} />
           )}
-          {isInformatico && (
+          {(isInformatico || isGerente) && (
             <Route exact path="/transports" component={Transports} />
           )}
-          {isInformatico && (
+          {(isInformatico || isGerente) && (
             <Route exact path="/activities" component={Activities} />
           )}
           {(isGerente || isAgente) && (
@@ -69,6 +83,12 @@ const Body = (props) => {
           )}
           {isGerente && (
             <Route exact path="/products" component={ProductList} />
+          )}
+          {props.loggedIn && (
+            <Route exact path="/sales" component={FindSales} />
+          )}
+          {(isGerente || isAgente) && (
+            <Route exact path="/create-sale" component={CreateSale} />
           )}
           {!props.loggedIn && (
             <Route exact path="/users/login" component={Login} />

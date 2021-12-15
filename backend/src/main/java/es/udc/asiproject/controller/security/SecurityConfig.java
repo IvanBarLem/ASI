@@ -14,37 +14,48 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import es.udc.asiproject.controller.security.token.JwtFilter;
 import es.udc.asiproject.controller.security.token.JwtGenerator;
-import es.udc.asiproject.persistence.model.User.RoleType;
+import es.udc.asiproject.persistence.model.enums.RoleType;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private JwtGenerator jwtGenerator;
+	@Autowired
+	private JwtGenerator jwtGenerator;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-	http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
-		.antMatchers("/users/signUp", "/users/login", "/users/loginFromServiceToken").permitAll()
-		.antMatchers(HttpMethod.GET, "/packs").hasRole(RoleType.AGENTE.name())
-		.antMatchers("/products/**/hidden").hasRole(RoleType.INFORMATICO.name())
-		.antMatchers(HttpMethod.GET, "/products/**")
-		.hasAnyRole(RoleType.AGENTE.name(), RoleType.INFORMATICO.name()).antMatchers("/products/**")
-		.hasRole(RoleType.INFORMATICO.name()).antMatchers("/**").hasRole(RoleType.GERENTE.name());
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and().addFilter(new JwtFilter(authenticationManager(), jwtGenerator)).authorizeRequests()
+				.antMatchers("/users/signUp", "/users/login", "/users/loginFromServiceToken").permitAll()
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-	CorsConfiguration config = new CorsConfiguration();
-	config.setAllowCredentials(true);
-	config.addAllowedOriginPattern("*");
-	config.addAllowedHeader("*");
-	config.addAllowedMethod("*");
+				.antMatchers(HttpMethod.GET, "/users/clients")
+				.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name()).antMatchers(HttpMethod.PUT, "/users/*")
+				.authenticated().antMatchers(HttpMethod.POST, "/users/**/changePassword").authenticated()
+				.antMatchers(HttpMethod.GET, "/packs").hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name())
+				.antMatchers("/products/**/hidden").hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
+				.antMatchers(HttpMethod.GET, "/products/**")
+				.hasAnyRole(RoleType.AGENTE.name(), RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
+				.antMatchers("/products/**").hasAnyRole(RoleType.INFORMATICO.name(), RoleType.GERENTE.name())
+				.antMatchers("/sales/findSales").authenticated().antMatchers(HttpMethod.POST, "/sales/freezeSale/*")
+				.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name())
+				.antMatchers(HttpMethod.POST, "/sales/create")
+				.hasAnyRole(RoleType.AGENTE.name(), RoleType.GERENTE.name()).antMatchers("/statistics/**")
+				.hasRole(RoleType.GERENTE.name()).antMatchers("/sales/paySale/*")
+				.hasAnyRole(RoleType.USER.name(), RoleType.GERENTE.name()).antMatchers("/**")
+				.hasRole(RoleType.GERENTE.name());
+	}
 
-	UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	source.registerCorsConfiguration("/**", config);
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOriginPattern("*");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
 
-	return source;
-    }
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", config);
+
+		return source;
+	}
 }

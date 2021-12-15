@@ -3,7 +3,6 @@ package es.udc.asiproject.backend.services;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
@@ -28,6 +27,7 @@ import es.udc.asiproject.persistence.dao.TravelDao;
 import es.udc.asiproject.persistence.model.Accommodation;
 import es.udc.asiproject.persistence.model.Activity;
 import es.udc.asiproject.persistence.model.Pack;
+import es.udc.asiproject.persistence.model.Product;
 import es.udc.asiproject.persistence.model.Transport;
 import es.udc.asiproject.persistence.model.Travel;
 import es.udc.asiproject.service.PackService;
@@ -38,306 +38,413 @@ import es.udc.asiproject.service.exceptions.InvalidOperationException;
 @SpringBootTest
 @ActiveProfiles("test")
 public class PackServiceTest {
-    @Autowired
-    PackService packService;
-    @Autowired
-    PackDao packDao;
-    @Autowired
-    AccommodationDao accommodationDao;
-    @Autowired
-    ActivityDao activityDao;
-    @Autowired
-    TransportDao transportDao;
-    @Autowired
-    TravelDao travelDao;
+	@Autowired
+	PackService packService;
+	@Autowired
+	PackDao packDao;
+	@Autowired
+	AccommodationDao accommodationDao;
+	@Autowired
+	ActivityDao activityDao;
+	@Autowired
+	TransportDao transportDao;
+	@Autowired
+	TravelDao travelDao;
 
-    private Date parseDate(String date) throws ParseException {
-	return new SimpleDateFormat("yyyy-MM-dd").parse(date);
-    }
+	private Date parseDate(String date) throws ParseException {
+		return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+	}
 
-    private Accommodation seedAccommodationDatabase() {
-	Accommodation accommodation = new Accommodation("Hesperia marineda", new BigDecimal(1.23));
-	accommodationDao.save(accommodation);
+	private Accommodation seedAccommodationDatabase() {
+		Accommodation accommodation = Accommodation.builder().name("Hesperia marineda").location("Madrid")
+				.price(new BigDecimal(1.23)).hidden(false).build();
+		accommodationDao.save(accommodation);
 
-	return accommodation;
-    }
+		return accommodation;
+	}
 
-    private Activity seedActivityDatabase() {
-	Activity activity = new Activity("Motos de Agua", new BigDecimal(1.23));
-	activityDao.save(activity);
+	private Activity seedActivityDatabase() {
+		Activity activity = Activity.builder().name("Motos de Agua").location("Madrid").price(new BigDecimal(1.23))
+				.hidden(false).build();
+		activityDao.save(activity);
 
-	return activity;
-    }
+		return activity;
+	}
 
-    private Transport seedTransportDatabase() {
-	Transport transport = new Transport("Patineta", new BigDecimal(1.23));
-	transportDao.save(transport);
+	private Transport seedTransportDatabase() {
+		Transport transport = Transport.builder().name("Patineta").location("Madrid").price(new BigDecimal(1.23))
+				.hidden(false).build();
+		transportDao.save(transport);
 
-	return transport;
-    }
+		return transport;
+	}
 
-    private Travel seedTravelDatabase() {
-	Travel travel = new Travel("Egipto Antiguo", new BigDecimal(1.23));
-	travelDao.save(travel);
+	private Travel seedTravelDatabase() {
+		Travel travel = Travel.builder().name("Egipto Antiguo").location("Madrid").price(new BigDecimal(1.23))
+				.hidden(false).build();
+		travelDao.save(travel);
 
-	return travel;
-    }
+		return travel;
+	}
 
-    @SuppressWarnings("serial")
-    private Pack createPack() {
-	Pack pack = new Pack();
-	pack.setTitle("title");
-	pack.setDescription("description");
-	pack.setImage(new Byte[] { 1, 2, 3 });
-	pack.setPrice(new BigDecimal(1.23));
-	pack.setDuration((short) 5);
-	pack.setPersons("persons");
-	pack.setOutstanding(false);
-	pack.setHidden(false);
-	pack.setCreatedAt(new Date());
-	pack.setAccommodations(new HashSet<Accommodation>() {
-	    {
-		add(seedAccommodationDatabase());
-	    }
-	});
-	pack.setActivities(new HashSet<Activity>() {
-	    {
-		add(seedActivityDatabase());
-	    }
-	});
-	pack.setTransports(new HashSet<Transport>() {
-	    {
-		add(seedTransportDatabase());
-	    }
-	});
-	pack.setTravels(new HashSet<Travel>() {
-	    {
-		add(seedTravelDatabase());
-	    }
-	});
+	@SuppressWarnings("serial")
+	private Pack createPack() {
+		Pack pack = Pack.builder().title("title").description("description").image(new Byte[] { 1, 2, 3 })
+				.price(new BigDecimal(1.23)).duration(5).persons("persons").outstanding(false).hidden(false)
+				.createdAt(new Date()).build();
+		pack.setProducts(new HashSet<Product>() {
+			{
+				add(seedAccommodationDatabase());
+				add(seedActivityDatabase());
+				add(seedTransportDatabase());
+				add(seedTravelDatabase());
+			}
+		});
 
-	return pack;
-    }
+		return pack;
+	}
 
-    @Test
-    public void testCreatePack() throws InstanceNotFoundException, InvalidOperationException {
-	Pack inputPack = createPack();
-	Pack outputPack = packService.createPack(inputPack);
+	/**
+	 * Resuelve CU 3. Prueba para comprobar la correcta creación de un paquete.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_new_pack() throws InstanceNotFoundException, InvalidOperationException {
+		Pack inputPack = createPack();
+		Pack outputPack = packService.createPack(inputPack);
 
-	assertAll(() -> {
-	    assertEquals(inputPack.getTitle(), outputPack.getTitle());
-	    assertEquals(inputPack.getDescription(), outputPack.getDescription());
-	    assertEquals(inputPack.getImage(), outputPack.getImage());
-	    assertEquals(inputPack.getPrice(), outputPack.getPrice());
-	    assertEquals(inputPack.getDuration(), outputPack.getDuration());
-	    assertEquals(inputPack.getPersons(), outputPack.getPersons());
-	    assertEquals(false, outputPack.getOutstanding());
-	    assertEquals(false, outputPack.getHidden());
-	    assertEquals(inputPack.getCreatedAt(), outputPack.getCreatedAt());
-	    assertEquals(inputPack.getAccommodations(), outputPack.getAccommodations());
-	    assertEquals(inputPack.getActivities(), outputPack.getActivities());
-	    assertEquals(inputPack.getTransports(), outputPack.getTransports());
-	    assertEquals(inputPack.getTravels(), outputPack.getTravels());
-	});
-    }
+		assertAll(() -> {
+			assertEquals(inputPack.getTitle(), outputPack.getTitle());
+			assertEquals(inputPack.getDescription(), outputPack.getDescription());
+			assertEquals(inputPack.getImage(), outputPack.getImage());
+			assertEquals(inputPack.getPrice(), outputPack.getPrice());
+			assertEquals(inputPack.getDuration(), outputPack.getDuration());
+			assertEquals(inputPack.getPersons(), outputPack.getPersons());
+			assertEquals(false, outputPack.getOutstanding());
+			assertEquals(false, outputPack.getHidden());
+			assertEquals(inputPack.getCreatedAt(), outputPack.getCreatedAt());
+			assertEquals(inputPack.getProducts(), outputPack.getProducts());
+		});
+	}
 
-    @Test
-    public void testFindPacks() throws InstanceNotFoundException, InvalidOperationException, ParseException {
-	Pack pack1 = createPack();
-	pack1.setCreatedAt(parseDate("2021-01-01"));
-	packDao.save(pack1);
-	Pack pack2 = createPack();
-	pack2.setCreatedAt(parseDate("2014-01-01"));
-	packDao.save(pack2);
-	Pack pack3 = createPack();
-	pack3.setHidden(true);
-	pack3.setCreatedAt(parseDate("2018-01-01"));
-	packDao.save(pack3);
+	/**
+	 * Resuelve CU 3.1. Prueba para comprobar que los paquetes no ocultos se
+	 * devuelven correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_not_hidden_packs()
+			throws InstanceNotFoundException, InvalidOperationException, ParseException {
+		Pack pack1 = createPack();
+		pack1.setCreatedAt(parseDate("2021-01-01"));
+		packDao.save(pack1);
+		Pack pack2 = createPack();
+		pack2.setCreatedAt(parseDate("2014-01-01"));
+		packDao.save(pack2);
+		Pack pack3 = createPack();
+		pack3.setHidden(true);
+		pack3.setCreatedAt(parseDate("2018-01-01"));
+		packDao.save(pack3);
 
-	Page<Pack> page = packService.findPacks(0, 2);
+		Page<Pack> page = packService.findPacks(0, 2);
 
-	assertAll(() -> {
-	    assertEquals(1, page.getTotalPages());
-	    assertEquals(2, page.getNumberOfElements());
-	    assertEquals(pack1, page.getContent().get(0));
-	    assertEquals(pack2, page.getContent().get(1));
-	    assertFalse(page.hasNext());
-	    assertFalse(page.hasPrevious());
-	});
-    }
+		assertAll(() -> {
+			assertEquals(1, page.getTotalPages());
+			assertEquals(2, page.getNumberOfElements());
+			assertEquals(pack1, page.getContent().get(0));
+			assertEquals(pack2, page.getContent().get(1));
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
 
-    @Test
-    public void testFindOutstandingPacks() throws InstanceNotFoundException, InvalidOperationException, ParseException {
-	Pack pack1 = createPack();
-	pack1.setCreatedAt(parseDate("2021-01-01"));
-	packDao.save(pack1);
-	Pack pack2 = createPack();
-	pack2.setOutstanding(true);
-	pack2.setCreatedAt(parseDate("2014-01-01"));
-	packDao.save(pack2);
-	Pack pack3 = createPack();
-	pack3.setHidden(true);
-	pack3.setCreatedAt(parseDate("2018-01-01"));
-	packDao.save(pack3);
+	/**
+	 * Resuelve CU 3.1. Prueba para comprobar que los paquetes no ocultos se
+	 * devuelven correctamente, siendo los primeros los que hayan sido destacados.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_not_hidden_packs_order_by_outstanding()
+			throws InstanceNotFoundException, InvalidOperationException, ParseException {
+		Pack pack1 = createPack();
+		pack1.setCreatedAt(parseDate("2021-01-01"));
+		packDao.save(pack1);
+		Pack pack2 = createPack();
+		pack2.setOutstanding(true);
+		pack2.setCreatedAt(parseDate("2014-01-01"));
+		packDao.save(pack2);
+		Pack pack3 = createPack();
+		pack3.setHidden(true);
+		pack3.setCreatedAt(parseDate("2018-01-01"));
+		packDao.save(pack3);
 
-	Page<Pack> page = packService.findPacks(0, 2);
+		Page<Pack> page = packService.findPacks(0, 2);
 
-	assertAll(() -> {
-	    assertEquals(1, page.getTotalPages());
-	    assertEquals(2, page.getNumberOfElements());
-	    assertEquals(pack2, page.getContent().get(0));
-	    assertEquals(pack1, page.getContent().get(1));
-	    assertFalse(page.hasNext());
-	    assertFalse(page.hasPrevious());
-	});
-    }
+		assertAll(() -> {
+			assertEquals(1, page.getTotalPages());
+			assertEquals(2, page.getNumberOfElements());
+			assertEquals(pack2, page.getContent().get(0));
+			assertEquals(pack1, page.getContent().get(1));
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
 
-    @Test
-    public void testFindPacksEmpty() {
-	Page<Pack> page = packService.findPacks(0, 1);
+	/**
+	 * Resuelve CU 3.1. Prueba para comprobar que si no hay paquetes no ocultos no
+	 * se devuelve nada.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_empty_list_with_not_hidden_packs() {
+		Pack pack = createPack();
+		pack.setHidden(true);
+		packDao.save(pack);
 
-	assertAll(() -> {
-	    assertEquals(0, page.getTotalPages());
-	    assertEquals(0, page.getNumberOfElements());
-	    assertFalse(page.hasNext());
-	    assertFalse(page.hasPrevious());
-	});
-    }
+		Page<Pack> page = packService.findPacks(0, 1);
 
-    @Test
-    public void testFindAllPacks() throws InstanceNotFoundException, InvalidOperationException, ParseException {
-	Pack pack1 = createPack();
-	pack1.setCreatedAt(parseDate("2021-01-01"));
-	packDao.save(pack1);
-	Pack pack2 = createPack();
-	pack2.setCreatedAt(parseDate("2018-01-01"));
-	packDao.save(pack2);
-	Pack pack3 = createPack();
-	pack3.setHidden(true);
-	pack3.setCreatedAt(parseDate("2014-01-01"));
-	packDao.save(pack3);
+		assertAll(() -> {
+			assertEquals(0, page.getTotalPages());
+			assertEquals(0, page.getNumberOfElements());
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
 
-	Page<Pack> page = packService.findAllPacks(1, 1);
+	/**
+	 * Resuelve CU 3.1. Prueba para comprobar que todos los paquetes se devuelven
+	 * correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_all_packs() throws InstanceNotFoundException, InvalidOperationException, ParseException {
+		Pack pack1 = createPack();
+		pack1.setCreatedAt(parseDate("2021-01-01"));
+		packDao.save(pack1);
+		Pack pack2 = createPack();
+		pack2.setCreatedAt(parseDate("2018-01-01"));
+		packDao.save(pack2);
+		Pack pack3 = createPack();
+		pack3.setHidden(true);
+		pack3.setCreatedAt(parseDate("2014-01-01"));
+		packDao.save(pack3);
 
-	assertAll(() -> {
-	    assertEquals(3, page.getTotalPages());
-	    assertEquals(1, page.getNumberOfElements());
-	    assertEquals(pack2, page.getContent().get(0));
-	    assertTrue(page.hasNext());
-	    assertTrue(page.hasPrevious());
-	});
-    }
+		Page<Pack> page = packService.findAllPacks(1, 1);
 
-    @Test
-    public void testFindAllOutstandingPacks()
-	    throws InstanceNotFoundException, InvalidOperationException, ParseException {
-	Pack pack1 = createPack();
-	pack1.setCreatedAt(parseDate("2021-01-01"));
-	packDao.save(pack1);
-	Pack pack2 = createPack();
-	pack2.setOutstanding(true);
-	pack2.setCreatedAt(parseDate("2014-01-01"));
-	packDao.save(pack2);
-	Pack pack3 = createPack();
-	pack3.setHidden(true);
-	pack3.setCreatedAt(parseDate("2018-01-01"));
-	packDao.save(pack3);
+		assertAll(() -> {
+			assertEquals(3, page.getTotalPages());
+			assertEquals(1, page.getNumberOfElements());
+			assertEquals(pack2, page.getContent().get(0));
+			assertTrue(page.hasNext());
+			assertTrue(page.hasPrevious());
+		});
+	}
 
-	Page<Pack> page = packService.findAllPacks(0, 3);
+	/**
+	 * Resuelve CU 3.1. Prueba para comprobar que todos los paquetes se devuelven
+	 * correctamente, siendo los primeros los que hayan sido destacados.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_all_packs_order_by_outstanding()
+			throws InstanceNotFoundException, InvalidOperationException, ParseException {
+		Pack pack1 = createPack();
+		pack1.setCreatedAt(parseDate("2021-01-01"));
+		packDao.save(pack1);
+		Pack pack2 = createPack();
+		pack2.setOutstanding(true);
+		pack2.setCreatedAt(parseDate("2014-01-01"));
+		packDao.save(pack2);
+		Pack pack3 = createPack();
+		pack3.setHidden(true);
+		pack3.setCreatedAt(parseDate("2018-01-01"));
+		packDao.save(pack3);
 
-	assertAll(() -> {
-	    assertEquals(1, page.getTotalPages());
-	    assertEquals(3, page.getNumberOfElements());
-	    assertEquals(pack2, page.getContent().get(0));
-	    assertEquals(pack1, page.getContent().get(1));
-	    assertEquals(pack3, page.getContent().get(2));
-	    assertFalse(page.hasNext());
-	    assertFalse(page.hasPrevious());
-	});
-    }
+		Page<Pack> page = packService.findAllPacks(0, 3);
 
-    @Test
-    public void testFindAllPacksEmpty() {
-	Page<Pack> page = packService.findAllPacks(0, 1);
+		assertAll(() -> {
+			assertEquals(1, page.getTotalPages());
+			assertEquals(3, page.getNumberOfElements());
+			assertEquals(pack2, page.getContent().get(0));
+			assertEquals(pack1, page.getContent().get(1));
+			assertEquals(pack3, page.getContent().get(2));
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
 
-	assertAll(() -> {
-	    assertEquals(0, page.getTotalPages());
-	    assertEquals(0, page.getNumberOfElements());
-	    assertFalse(page.hasNext());
-	    assertFalse(page.hasPrevious());
-	});
-    }
+	/**
+	 * Resuelve CU 3.1. Prueba para comprobar que si no hay paquetes no se devuelve
+	 * nada.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_return_empty_list_with_packs() {
+		Page<Pack> page = packService.findAllPacks(0, 1);
 
-    @SuppressWarnings("serial")
-    @Test
-    public void testUpdatePack() throws InstanceNotFoundException, InvalidOperationException {
-	Pack inputPack = packService.createPack(createPack());
-	inputPack.setTitle(inputPack.getTitle() + "X");
-	inputPack.setDescription(inputPack.getDescription() + "X");
-	inputPack.setImage(new Byte[] { 3, 2, 1 });
-	inputPack.setPrice(new BigDecimal(3.21));
-	inputPack.setDuration((short) 8);
-	inputPack.setOutstanding(true);
-	inputPack.setHidden(true);
-	inputPack.setAccommodations(new HashSet<Accommodation>() {
-	    {
-		add(seedAccommodationDatabase());
-	    }
-	});
-	inputPack.setActivities(new HashSet<Activity>() {
-	    {
-		add(seedActivityDatabase());
-		add(seedActivityDatabase());
-	    }
-	});
-	inputPack.setTransports(new HashSet<Transport>() {
-	    {
-		add(seedTransportDatabase());
-		add(seedTransportDatabase());
-		add(seedTransportDatabase());
-	    }
-	});
-	inputPack.setTravels(new HashSet<Travel>() {
-	    {
-		add(seedTravelDatabase());
-		add(seedTravelDatabase());
-		add(seedTravelDatabase());
-		add(seedTravelDatabase());
-	    }
-	});
+		assertAll(() -> {
+			assertEquals(0, page.getTotalPages());
+			assertEquals(0, page.getNumberOfElements());
+			assertFalse(page.hasNext());
+			assertFalse(page.hasPrevious());
+		});
+	}
 
-	Pack outputPack = packService.updatePack(inputPack);
+	/**
+	 * Resuelve CU 3.6. Prueba para comprobar que un paquete se actualiza
+	 * correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@SuppressWarnings("serial")
+	@Test
+	public void should_update_pack() throws InstanceNotFoundException, InvalidOperationException {
+		Pack inputPack = packService.createPack(createPack());
+		inputPack.setTitle(inputPack.getTitle() + "X");
+		inputPack.setDescription(inputPack.getDescription() + "X");
+		inputPack.setImage(new Byte[] { 3, 2, 1 });
+		inputPack.setPrice(new BigDecimal(3.21));
+		inputPack.setDuration(8);
+		inputPack.setOutstanding(true);
+		inputPack.setHidden(true);
+		inputPack.setProducts(new HashSet<Product>() {
+			{
+				add(seedAccommodationDatabase());
+				add(seedActivityDatabase());
+				add(seedActivityDatabase());
+				add(seedTransportDatabase());
+				add(seedTransportDatabase());
+				add(seedTransportDatabase());
+				add(seedTravelDatabase());
+				add(seedTravelDatabase());
+				add(seedTravelDatabase());
+				add(seedTravelDatabase());
+			}
+		});
 
-	assertAll(() -> {
-	    assertEquals(inputPack.getId(), outputPack.getId());
-	    assertEquals(inputPack.getTitle(), outputPack.getTitle());
-	    assertEquals(inputPack.getDescription(), outputPack.getDescription());
-	    assertEquals(inputPack.getImage(), outputPack.getImage());
-	    assertEquals(inputPack.getPrice(), outputPack.getPrice());
-	    assertEquals(inputPack.getDuration(), outputPack.getDuration());
-	    assertEquals(inputPack.getPersons(), outputPack.getPersons());
-	    assertEquals(inputPack.getOutstanding(), outputPack.getOutstanding());
-	    assertEquals(inputPack.getHidden(), outputPack.getHidden());
-	    assertEquals(inputPack.getCreatedAt(), outputPack.getCreatedAt());
-	    assertEquals(inputPack.getAccommodations(), outputPack.getAccommodations());
-	    assertEquals(inputPack.getActivities(), outputPack.getActivities());
-	    assertEquals(inputPack.getTransports(), outputPack.getTransports());
-	    assertEquals(inputPack.getTravels(), outputPack.getTravels());
-	    assertEquals(4, outputPack.getTravels().size());
-	});
-    }
+		Pack outputPack = packService.updatePack(inputPack);
 
-    @Test
-    public void testRemovePackWithInstanceNotFoundException() {
-	assertThrows(InstanceNotFoundException.class, () -> packService.removePack(-1L));
-    }
+		assertAll(() -> {
+			assertEquals(inputPack.getId(), outputPack.getId());
+			assertEquals(inputPack.getTitle(), outputPack.getTitle());
+			assertEquals(inputPack.getDescription(), outputPack.getDescription());
+			assertEquals(inputPack.getImage(), outputPack.getImage());
+			assertEquals(inputPack.getPrice(), outputPack.getPrice());
+			assertEquals(inputPack.getDuration(), outputPack.getDuration());
+			assertEquals(inputPack.getPersons(), outputPack.getPersons());
+			assertEquals(inputPack.getOutstanding(), outputPack.getOutstanding());
+			assertEquals(inputPack.getHidden(), outputPack.getHidden());
+			assertEquals(inputPack.getCreatedAt(), outputPack.getCreatedAt());
+			assertEquals(inputPack.getProducts(), outputPack.getProducts());
+		});
+	}
 
-    @Test
-    public void testRemovePack() throws InstanceNotFoundException, InvalidOperationException {
-	Pack pack = packService.createPack(createPack());
-	packService.removePack(pack.getId());
-	Page<Pack> packs = packService.findAllPacks(0, 1);
+	/**
+	 * Resuelve CU 3.1. Prueba para comprobar que un paquete se destaca
+	 * correctamente correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_change_outstanding_pack() throws InstanceNotFoundException, InvalidOperationException {
+		Pack inputPack = packService.createPack(createPack());
+		packService.toggleOutstandingPack(inputPack.getId());
+		Pack outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
 
-	assertEquals(0, packs.getNumberOfElements());
-    }
+		assertTrue(outputPack.getOutstanding());
+
+		packService.toggleOutstandingPack(inputPack.getId());
+		outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
+		assertFalse(outputPack.getOutstanding());
+	}
+
+	/**
+	 * Resuelve CU 3.7. Prueba para comprobar que un paquete se oculta correctamente
+	 * correctamente.
+	 * 
+	 * Nivel de prueba: unidad.
+	 * 
+	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * positiva.
+	 * 
+	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
+	 * estática.
+	 */
+	@Test
+	public void should_change_hidden_pack() throws InstanceNotFoundException, InvalidOperationException {
+		Pack inputPack = packService.createPack(createPack());
+		packService.toggleHiddenPack(inputPack.getId());
+		Pack outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
+
+		assertTrue(outputPack.getHidden());
+
+		packService.toggleHiddenPack(inputPack.getId());
+		outputPack = packDao.findById(inputPack.getId())
+				.orElseThrow(() -> new InstanceNotFoundException(Pack.class.getSimpleName(), inputPack.getId()));
+		assertFalse(outputPack.getHidden());
+	}
 }
