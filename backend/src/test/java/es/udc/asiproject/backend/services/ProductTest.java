@@ -40,16 +40,16 @@ public class ProductTest {
 	TravelDao travelDao;
 
 	/**
-	 * Resuelve CU 4. Prueba para comprobar la correcta creación de un producto de
+	 * Resuelve CU 4. Prueba para comprobar la correcta creacion de un producto de
 	 * tipo alojamiento.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_new_accommodation() {
@@ -61,16 +61,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 3.3. Prueba para obtener la lista de alojamientos que no están
+	 * Resuelve CU 3.3. Prueba para obtener la lista de alojamientos que no estan
 	 * ocultos.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_not_hidden_accommodations() throws InstanceNotFoundException {
@@ -87,11 +87,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_all_accommodations() {
@@ -103,16 +103,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificación de
+	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificacion de
 	 * un producto de tipo alojamiento.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void slould_return_updated_accommodation() throws InstanceNotFoundException {
@@ -132,11 +132,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_fail_when_update_accommodation_with_invalid_id() {
@@ -145,16 +145,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminación de un producto
+	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminacion de un producto
 	 * de tipo alojamiento.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_remove_accommodation() throws InstanceNotFoundException {
@@ -172,11 +172,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_fail_when_remove_accommodation_with_invalid_id() {
@@ -184,16 +184,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4. Prueba para comprobar la correcta creación de un producto de
+	 * Resuelve CU 4. Prueba para comprobar la correcta creacion de un producto de
 	 * tipo actividad.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_new_activity() {
@@ -205,16 +205,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 3.5. Prueba para obtener la lista de actividades que no están
+	 * Resuelve CU 3.5. Prueba para obtener la lista de actividades que no estan
 	 * ocultos.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_not_hidden_activities() throws InstanceNotFoundException {
@@ -231,11 +231,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_all_activities() {
@@ -247,16 +247,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificación de
+	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificacion de
 	 * un producto de tipo actividad.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void slould_return_updated_activity() throws InstanceNotFoundException {
@@ -276,11 +276,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_fail_when_update_activity_with_invalid_id() {
@@ -289,16 +289,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminación de un producto
+	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminacion de un producto
 	 * de tipo actividad.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_remove_activity() throws InstanceNotFoundException {
@@ -316,11 +316,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_fail_when_remove_activity_with_invalid_id() {
@@ -328,16 +328,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4. Prueba para comprobar la correcta creación de un producto de
+	 * Resuelve CU 4. Prueba para comprobar la correcta creacion de un producto de
 	 * tipo transporte.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_new_transport() {
@@ -349,16 +349,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 3.4. Prueba para obtener la lista de transportes que no están
+	 * Resuelve CU 3.4. Prueba para obtener la lista de transportes que no estan
 	 * ocultos.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_not_hidden_transports() throws InstanceNotFoundException {
@@ -375,11 +375,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_all_transports() {
@@ -393,16 +393,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificación de
+	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificacion de
 	 * un producto de tipo transporte.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void slould_return_updated_transport() throws InstanceNotFoundException {
@@ -422,11 +422,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_fail_when_update_transport_with_invalid_id() {
@@ -435,16 +435,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminación de un producto
+	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminacion de un producto
 	 * de tipo transporte.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_remove_transport() throws InstanceNotFoundException {
@@ -462,11 +462,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_fail_when_remove_transport_with_invalid_id() {
@@ -474,16 +474,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4. Prueba para comprobar la correcta creación de un producto de
+	 * Resuelve CU 4. Prueba para comprobar la correcta creacion de un producto de
 	 * tipo viaje.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_new_travel() {
@@ -495,15 +495,15 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 3.2. Prueba para obtener la lista de viajes que no están ocultos.
+	 * Resuelve CU 3.2. Prueba para obtener la lista de viajes que no estan ocultos.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_not_hidden_travels() throws InstanceNotFoundException {
@@ -520,11 +520,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_all_travels() {
@@ -536,16 +536,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificación de
+	 * Resuelve CU 4.1 y CU 4.3. Prueba para comprobar la correcta modificacion de
 	 * un producto de tipo viaje.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void slould_return_updated_travel() throws InstanceNotFoundException {
@@ -565,11 +565,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_fail_when_update_travel_with_invalid_id() {
@@ -578,16 +578,16 @@ public class ProductTest {
 	}
 
 	/**
-	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminación de un producto
+	 * Resuelve CU 4.2. Prueba para comprobar la correcta eliminacion de un producto
 	 * de tipo viaje.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_remove_travel() throws InstanceNotFoundException {
@@ -605,11 +605,11 @@ public class ProductTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * negativa.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_fail_when_remove_travel_with_invalid_id() {

@@ -105,15 +105,15 @@ public class PackServiceTest {
 	}
 
 	/**
-	 * Resuelve CU 3. Prueba para comprobar la correcta creación de un paquete.
+	 * Resuelve CU 3. Prueba para comprobar la correcta creacion de un paquete.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_new_pack() throws InstanceNotFoundException, InvalidOperationException {
@@ -140,11 +140,11 @@ public class PackServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_not_hidden_packs()
@@ -178,11 +178,11 @@ public class PackServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_not_hidden_packs_order_by_outstanding()
@@ -217,11 +217,11 @@ public class PackServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_empty_list_with_not_hidden_packs() {
@@ -245,11 +245,11 @@ public class PackServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_all_packs() throws InstanceNotFoundException, InvalidOperationException, ParseException {
@@ -281,11 +281,11 @@ public class PackServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_all_packs_order_by_outstanding()
@@ -321,11 +321,11 @@ public class PackServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_empty_list_with_packs() {
@@ -345,11 +345,11 @@ public class PackServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@SuppressWarnings("serial")
 	@Test
@@ -400,11 +400,11 @@ public class PackServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_change_outstanding_pack() throws InstanceNotFoundException, InvalidOperationException {
@@ -427,11 +427,11 @@ public class PackServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_change_hidden_pack() throws InstanceNotFoundException, InvalidOperationException {

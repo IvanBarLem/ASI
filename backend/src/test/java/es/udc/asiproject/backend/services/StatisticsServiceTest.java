@@ -129,16 +129,16 @@ public class StatisticsServiceTest {
 	}
 
 	/**
-	 * Resuelve CU 5. Prueba para comprobar el cálculo de las ventas totales de la
-	 * compañía y su facturación.
+	 * Resuelve CU 5. Prueba para comprobar el calculo de las ventas totales de la
+	 * compania y su facturacion.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_sales_company() throws ParseException {
@@ -156,16 +156,16 @@ public class StatisticsServiceTest {
 	}
 
 	/**
-	 * Resuelve CU 5. Prueba para comprobar el cálculo de las ventas de la compañía
-	 * por cada agente y su facturación.
+	 * Resuelve CU 5. Prueba para comprobar el calculo de las ventas de la compania
+	 * por cada agente y su facturacion.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_sales_agents() throws ParseException {
@@ -187,17 +187,17 @@ public class StatisticsServiceTest {
 	}
 
 	/**
-	 * Resuelve CU 5. Prueba para comprobar el cálculo de las ventas de la compañía
+	 * Resuelve CU 5. Prueba para comprobar el calculo de las ventas de la compania
 	 * por cada agente cuyo nombre contenga una cadena de caracteres dada y su
-	 * facturación.
+	 * facturacion.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_sales_agents_by_name() throws ParseException {
@@ -219,16 +219,16 @@ public class StatisticsServiceTest {
 	}
 
 	/**
-	 * Resuelve CU 5.1. Prueba para comprobar el cálculo de las ventas de la
-	 * compañía por cada producto y su facturación.
+	 * Resuelve CU 5.1. Prueba para comprobar el calculo de las ventas de la
+	 * compania por cada producto y su facturacion.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_sales_products() throws ParseException {
@@ -249,16 +249,16 @@ public class StatisticsServiceTest {
 	}
 
 	/**
-	 * Resuelve CU 5.1. Prueba para comprobar el cálculo de las ventas de la
-	 * compañía por cada producto perteneciente a una categoría y su facturación.
+	 * Resuelve CU 5.1. Prueba para comprobar el calculo de las ventas de la
+	 * compania por cada producto perteneciente a una categoria y su facturacion.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void testFindSalesProductsByCategory() throws ParseException {
@@ -281,17 +281,17 @@ public class StatisticsServiceTest {
 	}
 
 	/**
-	 * Resuelve CU 5.1. Prueba para comprobar el cálculo de las ventas de la
-	 * compañía por cada producto que se encuentre en una localización concreta y su
-	 * facturación.
+	 * Resuelve CU 5.1. Prueba para comprobar el calculo de las ventas de la
+	 * compania por cada producto que se encuentre en una localizacion concreta y su
+	 * facturacion.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void testFindSalesProductsByLocation() throws ParseException {

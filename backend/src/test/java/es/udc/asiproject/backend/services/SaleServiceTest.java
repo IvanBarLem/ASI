@@ -188,15 +188,15 @@ public class SaleServiceTest {
 
 	/**
 	 * Resuelve CU 2. Prueba para comprobar que una venta puede darse de alta en la
-	 * aplicación.
+	 * aplicacion.
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_new_sale() throws InstanceNotFoundException, InvalidOperationException {
@@ -247,11 +247,11 @@ public class SaleServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_list_with_sales_for_client() throws ParseException, InstanceNotFoundException {
@@ -281,11 +281,11 @@ public class SaleServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_list_with_sales_for_gerente() throws ParseException, InstanceNotFoundException {
@@ -309,11 +309,11 @@ public class SaleServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selecciï¿½n de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de selecciï¿½n de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_return_list_with_sales_for_agent() throws ParseException, InstanceNotFoundException {
@@ -343,11 +343,11 @@ public class SaleServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_change_sale_state_to_freeze()
@@ -369,11 +369,11 @@ public class SaleServiceTest {
 	 * 
 	 * Nivel de prueba: unidad.
 	 * 
-	 * Categorías a las que pertenece: prueba funcional dinámica de caja negra
+	 * Categorias a las que pertenece: prueba funcional dinamica de caja negra
 	 * positiva.
 	 * 
-	 * Mecanismo de selección de datos: prueba con generación de datos de entrada
-	 * estática.
+	 * Mecanismo de seleccion de datos: prueba con generacion de datos de entrada
+	 * estatica.
 	 */
 	@Test
 	public void should_change_sale_state_to_paid()
