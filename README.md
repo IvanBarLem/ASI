@@ -121,7 +121,7 @@ yarn start
 
 👤 Iván Barrientos Lema: ivan.barrientos.lema@udc.es
 
-👤 Jaime Caberi Creus: jaime.cabero@udc.es
+👤 Jaime Cabero Creus: jaime.cabero@udc.es
 
 👤 Laura Ben Artiles: l.ben@udc.es
 
