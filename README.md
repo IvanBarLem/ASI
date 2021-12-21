@@ -1,5 +1,6 @@
 <div id="top"></div>
 
+<br />
 <div align="center">
   <a href="https://github.com/IvanBarLem/ASI">
     <img src="https://bowiebearsnews.com/wp-content/uploads/2018/11/TRavel.png" alt="Logo" width="80" height="80">
@@ -36,10 +37,10 @@ Esta sección tiene como objetivo mostrar la lista de tecnologías empleadas par
 
 ### 🛠️ Gitflow
 
-Gitflow define un modelo estricto de ramificación diseñado en torno a los lanzamientos del proyecto, siendo este ideal para aquellos que lleven una planificación de entregas iterativas. Este flujo de trabajo permite la paralelización del desarrollo mediante ramas independientes, tanto para la preparación, mantenimiento y publicación de versiones como para la corrección de errores en cualquier momento. La funcionalidad y uso de cada rama se detalla a continuación.
+Gitflow define un modelo estricto de ramificación diseñado en torno a los lanzamientos de la aplicación, siendo este ideal para aquellos que lleven una planificación de entregas iterativas. Este flujo de trabajo permite la paralelización del desarrollo mediante ramas independientes, tanto para la preparación, mantenimiento y publicación de versiones como para la corrección de errores en cualquier momento. La funcionalidad y uso de cada rama se detalla a continuación.
 
 -   🏹 main: es la rama principal que contiene cada una de las versiones estables de la aplicación que están destinadas para que puedan ser incluidas en producción.
--   🧰 Develop: esta rama contiene todas las funcionalidades del proyecto y en ella se incluirán las nuevas funcionalidades que se desarrollen para la siguiente versión.
+-   🧰 develop: esta rama contiene todas las funcionalidades del proyecto y en ella se incluirán las nuevas funcionalidades que se desarrollen para la siguiente versión.
 -   ⚙️ feature: las ramas de características están destinadas a contener _commits_ que representen una funcionalidad determinada de la aplicación y, al completarse dicha funcionalidad, está es incluida en la rama de desarrollo.
 -   🧲 release: las ramas de lanzamiento contienen todas las versiones finales de un producto destinadas a ser incluidas en producción, siendo este un paso previo y preparatorio. En ella se incluyen todas las funcionalidades de la rama de desarrollo y se arregla cualquier error que contenga antes de entrar en producción.
 -   🧹 hotfixes: estas ramas están destinadas a ser utilizadas para aplicar arreglos directamente sobre la rama principal cuando se encuentren errores graves en una versión de producción.
@@ -120,7 +121,7 @@ yarn start
 
 👤 Iván Barrientos Lema: ivan.barrientos.lema@udc.es
 
-👤 Jaime Caberi Creus: jaime.cabero@udc.es
+👤 Jaime Cabero Creus: jaime.cabero@udc.es
 
 👤 Laura Ben Artiles: l.ben@udc.es
 
