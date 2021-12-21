@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.11
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=asi
+      - MYSQL_USER=asi
+      - MYSQL_PASSWORD=asi
+      - MYSQL_DATABASE=asiproject
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  mysql:

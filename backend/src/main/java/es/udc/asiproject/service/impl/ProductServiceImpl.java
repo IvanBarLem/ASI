@@ -19,183 +19,195 @@ import es.udc.asiproject.service.exceptions.InstanceNotFoundException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-	@Autowired
-	private AccommodationDao accommodationDao;
-	@Autowired
-	private ActivityDao activityDao;
-	@Autowired
-	private TransportDao transportDao;
-	@Autowired
-	private TravelDao travelDao;
+    @Autowired
+    private AccommodationDao accommodationDao;
+    @Autowired
+    private ActivityDao activityDao;
+    @Autowired
+    private TransportDao transportDao;
+    @Autowired
+    private TravelDao travelDao;
 
-	@Override
-	@Transactional
-	public Accommodation createAccommodation(Accommodation accommodation) {
-		accommodation.setHidden(false);
-		accommodation.setLocation(accommodation.getName());
-		return accommodationDao.save(accommodation);
-	}
+    // RF4
+    @Override
+    @Transactional
+    public Accommodation createAccommodation(Accommodation accommodation) {
+	accommodation.setHidden(false);
+	accommodation.setLocation(accommodation.getName());
+	return accommodationDao.save(accommodation);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Accommodation> findAccommodations() {
-		return accommodationDao.findByHiddenFalse();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Accommodation> findAccommodations() {
+	return accommodationDao.findByHiddenFalse();
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Accommodation> findAllAccommodations() {
-		return accommodationDao.findAll();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Accommodation> findAllAccommodations() {
+	return accommodationDao.findAll();
+    }
 
-	@Override
-	@Transactional
-	public Accommodation updateAccommodation(Accommodation accommodation) throws InstanceNotFoundException {
-		Accommodation oldAccommodation = accommodationDao.findById(accommodation.getId()).orElseThrow(
-				() -> new InstanceNotFoundException(Accommodation.class.getSimpleName(), accommodation.getId()));
+    // RF4.1
+    @Override
+    @Transactional
+    public Accommodation updateAccommodation(Accommodation accommodation) throws InstanceNotFoundException {
+	Accommodation oldAccommodation = accommodationDao.findById(accommodation.getId()).orElseThrow(
+		() -> new InstanceNotFoundException(Accommodation.class.getSimpleName(), accommodation.getId()));
 
-		oldAccommodation.setName(accommodation.getName());
-		oldAccommodation.setPrice(accommodation.getPrice());
-		oldAccommodation.setHidden(accommodation.getHidden());
+	oldAccommodation.setName(accommodation.getName());
+	oldAccommodation.setPrice(accommodation.getPrice());
+	oldAccommodation.setHidden(accommodation.getHidden());
 
-		return oldAccommodation;
-	}
+	return oldAccommodation;
+    }
 
-	@Override
-	@Transactional
-	public void removeAccommodation(Long id) throws InstanceNotFoundException {
-		Accommodation accommodation = accommodationDao.findById(id)
-				.orElseThrow(() -> new InstanceNotFoundException(Accommodation.class.getSimpleName(), id));
+    // RF4.2
+    @Override
+    @Transactional
+    public void removeAccommodation(Long id) throws InstanceNotFoundException {
+	Accommodation accommodation = accommodationDao.findById(id)
+		.orElseThrow(() -> new InstanceNotFoundException(Accommodation.class.getSimpleName(), id));
 
-		accommodationDao.delete(accommodation);
-	}
+	accommodationDao.delete(accommodation);
+    }
 
-	@Override
-	@Transactional
-	public Activity createActivity(Activity activity) {
-		activity.setHidden(false);
+    // RF4
+    @Override
+    @Transactional
+    public Activity createActivity(Activity activity) {
+	activity.setHidden(false);
 
-		activity.setLocation(activity.getName());
-		return activityDao.save(activity);
-	}
+	activity.setLocation(activity.getName());
+	return activityDao.save(activity);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Activity> findActivities() {
-		return activityDao.findByHiddenFalse();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Activity> findActivities() {
+	return activityDao.findByHiddenFalse();
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Activity> findAllActivities() {
-		return activityDao.findAll();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Activity> findAllActivities() {
+	return activityDao.findAll();
+    }
 
-	@Override
-	@Transactional
-	public Activity updateActivity(Activity activity) throws InstanceNotFoundException {
-		Activity oldActivity = activityDao.findById(activity.getId())
-				.orElseThrow(() -> new InstanceNotFoundException(Activity.class.getSimpleName(), activity.getId()));
+    // RF4.1
+    @Override
+    @Transactional
+    public Activity updateActivity(Activity activity) throws InstanceNotFoundException {
+	Activity oldActivity = activityDao.findById(activity.getId())
+		.orElseThrow(() -> new InstanceNotFoundException(Activity.class.getSimpleName(), activity.getId()));
 
-		oldActivity.setName(activity.getName());
-		oldActivity.setPrice(activity.getPrice());
-		oldActivity.setHidden(activity.getHidden());
+	oldActivity.setName(activity.getName());
+	oldActivity.setPrice(activity.getPrice());
+	oldActivity.setHidden(activity.getHidden());
 
-		return oldActivity;
-	}
+	return oldActivity;
+    }
 
-	@Override
-	@Transactional
-	public void removeActivity(Long id) throws InstanceNotFoundException {
-		Activity activity = activityDao.findById(id)
-				.orElseThrow(() -> new InstanceNotFoundException(Activity.class.getSimpleName(), id));
+    // RF4.2
+    @Override
+    @Transactional
+    public void removeActivity(Long id) throws InstanceNotFoundException {
+	Activity activity = activityDao.findById(id)
+		.orElseThrow(() -> new InstanceNotFoundException(Activity.class.getSimpleName(), id));
 
-		activityDao.delete(activity);
-	}
+	activityDao.delete(activity);
+    }
 
-	@Override
-	@Transactional
-	public Transport createTransport(Transport transport) {
-		transport.setHidden(false);
+    // RF4
+    @Override
+    @Transactional
+    public Transport createTransport(Transport transport) {
+	transport.setHidden(false);
 
-		transport.setLocation(transport.getName());
-		return transportDao.save(transport);
-	}
+	transport.setLocation(transport.getName());
+	return transportDao.save(transport);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Transport> findTransports() {
-		return transportDao.findByHiddenFalse();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Transport> findTransports() {
+	return transportDao.findByHiddenFalse();
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Transport> findAllTransports() {
-		return transportDao.findAll();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Transport> findAllTransports() {
+	return transportDao.findAll();
+    }
 
-	@Override
-	@Transactional
-	public Transport updateTransport(Transport transport) throws InstanceNotFoundException {
-		Transport oldTransport = transportDao.findById(transport.getId())
-				.orElseThrow(() -> new InstanceNotFoundException(Transport.class.getSimpleName(), transport.getId()));
+    // RF4.1
+    @Override
+    @Transactional
+    public Transport updateTransport(Transport transport) throws InstanceNotFoundException {
+	Transport oldTransport = transportDao.findById(transport.getId())
+		.orElseThrow(() -> new InstanceNotFoundException(Transport.class.getSimpleName(), transport.getId()));
 
-		oldTransport.setName(transport.getName());
-		oldTransport.setPrice(transport.getPrice());
-		oldTransport.setHidden(transport.getHidden());
+	oldTransport.setName(transport.getName());
+	oldTransport.setPrice(transport.getPrice());
+	oldTransport.setHidden(transport.getHidden());
 
-		return oldTransport;
-	}
+	return oldTransport;
+    }
 
-	@Override
-	@Transactional
-	public void removeTransport(Long id) throws InstanceNotFoundException {
-		Transport transport = transportDao.findById(id)
-				.orElseThrow(() -> new InstanceNotFoundException(Transport.class.getSimpleName(), id));
+    // RF4.2
+    @Override
+    @Transactional
+    public void removeTransport(Long id) throws InstanceNotFoundException {
+	Transport transport = transportDao.findById(id)
+		.orElseThrow(() -> new InstanceNotFoundException(Transport.class.getSimpleName(), id));
 
-		transportDao.delete(transport);
-	}
+	transportDao.delete(transport);
+    }
 
-	@Override
-	@Transactional
-	public Travel createTravel(Travel travel) {
-		travel.setHidden(false);
+    // RF4
+    @Override
+    @Transactional
+    public Travel createTravel(Travel travel) {
+	travel.setHidden(false);
 
-		travel.setLocation(travel.getName());
-		return travelDao.save(travel);
-	}
+	travel.setLocation(travel.getName());
+	return travelDao.save(travel);
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Travel> findTravels() {
-		return travelDao.findByHiddenFalse();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Travel> findTravels() {
+	return travelDao.findByHiddenFalse();
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Travel> findAllTravels() {
-		return travelDao.findAll();
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Travel> findAllTravels() {
+	return travelDao.findAll();
+    }
 
-	@Override
-	@Transactional
-	public Travel updateTravel(Travel travel) throws InstanceNotFoundException {
-		Travel oldTravel = travelDao.findById(travel.getId())
-				.orElseThrow(() -> new InstanceNotFoundException(Travel.class.getSimpleName(), travel.getId()));
+    // RF4.1
+    @Override
+    @Transactional
+    public Travel updateTravel(Travel travel) throws InstanceNotFoundException {
+	Travel oldTravel = travelDao.findById(travel.getId())
+		.orElseThrow(() -> new InstanceNotFoundException(Travel.class.getSimpleName(), travel.getId()));
 
-		oldTravel.setName(travel.getName());
-		oldTravel.setPrice(travel.getPrice());
-		oldTravel.setHidden(travel.getHidden());
+	oldTravel.setName(travel.getName());
+	oldTravel.setPrice(travel.getPrice());
+	oldTravel.setHidden(travel.getHidden());
 
-		return oldTravel;
-	}
+	return oldTravel;
+    }
 
-	@Override
-	@Transactional
-	public void removeTravel(Long id) throws InstanceNotFoundException {
-		Travel travel = travelDao.findById(id)
-				.orElseThrow(() -> new InstanceNotFoundException(Travel.class.getSimpleName(), id));
+    // RF4.2
+    @Override
+    @Transactional
+    public void removeTravel(Long id) throws InstanceNotFoundException {
+	Travel travel = travelDao.findById(id)
+		.orElseThrow(() -> new InstanceNotFoundException(Travel.class.getSimpleName(), id));
 
-		travelDao.delete(travel);
-	}
+	travelDao.delete(travel);
+    }
 }
