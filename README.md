@@ -10,7 +10,7 @@
   <p align="center">
     🗺️ Desarrollo de la agencia de viajes
     <br />
-    <a href="https://htmlpreview.github.io/?https://github.com/IvanBarLem/ASI/blob/master/backend/doc/index.html"><strong>Explora la documentación »</strong></a>
+    <a href="https://ivanbarlem.github.io/ASI/es/udc/asiproject/backend/services/package-summary.html"><strong>Explora la documentación »</strong></a>
   </p>
 </div>
 
