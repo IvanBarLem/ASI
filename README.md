@@ -1,62 +1,67 @@
-# ASI Project
+<div id="top"></div>
 
-## Requirements
+<div align="center">
+  <a href="https://github.com/IvanBarLem/ASI">
+    <img src="https://bowiebearsnews.com/wp-content/uploads/2018/11/TRavel.png" alt="Logo" width="80" height="80">
+  </a>
 
-- Node 8+.
-- Java SE 8+.
-- Maven 3+.
-- MySQL 8+.
+  <h3 align="center">ASI - Análisis de Sistemas de Información</h3>
 
-## Database creation
+  <p align="center">
+    🗺️ Desarrollo de la agencia de viajes
+    <br />
+    <a href="https://htmlpreview.github.io/?https://github.com/IvanBarLem/ASI/blob/master/backend/doc/index.html"><strong>Explora la documentación »</strong></a>
+  </p>
+</div>
 
-```
-Start Mysql server if not running (e.g. mysqld).
+## 💻 Estructura
 
-mysqladmin -u root create asiproject
-mysqladmin -u root create asiprojecttest
+<p align="right">(<a href="#top">volver arriba</a>)</p>
 
-mysql -u root
-    CREATE USER 'asi'@'localhost' IDENTIFIED BY 'asi';
-    GRANT ALL PRIVILEGES ON asiproject.* to 'asi'@'localhost' WITH GRANT OPTION;
-    GRANT ALL PRIVILEGES ON asiprojecttest.* to 'asi'@'localhost' WITH GRANT OPTION;
-    exit
-```
+## 🔌 Requisitos
 
-## If using Docker for mysql
+Esta sección tiene como objetivo mostrar la lista de tecnologías utilizadas para implementar, probar y ejecutar la aplicación propuesta.
 
-Download mysql image:
+React
 
-```bash
-docker pull mysql:8.0.11
-```
+Node 8+
 
-Start the mysql container:
-```bash
-docker run --name mysql -p 3306:3306 -v /path/to/your/db/volume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=admin -d mysql:8.0.11
-```
+Java SE 8+
 
-Once it is running, enter the container:
-```bash
-docker exec -it mysql bash
-```
+Maven 3+
 
-Then inside the container, access to mysql with credentials:
-```bash
-mysql -u root -p
-```
-Create database:
-```bash
-create database asiproject;
-```
+MySQL 8+
 
-## Run
+Docker
+
+<p align="right">(<a href="#top">volver arriba</a>)</p>
+
+## 🚧 Uso
 
 ```
-cd backend
-mvn sql:execute (only first time to create tables)
+mvn install
+```
+
+```
 mvn spring-boot:run
-
-cd frontend
-npm install (only first time to download libraries)
-npm start
 ```
+
+```
+mvn spring-boot:run
+```
+
+<p align="right">(<a href="#top">volver arriba</a>)</p>
+
+## 👥 Autores
+
+👤 David García Gondell: david.ggondell@udc.es
+
+👤 Diego Ramil López: diego.ramil.lopez@udc.es
+
+👤 Iván Barrientos Lema: ivan.barrientos.lema@udc.es
+
+👤 Jaime Caberi Creus: jaime.cabero@udc.es
+
+👤 Laura Ben Artiles:
+
+<p align="right">(<a href="#top">volver arriba</a>)</p>
