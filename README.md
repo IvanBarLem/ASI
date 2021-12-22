@@ -35,23 +35,71 @@ Esta sección tiene como objetivo mostrar la lista de tecnologías empleadas par
 
 ## 💻 Estructura
 
-### 🛠️ Gitflow
-
-Gitflow define un modelo estricto de ramificación diseñado en torno a los lanzamientos de la aplicación, siendo este ideal para aquellos que lleven una planificación de entregas iterativas. Este flujo de trabajo permite la paralelización del desarrollo mediante ramas independientes, tanto para la preparación, mantenimiento y publicación de versiones como para la corrección de errores en cualquier momento. La funcionalidad y uso de cada rama se detalla a continuación.
-
--   🏹 main: es la rama principal que contiene cada una de las versiones estables de la aplicación que están destinadas para que puedan ser incluidas en producción.
--   🧰 develop: esta rama contiene todas las funcionalidades del proyecto y en ella se incluirán las nuevas funcionalidades que se desarrollen para la siguiente versión.
--   ⚙️ feature: las ramas de características están destinadas a contener _commits_ que representen una funcionalidad determinada de la aplicación y, al completarse dicha funcionalidad, está es incluida en la rama de desarrollo.
--   🧲 release: las ramas de lanzamiento contienen todas las versiones finales de un producto destinadas a ser incluidas en producción, siendo este un paso previo y preparatorio. En ella se incluyen todas las funcionalidades de la rama de desarrollo y se arregla cualquier error que contenga antes de entrar en producción.
--   🧹 hotfixes: estas ramas están destinadas a ser utilizadas para aplicar arreglos directamente sobre la rama principal cuando se encuentren errores graves en una versión de producción.
-
 ### 🧱 Backend
 
 El [backend](backend) es la parte de la aplicación que procesa toda la lógica, también conocida como el lado del servidor. Esta se compone de un servidor y una base de datos a través del cual se recibe, procesa y envía la información solicitada por el usuario.
 
+```
+📦backend
+ ┣ 📂src
+ ┃ ┣ 📂main
+ ┃ ┃ ┣ 📂java.es.udc.asiproject
+ ┃ ┃ ┃ ┣ 📂controller
+ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┣ 📂exception
+ ┃ ┃ ┃ ┃ ┣ 📂mapper
+ ┃ ┃ ┃ ┃ ┗ 📂security
+ ┃ ┃ ┃ ┣ 📂persistence
+ ┃ ┃ ┃ ┃ ┣ 📂dao
+ ┃ ┃ ┃ ┃ ┗ 📂model
+ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┣ 📂exceptions
+ ┃ ┃ ┃ ┃ ┗ 📂impl
+ ┃ ┃ ┃ ┗ 📂utils
+ ┃ ┃ ┗ 📂resources
+ ┃ ┗ 📂test
+ ┃   ┣ 📂java.es.udc.asiproject.backend.services
+ ┃   ┗ 📂resources
+ ┗ 📜pom.xml
+```
+
+Dentro del directorio [backend](backend) se encuentran los siguientes directorios:
+
+-   `controller` como punto de acceso a los distintos servicios.
+-   `service` que contiene los servicios locales de la aplicación.
+-   `persistence` que se encarga de la comunicación con la base de datos.
+-   `test` que contiene las pruebas de la aplicación.
+
 ### 🏛️ Frontend
 
 El [frontend](frontend) es la parte de la aplicación que interactúa con los usuarios, también conocida como el lado del cliente. Básicamente, esto es lo que se ve al acceder al sitio web, así como los elementos que permiten la navegación dentro de la web, creando con ello la experiencia de usuario.
+
+```
+📦frontend
+ ┗ 📂src
+   ┣ 📂backend
+   ┣ 📂i18n
+   ┃ ┗ 📂messages
+   ┣ 📂modules
+   ┃ ┣ 📂agents
+   ┃ ┣ 📂app
+   ┃ ┣ 📂common
+   ┃ ┣ 📂packs
+   ┃ ┣ 📂products
+   ┃ ┣ 📂products-stats
+   ┃ ┣ 📂sales
+   ┃ ┗ 📂users
+   ┣ 📂polyfills
+   ┗ 📂store
+```
+
+En la carpeta `src` se encuentra todo el código del [frontend](frontend) cuyas carpetas más importantes son:
+
+-   `backend` para la comunicación con la API.
+-   `i18n` para la internacionalización.
+-   `modules` para los distintos módulos de la aplicación.
+
+Cabe destacar que cada directorio dentro de `modules` es un módulo de la aplicación que dentro tiene un directorio components con todos los componentes de dicho módulo.
 
 <p align="right">(<a href="#top">volver arriba</a>)</p>
 
@@ -110,6 +158,18 @@ El siguiente comando sirve para levantar el [frontend](frontend) en el [localhos
 ```
 yarn start
 ```
+
+<p align="right">(<a href="#top">volver arriba</a>)</p>
+
+## 🛠️ Gitflow
+
+Gitflow define un modelo estricto de ramificación diseñado en torno a los lanzamientos de la aplicación, siendo este ideal para aquellos que lleven una planificación de entregas iterativas. Este flujo de trabajo permite la paralelización del desarrollo mediante ramas independientes, tanto para la preparación, mantenimiento y publicación de versiones como para la corrección de errores en cualquier momento. La funcionalidad y uso de cada rama se detalla a continuación.
+
+-   🏹 main: es la rama principal que contiene cada una de las versiones estables de la aplicación que están destinadas para que puedan ser incluidas en producción.
+-   🧰 develop: esta rama contiene todas las funcionalidades del proyecto y en ella se incluirán las nuevas funcionalidades que se desarrollen para la siguiente versión.
+-   ⚙️ feature: las ramas de características están destinadas a contener _commits_ que representen una funcionalidad determinada de la aplicación y, al completarse dicha funcionalidad, está es incluida en la rama de desarrollo.
+-   🧲 release: las ramas de lanzamiento contienen todas las versiones finales de un producto destinadas a ser incluidas en producción, siendo este un paso previo y preparatorio. En ella se incluyen todas las funcionalidades de la rama de desarrollo y se arregla cualquier error que contenga antes de entrar en producción.
+-   🧹 hotfixes: estas ramas están destinadas a ser utilizadas para aplicar arreglos directamente sobre la rama principal cuando se encuentren errores graves en una versión de producción.
 
 <p align="right">(<a href="#top">volver arriba</a>)</p>
 
